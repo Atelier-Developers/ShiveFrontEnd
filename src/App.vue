@@ -135,4 +135,10 @@ export default {
 
 @import '~vuetify/src/styles/settings/_variables.scss';
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 </style>

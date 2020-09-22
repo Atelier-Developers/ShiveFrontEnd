@@ -16,7 +16,6 @@
             v-model="user.username"
             label="شماره دانشجویی"
             type="number"
-            :counter="7"
             outlined
             required
         ></v-text-field>

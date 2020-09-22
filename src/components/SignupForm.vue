@@ -24,7 +24,6 @@
             v-model="user.student_no"
             label="شماره دانشجویی"
             type="number"
-            :counter="7"
             outlined
             required
         ></v-text-field>
@@ -34,8 +33,7 @@
             v-model="user.phone"
             label="تلفن همراه"
             type="number"
-            prefix="+98"
-            :counter="7"
+            suffix="+98"
             outlined
             required
         ></v-text-field>
@@ -82,5 +80,6 @@ export default {
 </script>
 
 <style scoped>
+
 
 </style>
