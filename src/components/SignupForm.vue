@@ -8,14 +8,35 @@
     <v-row justify="center" no-gutters>
       <v-col cols="12" class="pb-7">
         <h2 class="text-center display-1">
-          وارد شوید...
+          ثبت نام کنید...
         </h2>
       </v-col>
       <v-col cols="12">
         <v-text-field
-            v-model="user.username"
+            v-model="user.name"
+            label="نام و نام خانوادگی"
+            type="number"
+            :counter="7"
+            outlined
+            required
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+            v-model="user.student_no"
             label="شماره دانشجویی"
             type="number"
+            :counter="7"
+            outlined
+            required
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+            v-model="user.phone"
+            label="تلفن همراه"
+            type="number"
+            prefix="+98"
             :counter="7"
             outlined
             required
@@ -36,22 +57,25 @@
           class="px-10"
           large
       >
-        ورود
+        ثبت نام
       </v-btn>
     </v-row>
 
 
   </v-form>
+
 </template>
 
 <script>
 export default {
-  name: "LoginForm",
+  name: "SignupForm",
   data() {
     return {
       valid: false,
       user: {
-        username: "",
+        name: "",
+        student_no: "",
+        phone: "",
         password: ""
       }
     }
