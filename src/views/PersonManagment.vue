@@ -1,38 +1,65 @@
 <template>
   <v-row class="mx-3">
     <v-col cols="12" class="col-md-4">
-      <PersonList :persons="persons" title="پذیرفته شده"/>
+      <PersonList :persons="pending" title="در حال انتظار" :actions="pendingActions"/>
     </v-col>
     <v-col cols="12" class="col-md-4">
-      <PersonList :persons="persons"  title="رد شده"/>
+      <PersonList :persons="accepted" title="پذیرفته شده" :actions="acceptedActions"/>
     </v-col>
     <v-col cols="12" class="col-md-4">
-      <PersonList :persons="persons"  title="در حال انتظار"/>
+      <PersonList :persons="rejected" title="رد شده" :actions="rejectActions"/>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import PersonList from "@/components/PersonList";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "PersonManagment",
   components: {PersonList},
   data() {
-    return {
-      persons: [
+    return {}
+  },
+  computed: {
+    ...mapGetters('personModule', ['pending', 'accepted', 'rejected']),
+    acceptedActions() {
+      return [
         {
-          pk: 1,
-          name: 'محمد',
-          student_no: "923847"
+          color: 'red',
+          icon: 'remove',
+          onClick: this.removeAccepted
+        }
+      ];
+    },
+    pendingActions() {
+      return [
+        {
+          color: 'green',
+          icon: 'check',
+          onClick: this.acceptPerson
         },
         {
-          pk: 2,
-          name: 'امیر',
-          student_no: "213123"
+          color: 'red',
+          icon: 'close',
+          onClick: this.rejectPerson
         }
-      ]
-    }
+      ];
+    },
+    rejectActions() {
+      return [
+        {
+          color: 'red',
+          icon: 'remove',
+          onClick: this.removeRejected
+        }
+      ];
+    },
+  },
+  methods: {
+    ...
+        mapActions('personModule', ['acceptPerson', 'rejectPerson', 'removeAccepted', 'removeRejected'])
   }
 }
 </script>

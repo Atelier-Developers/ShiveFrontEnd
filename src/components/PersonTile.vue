@@ -4,21 +4,12 @@
       <v-list-item-title>{{ person.name }}</v-list-item-title>
       <v-list-item-subtitle>{{ person.student_no }}</v-list-item-subtitle>
     </v-list-item-content>
-    <v-list-item-action>
-     <v-btn icon>
-       <v-icon
-           color="green"
-       >
-         check
-       </v-icon>
-     </v-btn>
-    </v-list-item-action>
-    <v-list-item-action>
-      <v-btn icon>
+    <v-list-item-action v-for="action in actions">
+      <v-btn icon @click="() => action.onClick(person)">
         <v-icon
-            color="red"
+            :color="action.color"
         >
-          close
+          {{ action.icon }}
         </v-icon>
       </v-btn>
     </v-list-item-action>
@@ -28,7 +19,7 @@
 <script>
 export default {
   name: "PersonTile",
-  props: ['person']
+  props: ['person', 'actions']
 }
 </script>
 
