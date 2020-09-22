@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from "@/views/Login";
 import Signup from "@/views/Signup";
+import PersonManagment from "@/views/PersonManagment";
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
         name: 'Signup',
         component: Signup
     },
+    {
+        path: '/user-management',
+        name: 'UserManagement',
+        component: PersonManagment
+    }
 ]
 
 const router = new VueRouter({
