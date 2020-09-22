@@ -4,7 +4,13 @@
       {{ title }}
     </v-card-title>
     <v-divider/>
-    <PersonTile v-for="person in persons" :person="person" :key="person.pk" :actions="actions"/>
+    <template v-if="persons.length > 0">
+      <PersonTile v-for="person in persons" :person="person" :key="person.pk"
+                  :actions="actions"/>
+    </template>
+    <v-card-text class="text-center" v-else>
+      لیست خالی است...
+    </v-card-text>
   </v-card>
 </template>
 
