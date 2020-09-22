@@ -15,8 +15,6 @@
         <v-text-field
             v-model="user.name"
             label="نام و نام خانوادگی"
-            type="number"
-            :counter="7"
             outlined
             required
         ></v-text-field>
