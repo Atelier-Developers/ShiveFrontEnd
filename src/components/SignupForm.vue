@@ -51,27 +51,32 @@
           :disabled="!valid"
           color="primary"
           class="px-10"
+          @click="signupPerson"
+          :loading="loading"
           large
       >
         ثبت نام
       </v-btn>
     </v-row>
-      <v-row class="mt-3" justify="center">
-        <v-btn text color="primary" @click="sendToLogin">
-          اکانت دارید؟ وارد شوید
-        </v-btn>
-      </v-row>
+    <v-row class="mt-3" justify="center">
+      <v-btn text color="primary" @click="sendToLogin">
+        اکانت دارید؟ وارد شوید
+      </v-btn>
+    </v-row>
 
   </v-form>
 
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "SignupForm",
   data() {
     return {
       valid: false,
+      loading: false,
       user: {
         name: "",
         student_no: "",
@@ -81,9 +86,16 @@ export default {
     }
   },
   methods: {
-    sendToLogin () {
+    ...mapActions('authModule', ['signUp']),
+    sendToLogin() {
       this.$router.push({name: 'Login'})
     },
+    signupPerson() {
+      this.loading = true;
+      this.signUp(this.user).finally(() => {
+        this.loading = false;
+      })
+    }
   }
 }
 </script>
