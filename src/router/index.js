@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from "@/views/Login";
 import Signup from "@/views/Signup";
-import PersonManagment from "@/views/PersonManagment";
+import PersonManagement from "@/views/PersonManagment";
+import TeamManagement from "@/views/TeamManagement";
 
 Vue.use(VueRouter)
 
@@ -26,7 +27,12 @@ const routes = [
     {
         path: '/user-management',
         name: 'UserManagement',
-        component: PersonManagment
+        component: PersonManagement
+    },
+    {
+        path: '/team-management',
+        name: 'TeamManagement',
+        component: TeamManagement
     }
 ]
 
