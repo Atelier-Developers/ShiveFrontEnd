@@ -2,9 +2,6 @@
   <div class="mx-3">
     <v-row dense>
       <v-col cols="12" class="row justify-center">
-        <div class="mt-5">
-          <v-btn large color="primary" class="px-12">تایید</v-btn>
-        </div>
       </v-col>
       <v-col cols="12">
         <v-row >
@@ -20,6 +17,17 @@
         </v-row>
       </v-col>
     </v-row>
+    <div id="floating-button" class="mb-10 mr-7">
+      <v-btn
+              fab
+              dark
+              large
+              color="primary"
+      >
+        <v-icon>done</v-icon>
+      </v-btn>
+    </div>
+
   </div>
 
 </template>
@@ -77,5 +85,8 @@ export default {
 </script>
 
 <style scoped>
-
+  #floating-button {
+    position: absolute;
+    bottom: 0;
+  }
 </style>
