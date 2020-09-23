@@ -57,7 +57,7 @@
       </v-btn>
     </v-row>
       <v-row class="mt-3" justify="center">
-        <v-btn text v-on="" @click="sendToLogin">
+        <v-btn text color="primary" @click="sendToLogin">
           اکانت دارید؟ وارد شوید
         </v-btn>
       </v-row>

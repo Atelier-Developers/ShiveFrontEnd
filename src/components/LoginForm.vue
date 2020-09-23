@@ -39,8 +39,8 @@
       </v-btn>
     </v-row>
     <v-row class="mt-3" justify="center">
-      <v-btn text v-on="" @click="sendToSignup">
-        اکانت دارید؟ وارد شوید
+      <v-btn text color="primary" @click="sendToSignup">
+        اکانت ندارید؟ ثبت نام کنید
       </v-btn>
     </v-row>
 
