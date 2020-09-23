@@ -1,5 +1,5 @@
 <template>
-  <v-card tile>
+  <v-card tile elevation="5">
     <v-card-title class="justify-center">
       {{ title !== undefined ? title : '(بدون موضوع)' }}
     </v-card-title>
@@ -10,6 +10,20 @@
     <v-card-text class="text-center" v-else>
       لیست خالی است...
     </v-card-text>
+    <v-card-actions>
+      <v-btn
+          icon
+          color="orange"
+      >
+        <v-icon>create</v-icon>
+      </v-btn>
+      <v-btn
+          color="error"
+          icon
+      >
+        <v-icon>delete</v-icon>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 

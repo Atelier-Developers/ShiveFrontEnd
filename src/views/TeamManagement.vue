@@ -1,11 +1,11 @@
 <template>
-  <div class="mx-3">
-    <v-row dense>
-      <v-col cols="12" class="col-md-3" v-for="team in teams">
+  <v-container>
+    <v-row>
+      <v-col cols="12" class="col-md-4" v-for="team in teams">
         <TeamList :persons="team.members" :title="team.subject"/>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 
 </template>
 
