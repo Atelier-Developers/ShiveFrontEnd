@@ -7,6 +7,7 @@ import PersonManagement from "@/views/PersonManagment";
 import TeamManagement from "@/views/TeamManagement";
 import PresentPage from "../views/PresentPage";
 import TeamCreateEdit from "../views/TeamCreateEdit";
+import SubjectManagement from "../views/SubjectManagement";
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
         path: '/team-create-edit',
         name: 'TeamCreateEdit',
         component: TeamCreateEdit
+    },
+    {
+        path: '/subject-management',
+        name: 'SubjectManagement',
+        component: SubjectManagement
     }
 ]
 

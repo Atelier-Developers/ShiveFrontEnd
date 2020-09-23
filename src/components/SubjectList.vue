@@ -1,0 +1,22 @@
+<template>
+    <v-card>
+        <v-card-title class="row justify-center"><h3>{{title}}</h3></v-card-title>
+        <v-divider></v-divider>
+        <v-list>
+            <SubjectTile v-for="subject in subjects" :subject="subject" :actions="actions"/>
+        </v-list>
+    </v-card>
+</template>
+
+<script>
+    import SubjectTile from "./SubjectTile";
+    export default {
+        name: "SubjectList",
+        components: {SubjectTile},
+        props: ['subjects', 'title', 'actions']
+    }
+</script>
+
+<style scoped>
+
+</style>
