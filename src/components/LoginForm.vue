@@ -33,6 +33,8 @@
           :disabled="!valid"
           color="primary"
           class="px-10"
+          :loading="loading"
+          @click="loginPerson"
           large
       >
         ورود
@@ -49,11 +51,14 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "LoginForm",
   data() {
     return {
       valid: false,
+      loading: false,
       user: {
         username: "",
         password: ""
@@ -63,7 +68,15 @@ export default {
   methods: {
     sendToSignup() {
       this.$router.push({name: 'Signup'})
+    },
+    ...mapActions('authModule', ['login']),
+    loginPerson() {
+      this.loading = true;
+      this.login(this.user).finally(() => {
+        this.loading = false;
+      })
     }
+
   }
 }
 </script>

@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import personModule from './modules/person-module'
 import teamModule from './modules/team-module'
 import teamCreateEditModule from './modules/team-create-edit-module'
+import authModule from './modules/authModule'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,5 +12,6 @@ export default new Vuex.Store({
         personModule,
         teamModule,
         teamCreateEditModule,
+        authModule
     }
 })
