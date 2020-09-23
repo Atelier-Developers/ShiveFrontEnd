@@ -29,7 +29,7 @@ import PersonList from "@/components/PersonList";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-  name: "PersonManagment",
+  name: "PersonManagement",
   components: {PersonList},
   data() {
     return {}
