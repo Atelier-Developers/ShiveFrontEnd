@@ -8,9 +8,11 @@
         <div>
             <v-col cols="12">
                 <v-select
-                    label="موضوع"
-                    dense
-                    outlined
+                        :items="subjects"
+                        v-model="subject"
+                        label="موضوع"
+                        dense
+                        outlined
                 ></v-select>
             </v-col>
         </div>
@@ -26,6 +28,7 @@
 
     export default {
         name: "SubjectDateChooser",
+        props: ['subjects', 'item'],
         components: {
             datePicker: VuePersianDatetimePicker
         }

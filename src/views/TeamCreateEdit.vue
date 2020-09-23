@@ -1,6 +1,6 @@
 <template>
     <div class="mt-5">
-        <SubjectDateChooser></SubjectDateChooser>
+        <SubjectDateChooser :item="item" :subjects="selectableSubjects"></SubjectDateChooser>
         <v-container>
             <v-row>
                 <v-col cols="12" class="col-md-6">
@@ -33,13 +33,20 @@
 
     export default {
         name: "TeamCreateEdit",
-
+        data() {
+            return {
+                item: {
+                    date: '',
+                    subject: ''
+                }
+            }
+        },
         components: {
             SubjectDateChooser,
             PersonList
         },
         computed: {
-            ...mapGetters('teamCreateEditModule', ['pending', 'teamMembers']),
+            ...mapGetters('teamCreateEditModule', ['pending', 'teamMembers', 'selectableSubjects']),
             addToTeamAction() {
                 return [{
                     color: "green",

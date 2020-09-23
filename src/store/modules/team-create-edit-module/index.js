@@ -12,7 +12,7 @@ const state = {
             student_no: "213123"
         }],
     teamMembers: [],
-    subjects: [],
+    selectableSubjects: [],
 };
 
 const mutations = {
@@ -38,6 +38,7 @@ const actions = {
 const getters = {
     pending: (state) => state.pending,
     teamMembers: (state) => state.teamMembers,
+    selectableSubjects: (state) => state.selectableSubjects,
 };
 
 
