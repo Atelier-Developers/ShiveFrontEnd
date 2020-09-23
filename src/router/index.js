@@ -5,6 +5,7 @@ import Login from "@/views/Login";
 import Signup from "@/views/Signup";
 import PersonManagement from "@/views/PersonManagment";
 import TeamManagement from "@/views/TeamManagement";
+import PresentPage from "../views/PresentPage";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/team-management',
         name: 'TeamManagement',
         component: TeamManagement
+    },
+    {
+        path: '/present-page',
+        name: 'PresentPage',
+        component: PresentPage
     }
 ]
 
