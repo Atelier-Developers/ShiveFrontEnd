@@ -1,22 +1,25 @@
 <template>
   <div class="mx-3">
-    <v-row dense>
-      <v-col cols="12" class="row justify-center">
-      </v-col>
-      <v-col cols="12">
-        <v-row >
-          <v-col cols="12" class="col-md-4">
-            <PersonList :persons="pending" title="در حال انتظار" :actions="pendingActions"/>
-          </v-col>
-          <v-col cols="12" class="col-md-4">
-            <PersonList :persons="accepted" title="پذیرفته شده" :actions="acceptedActions"/>
-          </v-col>
-          <v-col cols="12" class="col-md-4">
-            <PersonList :persons="rejected" title="رد شده" :actions="rejectActions"/>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <v-container>
+      <v-row dense>
+        <v-col cols="12" class="row justify-center">
+        </v-col>
+        <v-col cols="12">
+          <v-row >
+            <v-col cols="12" class="col-md-4">
+              <PersonList :persons="pending" title="در حال انتظار" :actions="pendingActions"/>
+            </v-col>
+            <v-col cols="12" class="col-md-4">
+              <PersonList :persons="accepted" title="پذیرفته شده" :actions="acceptedActions"/>
+            </v-col>
+            <v-col cols="12" class="col-md-4">
+              <PersonList :persons="rejected" title="رد شده" :actions="rejectActions"/>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+
+    </v-container>
     <div id="floating-button" class="mb-10 mr-7">
       <v-btn
               fab
