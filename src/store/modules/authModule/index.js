@@ -5,11 +5,16 @@ const state = {
     token: "",
 };
 
-const mutations = {};
+const mutations = {
+    setToken(state, payload) {
+        state.token = payload;
+    }
+};
 
 const actions = {
     async login(context, payload) {
         let response = await axios.post(LOGIN, payload);
+        context.commit("setToken", "Token " + response.data.token);
     },
     async signUp(context, payload) {
         let response = await axios.post(SIGNUP, payload);
