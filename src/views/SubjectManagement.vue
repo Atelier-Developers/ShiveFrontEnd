@@ -8,8 +8,7 @@
             </v-col>
         </v-row>
         <div id="floating-button" class="mb-10 mr-7">
-            <InputFieldDialogButton  title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes" :action="addToSubjects" >
-                    <v-icon slot="icon">add</v-icon>
+            <InputFieldDialogButton  title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes" :action="addToSubjects" icon="add" >
             </InputFieldDialogButton>
         </div>
     </div>
@@ -30,12 +29,21 @@
                 return [
                     {
                         icon: 'edit',
+                        isEdit: true,
                         onClick: this.changeOneSubject,
-                        color: 'primary'
+                        dialog: {
+                            buttonAttrs: {
+                                icon: true,
+                                color: 'primary'
+                            },
+                            title: 'ویرایش موضوع'
+                        }
+
                     },
                     {
                         icon: 'delete',
                         onClick: this.removeFromSubjects,
+                        isEdit: false,
                         color: 'red'
                     },
 

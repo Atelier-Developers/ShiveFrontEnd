@@ -5,7 +5,7 @@
                                 v-on="on"
                                 v-bind="buttonAttrs"
                         >
-                            <slot name="icon"/>
+                            <v-icon>{{icon}}</v-icon>
                         </v-btn>
         </template>
         <v-card>
@@ -34,16 +34,16 @@
 <script>
     export default {
         name: 'Home',
-        props: ['title', 'buttonAttrs', 'action', 'newTitle', 'inputPlaceHolder'],
+        props: ['title', 'buttonAttrs', 'subject', 'action', 'newTitle', 'inputPlaceHolder', 'icon'],
         data() {
             return {
-                dialog: false
+                dialog: false,
             }
         },
         methods: {
             submitAction() {
                 this.$data.dialog = false;
-                this.$props.action({title: this.$props.newTitle});
+                this.$props.action({title: this.$props.newTitle, subject: this.$props.subject});
             }
         }
     }
