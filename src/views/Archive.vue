@@ -14,10 +14,11 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" class="col-md-4" v-for="project in archive_projects" v-if="selected_year === 'همه' || project.year === selected_year">
-          <v-card >
+        <v-col cols="12" class="col-md-4" v-for="project in archive_projects"
+               v-if="selected_year === 'همه' || project.year === selected_year">
+          <v-card>
             <v-card-title>{{ project.title }}</v-card-title>
-            <v-card-subtitle>سال {{project.year}}</v-card-subtitle>
+            <v-card-subtitle>سال {{ project.year }}</v-card-subtitle>
             <v-divider/>
             <v-card-text>
               <template v-if="project.members.length > 0">
@@ -40,7 +41,7 @@ export default {
   props: [],
   data() {
     return {
-      years_item: [96, 97, 98, 'همه'],
+      years_item: ['همه', 96, 97, 98],
       selected_year: 'همه',
       archive_projects: [
         {
