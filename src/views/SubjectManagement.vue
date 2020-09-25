@@ -68,8 +68,7 @@ export default {
   },
   mounted() {
     this.loading = true;
-    this.getSubjects();
-    this.loading = false;
+    this.getSubjects().finally(() => {this.loading = false;});
   }
 }
 </script>
