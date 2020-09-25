@@ -23,6 +23,11 @@ import {mapActions, mapGetters} from "vuex";
 export default {
   name: 'Home',
   components: {SubjectList, InputFieldDialogButton},
+  data() {
+    return {
+      loading: false
+    }
+  },
   computed: {
     ...mapGetters('subjectModule', ['subjects']),
     editSubjectActions() {
@@ -59,10 +64,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions('subjectModule', ['addToSubjects', 'removeFromSubjects', 'changeOneSubject', 'firstInit'])
+    ...mapActions('subjectModule', ['addToSubjects', 'removeFromSubjects', 'changeOneSubject', 'getSubjects'])
   },
   mounted() {
-    this.firstInit();
+    this.loading = true;
+    this.getSubjects();
+    this.loading = false;
   }
 }
 </script>

@@ -36,7 +36,7 @@ const actions = {
         let response = await axios.get(GET_ALL_SUBJECT);
         context.commit('setSubjects', response.data)
     },
-    async firstInit(context){
+    async getSubjects(context){
         let response = await axios.get(GET_ALL_SUBJECT);
         context.commit('setSubjects', response.data)
     }
