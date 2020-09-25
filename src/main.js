@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import axios from 'axios'
+import VuePageTransition from 'vue-page-transition'
+
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -13,6 +15,8 @@ if (token) {
     Vue.prototype.$axios.defaults.headers.common['Authorization'] = token
 }
 
+
+Vue.use(VuePageTransition)
 new Vue({
     router,
     store,

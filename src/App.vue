@@ -1,8 +1,10 @@
 <template>
   <v-app class="faLang">
-    <MainDrawer/>
+    <MainDrawer v-if="isAuthenticated"/>
     <v-app-bar
         app
+        clipped-right
+        elevation="0"
         color="primary"
         dark
     >
@@ -13,8 +15,10 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-main>
-      <router-view class="fill-height"></router-view>
+    <v-main class="fill-height">
+      <vue-page-transition  name="overlay-up">
+        <router-view></router-view>
+      </vue-page-transition>
     </v-main>
   </v-app>
 </template>
@@ -22,6 +26,7 @@
 <script>
 
 import MainDrawer from "@/components/MainDrawer";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'App',
@@ -29,6 +34,9 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    ...mapGetters('authModule', ['isAuthenticated']),
+  }
 };
 </script>
 

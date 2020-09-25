@@ -1,10 +1,10 @@
 <template>
-
   <v-navigation-drawer
       class="primary"
       app
       dark
       right
+      clipped
   >
     <v-list>
       <v-list-item
@@ -24,7 +24,7 @@
     </v-list>
 
     <template v-slot:append>
-      <div class="pa-2" @click="logout">
+      <div class="pa-2" @click="logoutUser">
         <v-btn block>خروج</v-btn>
       </div>
     </template>
@@ -40,28 +40,28 @@ export default {
     return {
       items: [
         {
-          icon: "",
+          icon: "group",
           title: "مدیریت تیم ها",
           to: {
             name: "TeamManagement"
           }
         },
         {
-          icon: "",
+          icon: "face",
           title: "مدیریت کاربران",
           to: {
             name: "UserManagement"
           }
         },
         {
-          icon: "",
+          icon: "subject",
           title: "مدیریت موضوعات ارائه",
           to: {
             name: "SubjectManagement"
           }
         },
         {
-          icon: "",
+          icon: "slideshow",
           title: "ارائه",
           to: {
             name: "PresentPage"
@@ -72,6 +72,10 @@ export default {
   },
   methods: {
     ...mapActions('authModule', ['logout']),
+    logoutUser(){
+      this.logout();
+      this.$router.replace({name: "Login"})
+    }
   }
 }
 </script>
