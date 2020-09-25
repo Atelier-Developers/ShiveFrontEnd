@@ -9,7 +9,7 @@
                             <v-icon>{{icon}}</v-icon>
                         </v-btn>
         </template>
-        <v-card>
+        <v-card :loading="loading" :disabled="loading">
             <v-card-title>
                 <span class="headline">{{title}}</span>
             </v-card-title>
@@ -17,7 +17,7 @@
                 <v-container>
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field :label="inputPlaceHolder" v-model="newTitle" outlined/>
+                            <v-text-field :label="inputPlaceHolder" v-model="subject.title" outlined/>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -35,16 +35,21 @@
 <script>
     export default {
         name: 'Home',
-        props: ['title', 'buttonAttrs', 'subject', 'action', 'newTitle', 'inputPlaceHolder', 'icon'],
+        props: ['title', 'buttonAttrs', 'subject', 'action',  'inputPlaceHolder', 'icon'],
         data() {
             return {
+                loading: false,
                 dialog: false,
             }
         },
         methods: {
             submitAction() {
-                this.$data.dialog = false;
-                this.$props.action({title: this.$props.newTitle, subject: this.$props.subject});
+                this.loading = true;
+                this.action(this.subject).finally(() => {
+                    this.loading = false;
+                    this.dialog = false;
+                });
+
             }
         }
     }

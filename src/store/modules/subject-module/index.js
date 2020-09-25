@@ -32,7 +32,7 @@ const actions = {
         context.commit("setSubjects", response.data)
     },
     async changeOneSubject(context, payload) {
-        await axios.put(UPDATE_SUBJECT + payload.subject.pk, {title: payload.title});
+        await axios.put(UPDATE_SUBJECT + payload.pk, {title: payload.title});
         let response = await axios.get(GET_ALL_SUBJECT);
         context.commit('setSubjects', response.data)
     },

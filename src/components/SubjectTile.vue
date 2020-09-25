@@ -10,9 +10,9 @@
             <v-btn v-if="!action.isEdit" icon @click="() => action.onClick(subject)">
                 <v-icon :color="action.color">{{action.icon}}</v-icon>
             </v-btn>
-            <InputFieldDialogButton v-else :input-place-holder="subject.title" :title=action.dialog.title
+            <InputFieldDialogButton v-else input-place-holder="تیتر" :title=action.dialog.title
                                     :action="action.onClick" :button-attrs="action.dialog.buttonAttrs"
-                                    :icon="action.icon" :subject="subject"/>
+                                    :icon="action.icon" :subject="{...subject}"/>
         </v-list-item-action>
     </v-list-item>
 </template>
