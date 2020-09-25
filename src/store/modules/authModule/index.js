@@ -2,7 +2,7 @@ import axios from 'axios';
 import {LOGIN, SIGNUP} from "@/network/API";
 
 const state = {
-    token: "",
+    token: localStorage.getItem("ShiveToken") || '',
 };
 
 const mutations = {
@@ -14,18 +14,24 @@ const mutations = {
 const actions = {
     async login(context, payload) {
         let response = await axios.post(LOGIN, payload);
-        context.commit("setToken", "Token " + response.data.token);
+        await context.commit("setToken", "Token " + response.data.token);
+        localStorage.setItem("ShiveToken", state.token);
+        axios.defaults.headers.common['Authorization'] = state.token;
     },
     async signUp(context, payload) {
         let response = await axios.post(SIGNUP, payload);
-    }
-
+    },
+    logout(context) {
+        axios.defaults.headers.common['Authorization'] = '';
+        localStorage.removeItem("ShiveToken");
+        context.commit('setToken', "");
+    },
 };
 
 const getters = {
-    pending: (state) => state.pending,
-    accepted: (state) => state.accepted,
-    rejected: (state) => state.rejected
+    isAuthenticated: (state) => {
+        return !!state.token
+    }
 };
 
 
