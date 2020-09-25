@@ -1,22 +1,14 @@
 import axios from 'axios';
 import {parseTime} from "vuetify/lib/components/VCalendar/util/timestamp";
+import {CREATE_SUBJECT, DELETE_SUBJECT, GET_ALL_SUBJECT, UPDATE_SUBJECT} from "../../../network/API";
 
 const state = {
-    subjects: [{
-        title: "تدریس مجازی"
-    },
-        {
-            title: "شیوه‌ی نگارش رزومه"
-        },
-        {
-            title: "شیوه‌ی ارائه تشریحی"
-        }],
+    subjects: [],
 };
 
 const mutations = {
-    addToSubjects(state, item) {
-        console.log(item);
-        state.subjects.push(item);
+    setSubjects(state, subjects) {
+        state.subjects = subjects
     },
     removeFromSubjects(state, item) {
         let value = state.subjects.splice(state.subjects.indexOf(item), 1)[0];
@@ -29,14 +21,21 @@ const mutations = {
 
 const actions = {
 
-    addToSubjects(context, payload) {
-        context.commit('addToSubjects', payload);
+    async addToSubjects(context, payload) { // todo awaits?
+        await axios.post(CREATE_SUBJECT, payload);
+        let response = await axios.get(GET_ALL_SUBJECT);
+        await context.commit("setSubjects", response.data)
+
     },
-    removeFromSubjects(context, payload){
-        context.commit('removeFromSubjects', payload);
+    async removeFromSubjects(context, payload) { // todo payload.id or payload
+        await axios.delete(DELETE_SUBJECT + payload)
+        let response = await axios.get(GET_ALL_SUBJECT);
+        context.commit("setSubjects", response.data)
     },
-    changeOneSubject(context, payload) {
-        context.commit('changeOneSubject', payload);
+    async changeOneSubject(context, payload) {
+        await axios.put(UPDATE_SUBJECT + payload, payload);
+        let response = await axios.get(GET_ALL_SUBJECT);
+        context.commit('setSubjects', response.data)
     }
 
 };

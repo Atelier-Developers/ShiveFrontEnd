@@ -6,3 +6,7 @@ export const TEAMS_DELETE = baseUrl + "team/delete/";
 export const GET_PENDING_PERSON = baseUrl + "profile/list/pending/"
 export const ACCEPT_PENDING_PERSON = baseUrl + "profile/accept/"
 export const REJECT_PENDING_PERSON = baseUrl + "profile/reject/"
+export const CREATE_SUBJECT = baseUrl + "subject/create/"
+export const GET_ALL_SUBJECT = baseUrl + "subject/list/all/"
+export const UPDATE_SUBJECT = baseUrl + "subject/update/"
+export const DELETE_SUBJECT = baseUrl + "subject/delete/"
