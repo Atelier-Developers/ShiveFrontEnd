@@ -9,6 +9,7 @@
     <v-container>
       <v-card class="mx-5 mx-sm-15" tile>
         <v-card-title class="pr-10">
+          <v-icon right>content_copy</v-icon>
           فایل‌های ارائه
         </v-card-title>
         <v-divider/>
@@ -29,7 +30,7 @@
           توضیحات
         </v-card-title>
         <v-divider/>
-        <v-card-text class="txt">
+        <v-card-text>
           سخنگوی وزارت امور خارجه کشورمان در پیامی طعنه‌آمیز اعلام کرد رئیس‌جمهور آمریکا روز گذشته به‌گونه‌ای در مجمع
           عمومی سازمان ملل متحد سخنرانی کرده که گویی در یک تجمع انتخاباتی در کشورش مشغول سخنرانی بوده است!
           به گزارش گروه بین‌الملل خبرگزاری تسنیم، سعید خطیب‌زاده سخنگوی وزارت امور خارجه جمهوری اسلامی ایران شامگاه
@@ -44,17 +45,17 @@
     <v-container>
       <v-card class="mx-5 mx-sm-15" tile>
         <v-card-title class="pr-10">
+          <v-icon right>comment</v-icon>
           نظرات
         </v-card-title>
         <v-divider/>
-        <v-card-text class="txt">
+        <v-card-text>
           <v-container>
             <v-card tile>
               <v-card-title>
                 <h5>گورخر رنگین‌کمانی</h5>
               </v-card-title>
-              <v-divider/>
-              <v-card-text class="txt">
+              <v-card-text>
                 خیلی ارائه کصشری بود خدایی خجالت نمیکشید این رو گذاشتید جلو استاد و سه ساعت کصوشر میبافید راجب بهش، خو یه گوسفند میذاشتید تو فیلم میرید واسمون بیشتر یاد میگرفتیم تا با این ارائه شما خو. کیرم تو سر و تهتون. اههه خدافظ.
               </v-card-text>
             </v-card>
@@ -112,7 +113,4 @@ export default {
 </script>
 
 <style scoped>
-.txt {
-  color: black!important;
-}
 </style>
