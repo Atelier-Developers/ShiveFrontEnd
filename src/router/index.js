@@ -8,6 +8,8 @@ import PresentPage from "../views/PresentPage";
 import TeamCreateEdit from "../views/TeamCreateEdit";
 import SubjectManagement from "../views/SubjectManagement";
 import Archive from "../views/Archive";
+import TeamCreate from "../views/TeamCreate";
+import TeamEdit from "../views/TeamEdit";
 
 Vue.use(VueRouter)
 
@@ -38,9 +40,14 @@ const routes = [
         component: PresentPage
     },
     {
-        path: '/team-create-edit',
-        name: 'TeamCreateEdit',
-        component: TeamCreateEdit
+        path: '/team-create',
+        name: 'TeamCreate',
+        component: TeamCreate
+    },
+    {
+        path: '/team-edit/:id',
+        name: 'TeamEdit',
+        component: TeamEdit
     },
     {
         path: '/subject-management',

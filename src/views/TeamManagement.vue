@@ -10,8 +10,7 @@
     <div id="floating-button" class="mb-10">
       <v-btn
           fab
-          @click="sendNewStateToServer"
-          :loading="loading"
+          @click="routeToCreateTeam"
           color="accent"
       >
         <v-icon>add</v-icon>
@@ -32,6 +31,11 @@ export default {
   },
   mounted() {
     this.$store.dispatch('teamModule/setTeam')
+  },
+  methods: {
+    routeToCreateTeam() {
+      this.$router.push({name: 'TeamCreate'});
+    }
   }
 }
 </script>

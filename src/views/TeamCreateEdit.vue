@@ -1,6 +1,6 @@
 <template>
     <div class="mt-5">
-        <SubjectDateChooser :item="item" :subjects="selectableSubjects"></SubjectDateChooser>
+        <SubjectDateChooser :item="presentation" :subjects="allSubjects"/>
         <v-container>
             <v-row>
                 <v-col cols="12" class="col-md-6">
@@ -18,6 +18,12 @@
                     dark
                     large
                     color="primary"
+                    @click="() => actionFunction({
+                    deadline: presentation.deadline,
+                    subject: presentation.subject,
+                    pk: pk,
+                    profiles: teamMembers.map((m) => m.pk)
+                    })"
             >
                 <v-icon>done</v-icon>
             </v-btn>
@@ -33,12 +39,9 @@
 
     export default {
         name: "TeamCreateEdit",
+        props: ['presentation', 'members', 'actionFunction', 'isEdit', 'pk'],
         data() {
             return {
-                item: {
-                    date: '',
-                    subject: ''
-                }
             }
         },
         components: {
@@ -60,10 +63,25 @@
                     onClick: this.removePersonFromTeam,
                     icon: 'remove'
                 }]
+            },
+            allSubjects() {
+                if (this.isEdit) {
+                    return this.selectableSubjects.concat(this.presentation.subject);
+                }
+                else {
+                    return this.selectableSubjects
+                }
             }
         },
         methods: {
-            ...mapActions('teamCreateEditModule', ['addPersonToTeam', 'removePersonFromTeam'])
+            ...mapActions('teamCreateEditModule', ['addPersonToTeam', 'removePersonFromTeam', 'getSelectableSubjects', 'getPending', 'assignTeamMembers'])
+        },
+        mounted() {
+            this.getSelectableSubjects().then(() => {
+                return this.getPending();
+            }).then(() => {
+                return this.assignTeamMembers(this.members);
+            });
         }
     }
 </script>

@@ -9,16 +9,18 @@
             <v-col cols="12">
                 <v-select
                         :items="subjects"
-                        v-model="subject"
+                        v-model="item.subject"
                         label="موضوع"
+                        item-text="title"
+                        item-value="pk"
                         dense
                         outlined
-                ></v-select>
+                />
             </v-col>
         </div>
 
         <div class="row justify-center">
-            <date-picker v-model="date" :clearable="true" label="تاریخ"/>
+            <date-picker v-model="item.deadline" :clearable="true" label="تاریخ" />
         </div>
     </v-card>
 </template>
