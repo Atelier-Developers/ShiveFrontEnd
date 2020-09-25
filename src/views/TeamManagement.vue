@@ -18,7 +18,9 @@ export default {
   components: {TeamList},
   computed: {
     ...mapGetters('teamModule', ['teams']),
-
+  },
+  created () {
+    this.$store.dispatch('teamModule/setTeam')
   }
 }
 </script>

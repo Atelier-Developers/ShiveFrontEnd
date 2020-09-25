@@ -1,134 +1,23 @@
 import axios from 'axios';
+import {TEAMS_LIST} from "../../../network/API";
 
 const state = {
-    teams: [
-        {
-            subject: "مطالب فنی",
-            pk: 4,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-            ],
-        },
-        {
-            pk: 5,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        },
-        {
-            pk: 6,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        },
-        {
-            pk: 4,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-            ],
-        },
-        {
-            pk: 5,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        },
-        {
-            pk: 6,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        },
-        {
-            pk: 4,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-            ],
-        },
-        {
-            pk: 5,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        },
-        {
-            pk: 6,
-            members: [
-                {
-                    pk: 1,
-                    name: 'محمد',
-                    student_no: "923847"
-                },
-                {
-                    pk: 2,
-                    name: 'امیر',
-                    student_no: "213123"
-                }
-            ],
-        }
-    ],
+    teams: []
 };
 
-const mutations = {};
+const mutations = {
+    setTeams (state, teams) {
+        state.teams = teams;
+    }
+};
 
-const actions = {};
+const actions = {
+    async setTeam (context, payload) {
+        let response = axios.get(TEAMS_LIST);
+        console.log(response)
+        await context.commit("setTeams", response.body);
+    }
+};
 
 const getters = {
     teams: (state) => state.teams,
