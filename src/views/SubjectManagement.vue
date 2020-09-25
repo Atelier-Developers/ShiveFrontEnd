@@ -8,7 +8,7 @@
     </v-container>
     <div id="floating-button" class="mb-10">
       <InputFieldDialogButton title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes"
-                              :action="addToSubjects" icon="add">
+                              :action="addToSubjects" :subject="{...subject}" icon="add">
       </InputFieldDialogButton>
     </div>
   </div>
@@ -25,6 +25,9 @@ export default {
   components: {SubjectList, InputFieldDialogButton},
   data() {
     return {
+      subject: {
+        title: '',
+      },
       loading: false
     }
   },
