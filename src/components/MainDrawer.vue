@@ -76,6 +76,13 @@ export default {
             name: "PresentPage"
           }
         },
+        {
+          icon: "archive",
+          title: "آرشیو",
+          to: {
+            name: "Archive"
+          }
+        },
       ]
     }
   },

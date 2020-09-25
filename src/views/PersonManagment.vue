@@ -111,7 +111,7 @@ export default {
 
 <style scoped>
 #floating-button {
-  position: absolute;g
+  position: absolute;
   bottom: 0;
 }
 </style>
