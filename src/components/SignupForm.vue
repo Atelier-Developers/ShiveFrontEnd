@@ -16,6 +16,7 @@
             v-model="user.name"
             label="نام و نام خانوادگی"
             outlined
+            :rules="[v => !!v || 'الزامی']"
             required
         ></v-text-field>
       </v-col>
@@ -24,6 +25,7 @@
             v-model="user.student_no"
             label="شماره دانشجویی"
             type="number"
+            :rules="[v => !!v || 'الزامی']"
             outlined
             required
         ></v-text-field>
@@ -34,6 +36,7 @@
             label="تلفن همراه"
             type="number"
             suffix="+98"
+            :rules="[v => !!v || 'الزامی']"
             outlined
             required
         ></v-text-field>
@@ -43,6 +46,7 @@
             v-model="user.password"
             outlined
             label="رمزعبور"
+            :rules="[v => !!v || 'الزامی']"
             required
             type="password"
         ></v-text-field>
@@ -91,6 +95,8 @@ export default {
       this.$router.push({name: 'Login'})
     },
     signupPerson() {
+      if (!this.$refs.form.validate())
+        return;
       this.loading = true;
       this.signUp(this.user).finally(() => {
         this.loading = false;
