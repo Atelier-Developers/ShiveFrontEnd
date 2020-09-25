@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row v-if="teams.length !== 0">
+    <v-row v-if="teams.length !== 0" class="fill-height">
       <v-col cols="12" class="col-md-4" v-for="team in teams">
-        <TeamList :persons="team.profiles" :title="team.presentation.subject.title"/>
+        <TeamList :team="team"/>
       </v-col>
     </v-row>
   </v-container>
@@ -19,7 +19,7 @@ export default {
   computed: {
     ...mapGetters('teamModule', ['teams']),
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('teamModule/setTeam')
   }
 }

@@ -1,21 +1,27 @@
 import axios from 'axios';
-import {TEAMS_LIST} from "../../../network/API";
+import {TEAMS_DELETE, TEAMS_LIST} from "../../../network/API";
 
 const state = {
     teams: []
 };
 
 const mutations = {
-    setTeams (state, teams) {
+    setTeams(state, teams) {
         state.teams = teams;
+    },
+    deleteTeamFromList(state, id) {
+        state.teams = state.teams.filter((t) => t.pk !== id);
     }
 };
 
 const actions = {
-    async setTeam (context, payload) {
+    async setTeam(context) {
         let response = await axios.get(TEAMS_LIST);
         await context.commit("setTeams", response.data);
-        console.log(state.teams)
+    },
+    async deleteSingleTeam(context, payload) {
+        let response = await axios.delete(TEAMS_DELETE + payload);
+        await context.commit("deleteTeamFromList", payload);
     }
 };
 
