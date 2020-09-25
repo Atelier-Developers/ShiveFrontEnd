@@ -13,9 +13,9 @@ const mutations = {
 
 const actions = {
     async setTeam (context, payload) {
-        let response = axios.get(TEAMS_LIST);
-        console.log(response)
-        await context.commit("setTeams", response.body);
+        let response = await axios.get(TEAMS_LIST);
+        await context.commit("setTeams", response.data);
+        console.log(state.teams)
     }
 };
 
