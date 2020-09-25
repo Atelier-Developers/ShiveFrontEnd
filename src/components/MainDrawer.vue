@@ -5,8 +5,10 @@
       :mobile-breakpoint="960"
       dark
       right
-      mini-variant
-      expand-on-hover
+      v-model="drawer"
+      :temporary="responsive"
+      :mini-variant="!responsive"
+      :expand-on-hover="!responsive"
       clipped
   >
     <v-list>
@@ -45,8 +47,10 @@ import {mapActions} from "vuex";
 
 export default {
   name: "MainDrawer",
+  props: ['responsive'],
   data() {
     return {
+      drawer: false,
       items: [
         {
           icon: "group",
@@ -88,11 +92,11 @@ export default {
   },
   methods: {
     ...mapActions('authModule', ['logout']),
-    logoutUser(){
+    logoutUser() {
       this.logout();
       this.$router.replace({name: "Login"})
-    }
-  }
+    },
+  },
 }
 </script>
 

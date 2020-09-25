@@ -1,6 +1,6 @@
 <template>
   <v-app class="faLang" v-bind:style="{ background: $vuetify.theme.themes.light.background}">
-    <MainDrawer v-if="isAuthenticated"/>
+    <MainDrawer v-if="isAuthenticated" ref="drawer" :responsive="responsive"/>
     <v-app-bar
         app
         clipped-right
@@ -14,7 +14,7 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="responsive" @click="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-main>
@@ -34,11 +34,27 @@ export default {
   name: 'App',
   components: {MainDrawer},
   data: () => ({
-    //
+    responsive: false,
   }),
   computed: {
     ...mapGetters('authModule', ['isAuthenticated']),
-  }
+  },
+  methods: {
+    onResponsiveInverted() {
+      this.responsive = window.innerWidth < 960;
+    },
+    toggleDrawer() {
+      this.$refs.drawer.drawer = !this.$refs.drawer.drawer;
+    }
+  },
+  mounted() {
+    this.onResponsiveInverted();
+    this.$refs.drawer.drawer = !this.responsive
+    window.addEventListener('resize', this.onResponsiveInverted)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResponsiveInverted)
+  },
 };
 </script>
 
