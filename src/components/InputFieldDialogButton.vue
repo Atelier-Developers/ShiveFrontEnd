@@ -4,6 +4,7 @@
                         <v-btn
                                 v-on="on"
                                 v-bind="buttonAttrs"
+                                color="accent"
                         >
                             <v-icon>{{icon}}</v-icon>
                         </v-btn>

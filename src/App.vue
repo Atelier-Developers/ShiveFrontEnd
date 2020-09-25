@@ -44,7 +44,7 @@ export default {
 
 <style lang="scss">
 
-.overlay-left,  .overlay-right,  .overlay-top,  .overlay-bottom   {
+.overlay-left, .overlay-right, .overlay-top, .overlay-bottom {
   background: #fed766 !important;
 }
 
@@ -132,6 +132,11 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+#floating-button {
+  position: fixed;
+  bottom: 0;
 }
 
 </style>

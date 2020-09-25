@@ -20,20 +20,17 @@
       </v-row>
 
     </v-container>
-    <v-btn
-        id="floating-button"
-        fab
-        dark
-        @click="sendNewStateToServer"
-        :loading="loading"
-        large
-        bottom
-        right
-        absolute
-        color="accent"
-    >
-      <v-icon>done</v-icon>
-    </v-btn>
+    <div id="floating-button" class="mb-10">
+      <v-btn
+          fab
+          @click="sendNewStateToServer"
+          :loading="loading"
+          color="accent"
+      >
+        <v-icon>done</v-icon>
+      </v-btn>
+    </div>
+
 
   </div>
 
@@ -110,8 +107,5 @@ export default {
 </script>
 
 <style scoped>
-#floating-button {
-  position: absolute;
-  bottom: 0;
-}
+
 </style>

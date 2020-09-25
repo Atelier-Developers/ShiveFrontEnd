@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="mx-3">
         <v-row justify="center">
             <v-col cols="12" sm="6" class="d-flex justify-center">
                 <v-container>
@@ -7,7 +7,7 @@
                 </v-container>
             </v-col>
         </v-row>
-        <div id="floating-button" class="mb-10 mr-7">
+        <div id="floating-button" class="mb-10">
             <InputFieldDialogButton  title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes" :action="addToSubjects" icon="add" >
             </InputFieldDialogButton>
         </div>
@@ -65,8 +65,4 @@
 </script>
 
 <style scoped>
-    #floating-button {
-        position: absolute;
-        bottom: 0;
-    }
 </style>
