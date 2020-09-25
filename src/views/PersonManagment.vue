@@ -21,12 +21,16 @@
 
     </v-container>
     <v-btn
+        id="floating-button"
         fab
         dark
         @click="sendNewStateToServer"
         :loading="loading"
         large
-        color="primary"
+        bottom
+        right
+        absolute
+        color="accent"
     >
       <v-icon>done</v-icon>
     </v-btn>
@@ -107,7 +111,7 @@ export default {
 
 <style scoped>
 #floating-button {
-  position: absolute;
+  position: absolute;g
   bottom: 0;
 }
 </style>

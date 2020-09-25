@@ -2,8 +2,11 @@
   <v-navigation-drawer
       class="primary"
       app
+      :mobile-breakpoint="960"
       dark
       right
+      mini-variant
+      expand-on-hover
       clipped
   >
     <v-list>
@@ -24,9 +27,15 @@
     </v-list>
 
     <template v-slot:append>
-      <div class="pa-2" @click="logoutUser">
-        <v-btn block>خروج</v-btn>
-      </div>
+      <v-list-item link @click="logoutUser">
+        <v-list-item-icon>
+          <v-icon>logout</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>خروج</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </template>
   </v-navigation-drawer>
 </template>

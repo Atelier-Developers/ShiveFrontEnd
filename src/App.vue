@@ -1,5 +1,5 @@
 <template>
-  <v-app class="faLang">
+  <v-app class="faLang" v-bind:style="{ background: $vuetify.theme.themes.light.background}">
     <MainDrawer v-if="isAuthenticated"/>
     <v-app-bar
         app
@@ -8,16 +8,18 @@
         color="primary"
         dark
     >
+
       <div class="d-flex align-center">
         شیوه ارائه مطالب فنی
       </div>
 
       <v-spacer></v-spacer>
+
     </v-app-bar>
 
-    <v-main class="fill-height">
-      <vue-page-transition  name="overlay-up">
-        <router-view></router-view>
+    <v-main>
+      <vue-page-transition name="overlay-up" class="fill-height">
+        <router-view class="fill-height"></router-view>
       </vue-page-transition>
     </v-main>
   </v-app>
@@ -41,6 +43,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.overlay-left,  .overlay-right,  .overlay-top,  .overlay-bottom   {
+  background: #fed766 !important;
+}
 
 
 @font-face {
