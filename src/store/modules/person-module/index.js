@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_PENDING_PERSON, LOGIN} from "@/network/API";
+import {ACCEPT_PENDING_PERSON, GET_PENDING_PERSON, LOGIN, REJECT_PENDING_PERSON} from "@/network/API";
 
 const state = {
     pending: [],
@@ -26,6 +26,12 @@ const mutations = {
     },
     setPendingPerson(state, items) {
         state.pending = items;
+    },
+    setAllRejectProfile(state) {
+        state.rejected = []
+    },
+    setAllAcceptProfile(state) {
+        state.accepted = []
     }
 };
 
@@ -33,6 +39,14 @@ const actions = {
     async getPendingPersons(context) {
         let response = await axios.get(GET_PENDING_PERSON);
         context.commit("setPendingPerson", response.data);
+    },
+    async acceptPersonProfile(context) {
+        await axios.post(ACCEPT_PENDING_PERSON, state.accepted.map((p) => p.pk));
+        context.commit("setAllAcceptProfile");
+    },
+    async rejectPersonProfile(context) {
+        await axios.post(REJECT_PENDING_PERSON, state.rejected.map((p) => p.pk));
+        context.commit("setAllRejectProfile");
     },
     acceptPerson(context, payload) {
         context.commit("acceptPerson", payload);

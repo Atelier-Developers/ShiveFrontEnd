@@ -20,16 +20,16 @@
       </v-row>
 
     </v-container>
-    <div id="floating-button" class="mb-10 mr-7">
-      <v-btn
-          fab
-          dark
-          large
-          color="primary"
-      >
-        <v-icon>done</v-icon>
-      </v-btn>
-    </div>
+    <v-btn
+        fab
+        dark
+        @click="sendNewStateToServer"
+        :loading="loading"
+        large
+        color="primary"
+    >
+      <v-icon>done</v-icon>
+    </v-btn>
 
   </div>
 
@@ -84,7 +84,16 @@ export default {
   },
   methods: {
     ...
-        mapActions('personModule', ['acceptPerson', 'rejectPerson', 'removeAccepted', 'removeRejected', 'getPendingPersons']),
+        mapActions('personModule', ['acceptPerson', 'rejectPerson', 'removeAccepted', 'removeRejected', 'getPendingPersons', 'acceptPersonProfile', 'rejectPersonProfile']),
+    async sendNewStateToServer() {
+      this.loading = true
+      this.acceptPersonProfile().then(async () => {
+        return this.rejectPersonProfile();
+      }).finally(() => {
+        this.loading = false;
+      });
+    }
+
   },
   mounted() {
     this.loading = true;
