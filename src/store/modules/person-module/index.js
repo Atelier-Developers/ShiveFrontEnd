@@ -1,16 +1,8 @@
 import axios from 'axios';
+import {GET_PENDING_PERSON, LOGIN} from "@/network/API";
 
 const state = {
-    pending: [{
-        pk: 1,
-        name: 'محمد',
-        student_no: "923847"
-    },
-        {
-            pk: 2,
-            name: 'امیر',
-            student_no: "213123"
-        }],
+    pending: [],
     accepted: [],
     rejected: [],
 };
@@ -31,10 +23,17 @@ const mutations = {
     removeRejected(state, item) {
         let value = state.rejected.splice(state.rejected.indexOf(item), 1)[0];
         state.pending.push(value);
+    },
+    setPendingPerson(state, items) {
+        state.pending = items;
     }
 };
 
 const actions = {
+    async getPendingPersons(context) {
+        let response = await axios.get(GET_PENDING_PERSON);
+        context.commit("setPendingPerson", response.data);
+    },
     acceptPerson(context, payload) {
         context.commit("acceptPerson", payload);
     },

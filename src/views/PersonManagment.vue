@@ -5,7 +5,7 @@
         <v-col cols="12" class="row justify-center">
         </v-col>
         <v-col cols="12">
-          <v-row >
+          <v-row>
             <v-col cols="12" class="col-md-4">
               <PersonList :persons="pending" title="در حال انتظار" :actions="pendingActions"/>
             </v-col>
@@ -22,10 +22,10 @@
     </v-container>
     <div id="floating-button" class="mb-10 mr-7">
       <v-btn
-              fab
-              dark
-              large
-              color="primary"
+          fab
+          dark
+          large
+          color="primary"
       >
         <v-icon>done</v-icon>
       </v-btn>
@@ -43,7 +43,9 @@ export default {
   name: "PersonManagement",
   components: {PersonList},
   data() {
-    return {}
+    return {
+      loading: false,
+    }
   },
   computed: {
     ...mapGetters('personModule', ['pending', 'accepted', 'rejected']),
@@ -82,14 +84,21 @@ export default {
   },
   methods: {
     ...
-        mapActions('personModule', ['acceptPerson', 'rejectPerson', 'removeAccepted', 'removeRejected'])
+        mapActions('personModule', ['acceptPerson', 'rejectPerson', 'removeAccepted', 'removeRejected', 'getPendingPersons']),
+  },
+  mounted() {
+    this.loading = true;
+    this.getPendingPersons().finally(() => {
+          this.loading = false;
+        }
+    )
   }
 }
 </script>
 
 <style scoped>
-  #floating-button {
-    position: absolute;
-    bottom: 0;
-  }
+#floating-button {
+  position: absolute;
+  bottom: 0;
+}
 </style>
