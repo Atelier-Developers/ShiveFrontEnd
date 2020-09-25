@@ -59,7 +59,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('subjectModule', ['addToSubjects', 'removeFromSubjects', 'changeOneSubject'])
+    ...mapActions('subjectModule', ['addToSubjects', 'removeFromSubjects', 'changeOneSubject', 'firstInit'])
+  },
+  mounted() {
+    this.firstInit();
   }
 }
 </script>

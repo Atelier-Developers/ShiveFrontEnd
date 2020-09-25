@@ -20,7 +20,6 @@ const mutations = {
 };
 
 const actions = {
-
     async addToSubjects(context, payload) { // todo awaits?
         await axios.post(CREATE_SUBJECT, payload);
         let response = await axios.get(GET_ALL_SUBJECT);
@@ -36,8 +35,11 @@ const actions = {
         await axios.put(UPDATE_SUBJECT + payload, payload);
         let response = await axios.get(GET_ALL_SUBJECT);
         context.commit('setSubjects', response.data)
+    },
+    async firstInit(context){
+        let response = await axios.get(GET_ALL_SUBJECT);
+        context.commit('setSubjects', response.data)
     }
-
 };
 
 const getters = {
