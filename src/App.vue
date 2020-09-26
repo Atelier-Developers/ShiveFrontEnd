@@ -56,16 +56,13 @@ export default {
     this.$refs.drawer.drawer = !this.responsive
     window.addEventListener('resize', this.onResponsiveInverted);
     this.loading = true;
-    console.log(this.$can('delete', 'subject'))
     if (this.isAuthenticated) {
       this.getRole().then(() => {
-        console.log(this.role)
-        this.$ability.update(defineRulesFor(this.role).rules)
-        console.log(this.$can('delete', 'subject'))
+        this.$ability.update(defineRulesFor(this.role).rules);
+        this.loading = false;
       })
     } else {
       this.loading = false;
-
     }
   },
   beforeDestroy() {
