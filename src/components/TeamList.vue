@@ -18,7 +18,7 @@
             >
                 <v-icon>create</v-icon>
             </v-btn>
-            <v-dialog v-model="dialog" persistent max-width="290">
+            <v-dialog v-model="dialog" max-width="290">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                             color="error"
@@ -65,6 +65,7 @@
                 this.loading = true;
                 this.deleteSingleTeam(this.team.pk).finally(() => {
                     this.loading = false;
+                    this.dialog = false
                 })
             },
             routeToEdit() {

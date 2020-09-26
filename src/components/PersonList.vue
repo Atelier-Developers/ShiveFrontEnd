@@ -1,5 +1,5 @@
 <template>
-  <v-card tile>
+  <v-card tile :loading="loading" :disabled="loading">
     <v-card-title class="justify-center">
       {{ title }}
     </v-card-title>
@@ -20,7 +20,7 @@ import PersonTile from "@/components/PersonTile";
 export default {
   name: "PersonList",
   components: {PersonTile},
-  props: ['persons', 'title', 'actions']
+  props: ['persons', 'title', 'actions', 'loading']
 }
 </script>
 
