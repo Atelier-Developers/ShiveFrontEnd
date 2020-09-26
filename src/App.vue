@@ -17,7 +17,7 @@
       <v-app-bar-nav-icon v-if="responsive" @click="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-main>
+    <v-main v-if="!loading">
       <vue-page-transition name="overlay-up" class="fill-height">
         <router-view class="fill-height"></router-view>
       </vue-page-transition>
@@ -28,18 +28,23 @@
 <script>
 
 import MainDrawer from "@/components/MainDrawer";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import defineRulesFor from "@/services/ability";
 
 export default {
   name: 'App',
   components: {MainDrawer},
   data: () => ({
     responsive: false,
+    loading: false,
   }),
   computed: {
     ...mapGetters('authModule', ['isAuthenticated']),
+    ...mapGetters('roleModule', ['role']),
+
   },
   methods: {
+    ...mapActions('roleModule', ['getRole']),
     onResponsiveInverted() {
       this.responsive = window.innerWidth < 960;
     },
@@ -50,7 +55,15 @@ export default {
   mounted() {
     this.onResponsiveInverted();
     this.$refs.drawer.drawer = !this.responsive
-    window.addEventListener('resize', this.onResponsiveInverted)
+    window.addEventListener('resize', this.onResponsiveInverted);
+    this.loading = true;
+    console.log(this.$can('delete', 'subject'))
+    this.getRole().then(() => {
+      console.log(this.role)
+      this.$ability.update(defineRulesFor(this.role).rules)
+      console.log(this.$can('delete', 'subject'))
+      this.loading = false;
+    })
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResponsiveInverted)

@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@casl/ability": "^4.1.6",
+    "@casl/vue": "^1.1.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "jalali-moment": "^3.3.8",
