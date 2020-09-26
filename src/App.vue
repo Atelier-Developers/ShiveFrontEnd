@@ -1,6 +1,6 @@
 <template>
   <v-app class="faLang" v-bind:style="{ background: $vuetify.theme.themes.light.background}">
-    <MainDrawer v-if="isAuthenticated" ref="drawer" :responsive="responsive"/>
+    <MainDrawer ref="drawer" :responsive="responsive"/>
     <v-app-bar
         app
         clipped-right
@@ -39,9 +39,8 @@ export default {
     loading: false,
   }),
   computed: {
-    ...mapGetters('authModule', ['isAuthenticated']),
     ...mapGetters('roleModule', ['role']),
-
+    ...mapGetters('authModule', ['isAuthenticated']),
   },
   methods: {
     ...mapActions('roleModule', ['getRole']),
@@ -58,12 +57,16 @@ export default {
     window.addEventListener('resize', this.onResponsiveInverted);
     this.loading = true;
     console.log(this.$can('delete', 'subject'))
-    this.getRole().then(() => {
-      console.log(this.role)
-      this.$ability.update(defineRulesFor(this.role).rules)
-      console.log(this.$can('delete', 'subject'))
+    if (this.isAuthenticated) {
+      this.getRole().then(() => {
+        console.log(this.role)
+        this.$ability.update(defineRulesFor(this.role).rules)
+        console.log(this.$can('delete', 'subject'))
+      })
+    } else {
       this.loading = false;
-    })
+
+    }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResponsiveInverted)
