@@ -10,6 +10,7 @@ import SubjectManagement from "../views/SubjectManagement";
 import Archive from "../views/Archive";
 import TeamCreate from "../views/TeamCreate";
 import TeamEdit from "../views/TeamEdit";
+import TeamPresentPage from "../views/TeamPresentPage";
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
         path: '/present-page',
         name: 'PresentPage',
         component: PresentPage
+    },
+    {
+        path: '/team-present-page',
+        name: 'TeamPresentPage',
+        component: TeamPresentPage
     },
     {
         path: '/team-create',

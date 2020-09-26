@@ -1,5 +1,5 @@
 <template>
-    <div class>
+    <div>
         <v-container>
             <v-row justify="center">
                 <h1>کلاس‌های مجازی</h1>
@@ -17,7 +17,7 @@
                     <v-container>
                         <v-row>
                             <v-col sm="6" md="4" lg="3" v-for="file in files" :key="file.id">
-                                <FileTile :name="file.name" :type="file.type"/>
+                                <FileTile :is-deletable="false" :name="file.name" :type="file.type"/>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -97,7 +97,7 @@
                                 امیر مسعود باغی
                             </v-subheader>
                             <v-container>
-                                <v-textarea label="کامنت جدید..." rows="2">
+                                <v-textarea outlined label="کامنت جدید..." rows="4">
                                 </v-textarea>
                             </v-container>
                             <v-card-actions class="justify-center">
@@ -147,7 +147,7 @@
                     <v-card-text>
                         <v-row>
                             <v-col>
-                                    <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>
+                                <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>
                             </v-col>
                         </v-row>
                     </v-card-text>
@@ -165,6 +165,7 @@
 <script>
     import FileTile from "../components/FileTile";
     import VideoPlayer from "../components/VideoPlayer";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "PresentPage",
@@ -207,7 +208,17 @@
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
             }
+        },
+        computed: {
+            ...mapGetters('presentationModule', ['currentPresentation'])
+        },
+        methods: {
+            ...mapActions('presentationModule', ['getCurrentPresentation']),
+        },
+        mounted() {
+            this.getCurrentPresentation();
         }
+
     }
 </script>
 
