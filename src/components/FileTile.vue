@@ -14,6 +14,9 @@
                 <v-btn color="primary" fab small>
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
+                <v-btn color="red" fab small>
+                    <v-icon color="accent">delete</v-icon>
+                </v-btn>
             </v-row>
         </v-card-text>
     </v-card>
