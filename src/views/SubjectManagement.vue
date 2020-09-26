@@ -12,7 +12,7 @@
       </v-row>
     </v-container>
     <div id="floating-button" class="mb-10">
-      <InputFieldDialogButton title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes"
+      <InputFieldDialogButton v-if="$can('create', 'subject')" title="موضوع جدید" input-place-holder="تیتر" :button-attrs="addSubjectButtonAttributes"
                               :action="addToSubjects" :subject="{...subject}" icon="add">
       </InputFieldDialogButton>
     </div>
@@ -46,6 +46,7 @@ export default {
           icon: 'edit',
           isEdit: true,
           onClick: this.changeOneSubject,
+          permission: this.$can('edit', 'subject'),
           dialog: {
             buttonAttrs: {
               icon: true,
@@ -58,6 +59,7 @@ export default {
         {
           icon: 'delete',
           onClick: this.removeFromSubjects,
+          permission: this.$can('delete', 'subject'),
           isEdit: false,
           color: 'red'
         },
