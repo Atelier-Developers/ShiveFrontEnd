@@ -56,7 +56,14 @@ export default {
           onClick: this.removeFromSubjects,
           permission: this.$can('delete', 'subject'),
           isEdit: false,
-          color: 'red'
+          color: 'red',
+          dialog: {
+            buttonAttrs: {
+              icon: true,
+              color: 'primary'
+            },
+            title: 'ویرایش موضوع'
+          }
         },
 
       ]
