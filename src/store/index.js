@@ -5,6 +5,7 @@ import teamModule from './modules/team-module'
 import teamCreateEditModule from './modules/team-create-edit-module'
 import authModule from './modules/authModule'
 import subjectModule from './modules/subject-module'
+import roleModule from './modules/role-module'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         teamModule,
         teamCreateEditModule,
         authModule,
-        subjectModule
+        subjectModule,
+        roleModule
     }
 })

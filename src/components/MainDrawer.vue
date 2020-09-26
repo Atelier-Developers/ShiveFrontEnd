@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+      v-if="isAuthenticated"
       class="primary"
       app
       :mobile-breakpoint="960"
@@ -43,11 +44,14 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "MainDrawer",
   props: ['responsive'],
+  computed: {
+    ...mapGetters('authModule', ['isAuthenticated']),
+  },
   data() {
     return {
       drawer: false,

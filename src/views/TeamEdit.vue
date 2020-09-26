@@ -9,6 +9,7 @@
         name: "TeamEdit",
         data() {
             return {
+                loading: false,
                 team: {
 
                 }

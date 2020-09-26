@@ -1,10 +1,11 @@
 <template>
-    <TeamCreateEdit :presentation="presentation" :members="members" :action-function="sendTeamMembers" />
+    <TeamCreateEdit :presentation="presentation" :members="members" :action-function="sendTeamMembers"/>
 </template>
 
 <script>
     import TeamCreateEdit from "./TeamCreateEdit";
     import {mapActions} from "vuex";
+
     export default {
         name: "TeamCreate",
         components: {TeamCreateEdit},

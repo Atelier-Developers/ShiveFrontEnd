@@ -14,7 +14,7 @@ const mutations = {
 const actions = {
     async login(context, payload) {
         let response = await axios.post(LOGIN, payload);
-        await context.commit("setToken", "Token " + response.data.token);
+        context.commit("setToken", "Token " + response.data.token);
         localStorage.setItem("ShiveToken", state.token);
         axios.defaults.headers.common['Authorization'] = state.token;
     },
@@ -30,7 +30,7 @@ const actions = {
 
 const getters = {
     isAuthenticated: (state) => {
-        return !!state.token
+        return state.token !== ""
     }
 };
 
