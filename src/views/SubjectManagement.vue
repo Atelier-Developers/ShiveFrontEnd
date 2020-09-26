@@ -2,12 +2,7 @@
   <div class="mx-3">
     <v-container>
       <v-row justify="center">
-        <v-skeleton-loader
-                style="max-width: 700px; width: 90vw"
-                v-if="pageLoading"
-                type="card"
-                :loading="true" />
-        <SubjectList v-else style="max-width: 700px; width: 90vw" title="موضوعات" :subjects="subjects"
+        <SubjectList :loading="pageLoading" style="max-width: 700px; width: 90vw" title="موضوعات" :subjects="subjects"
                      :actions="editSubjectActions"/>
       </v-row>
     </v-container>
