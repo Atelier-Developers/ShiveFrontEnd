@@ -2,24 +2,12 @@
     <div class="mt-5">
         <SubjectDateChooser :item="presentation" :subjects="allSubjects"/>
         <v-container>
-            <v-row v-if="pageLoading">
+            <v-row>
                 <v-col cols="12" class="col-md-6">
-                    <v-skeleton-loader
-                            type="card"
-                            :loading="true" />
+                    <PersonList :loading="pageLoading" title="بدون تیم" :persons="pending" :actions="addToTeamAction"/>
                 </v-col>
                 <v-col cols="12" class="col-md-6">
-                    <v-skeleton-loader
-                            type="card"
-                            :loading="true" />
-                </v-col>
-            </v-row>
-            <v-row v-else>
-                <v-col cols="12" class="col-md-6">
-                    <PersonList title="بدون تیم" :persons="pending" :actions="addToTeamAction"/>
-                </v-col>
-                <v-col cols="12" class="col-md-6">
-                    <PersonList title="تیم" :persons="teamMembers" :actions="removeFromTeamAction"/>
+                    <PersonList :loading="pageLoading" title="تیم" :persons="teamMembers" :actions="removeFromTeamAction"/>
                 </v-col>
             </v-row>
         </v-container>
