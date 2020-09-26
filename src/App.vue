@@ -75,6 +75,7 @@ export default {
 
 .overlay-left, .overlay-right, .overlay-top, .overlay-bottom {
   background: #fed766 !important;
+  z-index: 2;
 }
 
 

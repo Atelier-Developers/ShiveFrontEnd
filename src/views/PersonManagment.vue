@@ -1,21 +1,19 @@
 <template>
   <div class="mx-3">
     <v-container>
-      <CardLoadingSkeleton v-if="pageLoading" />
-
-      <v-row v-else dense>
+      <v-row dense>
         <v-col cols="12" class="row justify-center">
         </v-col>
         <v-col cols="12">
           <v-row>
             <v-col cols="12" class="col-md-4">
-              <PersonList :persons="pending" title="در حال انتظار" :actions="pendingActions"/>
+              <PersonList :persons="pending" :loading="pageLoading" title="در حال انتظار" :actions="pendingActions"/>
             </v-col>
             <v-col cols="12" class="col-md-4">
-              <PersonList :persons="accepted" title="پذیرفته شده" :actions="acceptedActions"/>
+              <PersonList :persons="accepted" :loading="pageLoading" title="پذیرفته شده" :actions="acceptedActions"/>
             </v-col>
             <v-col cols="12" class="col-md-4">
-              <PersonList :persons="rejected" title="رد شده" :actions="rejectActions"/>
+              <PersonList :persons="rejected" :loading="pageLoading" title="رد شده" :actions="rejectActions"/>
             </v-col>
           </v-row>
         </v-col>

@@ -2,7 +2,7 @@
     <div class="mx-3">
         <v-container>
             <CardLoadingSkeleton v-if="pageLoading" />
-            <v-row v-if="teams.length !== 0" class="fill-height">
+            <v-row v-else-if="teams.length !== 0" class="fill-height">
                 <v-col cols="12" class="col-md-4" v-for="team in teams">
                     <TeamList :team="team"/>
 

@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card :loading="loading" :disabled="loading">
         <v-card-title class="row justify-center"><h3>{{title}}</h3></v-card-title>
         <v-divider></v-divider>
         <v-list>
@@ -13,7 +13,7 @@
     export default {
         name: "SubjectList",
         components: {SubjectTile},
-        props: ['subjects', 'title', 'actions']
+        props: ['subjects', 'title', 'actions', 'loading']
     }
 </script>
 
