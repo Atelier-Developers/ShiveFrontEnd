@@ -1,7 +1,9 @@
 <template>
   <div class="mx-3">
     <v-container>
-      <v-row dense>
+      <CardLoadingSkeleton v-if="pageLoading" />
+
+      <v-row v-else dense>
         <v-col cols="12" class="row justify-center">
         </v-col>
         <v-col cols="12">
@@ -22,16 +24,14 @@
     </v-container>
     <div id="floating-button" class="mb-10">
       <v-btn
-          fab
-          @click="sendNewStateToServer"
-          :loading="loading"
-          color="accent"
+              fab
+              @click="sendNewStateToServer"
+              :loading="loading"
+              color="accent"
       >
         <v-icon>done</v-icon>
       </v-btn>
     </div>
-
-
   </div>
 
 </template>
@@ -39,13 +39,16 @@
 <script>
 import PersonList from "@/components/PersonList";
 import {mapActions, mapGetters} from "vuex";
+import Spinner from "../components/Spinner";
+import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
 
 export default {
   name: "PersonManagement",
-  components: {PersonList},
+  components: {CardLoadingSkeleton, Spinner, PersonList},
   data() {
     return {
       loading: false,
+      pageLoading: false,
     }
   },
   computed: {
@@ -97,9 +100,9 @@ export default {
 
   },
   mounted() {
-    this.loading = true;
+    this.pageLoading = true;
     this.getPendingPersons().finally(() => {
-          this.loading = false;
+          this.pageLoading = false;
         }
     )
   }

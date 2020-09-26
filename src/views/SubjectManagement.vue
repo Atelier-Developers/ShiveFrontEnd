@@ -2,7 +2,12 @@
   <div class="mx-3">
     <v-container>
       <v-row justify="center">
-        <SubjectList style="max-width: 700px; width: 90vw" title="موضوعات" :subjects="subjects"
+        <v-skeleton-loader
+                style="max-width: 700px; width: 90vw"
+                v-if="pageLoading"
+                type="card"
+                :loading="true" />
+        <SubjectList v-else style="max-width: 700px; width: 90vw" title="موضوعات" :subjects="subjects"
                      :actions="editSubjectActions"/>
       </v-row>
     </v-container>
@@ -19,16 +24,18 @@
 import SubjectList from "../components/SubjectList";
 import InputFieldDialogButton from "../components/InputFieldDialogButton";
 import {mapActions, mapGetters} from "vuex";
+import Spinner from "../components/Spinner";
 
 export default {
   name: 'Home',
-  components: {SubjectList, InputFieldDialogButton},
+  components: {Spinner, SubjectList, InputFieldDialogButton},
   data() {
     return {
       subject: {
         title: '',
       },
-      loading: false
+      loading: false,
+      pageLoading: false,
     }
   },
   computed: {
@@ -70,8 +77,8 @@ export default {
     ...mapActions('subjectModule', ['addToSubjects', 'removeFromSubjects', 'changeOneSubject', 'getSubjects'])
   },
   mounted() {
-    this.loading = true;
-    this.getSubjects().finally(() => {this.loading = false;});
+    this.pageLoading = true;
+    this.getSubjects().finally(() => {this.pageLoading = false;});
   }
 }
 </script>
