@@ -2,8 +2,7 @@
     <div>
         <v-container>
             <v-row justify="center">
-                <!--                <h1>{{teamPresentation.subject.title}}</h1>-->
-                <h1>adjf;kj</h1>
+                <h1>{{teamPresentation.subject.title}}</h1>
             </v-row>
             <!--            <v-row justify="center">-->
             <!--                <h3 class="subtitle-1">توسط</h3>-->

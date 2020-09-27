@@ -7,6 +7,9 @@
         </div>
         <v-divider/>
         <v-card-text>
+            {{file.profile.name}}
+        </v-card-text>
+        <v-card-text>
             <v-row justify="space-around" class="mx-2">
                 <v-btn color="primary" fab small>
                     <v-icon color="accent">play_arrow</v-icon>
