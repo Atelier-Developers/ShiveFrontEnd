@@ -1,5 +1,11 @@
 import axios from 'axios';
-import {GET_PRESENTATION_CURRENT, GET_PRESENTATION_TEAM} from "../../../network/API";
+import {
+    GET_PRESENTATION_CURRENT,
+    GET_PRESENTATION_TEAM,
+    POST_COMMENT,
+    PRESENTATION_FILE_UPLOAD,
+    UPDATE_PRESENTATION
+} from "../../../network/API";
 
 const state = {
     teamPresentation: {},
@@ -36,14 +42,22 @@ const actions = {
         let response = await axios.get(GET_PRESENTATION_CURRENT);
         context.commit('setCurrentPresentation', response.data[0]);
     },
-    postCommentForCurrentPresentation(context, payload) {
-        context.commit('addCommentToCurrentPresentation', payload);
+    async postCommentForCurrentPresentation(context, payload) {
+        let response = await axios.post(POST_COMMENT + payload.pk, payload.comment);
     },
-    uploadFileForTeamPresentation(context, payload) {
-        context.commit('addPostToTeamPresentation', payload);
+    async uploadFileForTeamPresentation(context, payload) {
+        const formData = new FormData();
+        formData.append('file',payload.file);
+        formData.append('name', payload.name);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        let response = await axios.post(PRESENTATION_FILE_UPLOAD + payload.pk, formData, config);
     },
-    setDescriptionForTeamPresentation(context, payload) {
-        context.commit('setTeamPresentationDescription', payload);
+    async setDescriptionForTeamPresentation(context, payload) {
+        let response = await axios.put(UPDATE_PRESENTATION + payload.pk, payload.description);
     },
     deleteFileFromTeamPresentation(context, payload) {
         context.commit('removeFileFromTeamPresentation', payload)

@@ -11,10 +11,10 @@
                 <v-btn color="primary" fab small>
                     <v-icon color="accent">play_arrow</v-icon>
                 </v-btn>
-                <v-btn color="primary" fab small>
+                <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
-                <v-btn v-show="isDeletable" color="red" fab small @click="() => deleteAction(file)">
+                <v-btn v-if="isDeletable" color="red" fab small @click="() => deleteAction(file)">
                     <v-icon color="accent">delete</v-icon>
                 </v-btn>
             </v-row>

@@ -18,3 +18,6 @@ export const GET_SINGLE_TEAM = baseUrl + "team/list/";
 export const GET_ROLE = baseUrl + "profile/role/";
 export const GET_PRESENTATION_CURRENT = baseUrl + "presentation/current/";
 export const GET_PRESENTATION_TEAM = baseUrl + "profile/presentation/";
+export const POST_COMMENT = baseUrl + "presentation/comment/create/";
+export const UPDATE_PRESENTATION = baseUrl + "presentation/update/";
+export const PRESENTATION_FILE_UPLOAD = baseUrl + "presentation/upload/";
