@@ -30,11 +30,11 @@ const mutations = {
 const actions = {
     async getTeamPresentation(context,) {
         let response = await axios.get(GET_PRESENTATION_TEAM);
-        context.commit('setTeamPresentation', response.data);
+        context.commit('setTeamPresentation', response.data[0]);
     },
     async getCurrentPresentation(context,) {
         let response = await axios.get(GET_PRESENTATION_CURRENT);
-        context.commit('setCurrentPresentation', response.data);
+        context.commit('setCurrentPresentation', response.data[0]);
     },
     postCommentForCurrentPresentation(context, payload) {
         context.commit('addCommentToCurrentPresentation', payload);
