@@ -5,9 +5,10 @@
             <v-row v-else-if="teams.length !== 0" class="fill-height">
                 <v-col cols="12" class="col-md-4" v-for="team in teams">
                     <TeamList :team="team"/>
-
                 </v-col>
             </v-row>
+
+            <EmptyState v-else class="fill-height" />
         </v-container>
         <div id="floating-button" class="mb-10">
             <v-btn
@@ -26,10 +27,11 @@
     import TeamList from "@/components/TeamList";
     import Spinner from "../components/Spinner";
     import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
+    import EmptyState from "../components/EmptyState";
 
     export default {
         name: "TeamManagement",
-        components: {CardLoadingSkeleton, Spinner, TeamList},
+        components: {EmptyState, CardLoadingSkeleton, Spinner, TeamList},
         computed: {
             ...mapGetters('teamModule', ['teams']),
         },

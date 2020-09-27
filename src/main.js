@@ -8,6 +8,7 @@ import axios from 'axios'
 import VuePageTransition from 'vue-page-transition'
 import { abilitiesPlugin } from '@casl/vue';
 import ability from './services/ability';
+import ReadMore from 'vue-read-more';
 
 
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ if (token) {
 }
 Vue.use(VuePageTransition);
 Vue.use(abilitiesPlugin, ability(''));
+Vue.use(ReadMore);
 
 new Vue({
     router,

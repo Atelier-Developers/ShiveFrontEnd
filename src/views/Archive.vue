@@ -6,7 +6,7 @@
           سال:
           <v-select
               v-model="selected_year"
-              :items="years_item"
+              :items="semesterYears"
               solo
           />
         </v-col>
@@ -34,11 +34,23 @@
 
 <script>
 import TeamPersonTile from "../components/TeamPersonTile";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "Archive",
   components: {TeamPersonTile},
   props: [],
+  computed: {
+    ...mapGetters('archiveModule', ['semesters', 'presentations']),
+    semesterYears() {
+      let semYears = [];
+      this.semesters.forEach((semYear) => {
+        semYears.push(semYear.year);
+      })
+
+      return semYears;
+    }
+  },
   data() {
     return {
       years_item: ['همه', 96, 97, 98],
@@ -156,6 +168,16 @@ export default {
         },
       ]
     }
+  },
+
+  methods: {
+    ...mapActions('archiveModule', ['getSemesters'])
+  },
+
+  mounted() {
+    this.getSemesters().then(() => {
+
+    })
   }
 }
 </script>
