@@ -12,8 +12,8 @@ const mutations = {
         state.semesters = payload;
     },
 
-    setSemesters(state, payload) {
-        state.semesters = payload;
+    setPresentations(state, payload) {
+        state.presentations = payload;
     },
 };
 
@@ -23,8 +23,8 @@ const actions = {
         context.commit("setSemesters", response.data);
     },
 
-    async getPresentations(context) {
-        let response = await axios.get(GET_PRESENTATIONS);
+    async getPresentations(context, id) {
+        let response = await axios.get(GET_PRESENTATIONS + id);
         context.commit("setPresentations", response.data);
     },
 };

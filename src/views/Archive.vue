@@ -6,7 +6,10 @@
           سال:
           <v-select
               v-model="selected_year"
-              :items="semesterYears"
+              :items="semesters"
+              item-text="year"
+              item-value="id"
+              @input="(semId) => getSemPresentations(semId)"
               solo
           />
         </v-col>
@@ -14,15 +17,15 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" class="col-md-4" v-for="project in archive_projects"
-               v-if="selected_year === 'همه' || project.year === selected_year">
+        <v-col cols="12" class="col-md-4" v-for="project in presentations"
+               >
           <v-card>
-            <v-card-title>{{ project.title }}</v-card-title>
-            <v-card-subtitle>سال {{ project.year }}</v-card-subtitle>
+            <v-card-title v-if="project.subject !== null">{{ project.subject.title }}</v-card-title>
+            <v-card-subtitle v-if="project.deadline !== null">سال {{ project.deadline }}</v-card-subtitle>
             <v-divider/>
             <v-card-text>
-              <template v-if="project.members.length > 0">
-                <TeamPersonTile v-for="person in project.members" :person="person"/>
+              <template v-if="project.team.length > 0">
+                <TeamPersonTile v-for="person in project.team.profiles" :person="person"/>
               </template>
             </v-card-text>
           </v-card>
@@ -54,7 +57,7 @@ export default {
   data() {
     return {
       years_item: ['همه', 96, 97, 98],
-      selected_year: 'همه',
+      selected_year: null,
       archive_projects: [
         {
           title: "اعداد اول",
@@ -171,12 +174,20 @@ export default {
   },
 
   methods: {
-    ...mapActions('archiveModule', ['getSemesters'])
+    ...mapActions('archiveModule', ['getSemesters', 'getPresentations']),
+
+    getSemPresentations(semesterId) {
+      console.log(semesterId);
+      this.getPresentations(semesterId).then(() => {
+      })
+    }
   },
 
   mounted() {
     this.getSemesters().then(() => {
-
+      this.selected_year = this.semesters[0].year
+      this.getPresentations(this.semesters[0].id).then(() => {
+      })
     })
   }
 }
