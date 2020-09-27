@@ -3,6 +3,7 @@
             ref="form"
             v-model="valid"
             lazy-validation
+            @submit.prevent="signupPerson"
             class="py-5 px-5"
     >
         <v-row justify="center" no-gutters>
@@ -57,7 +58,7 @@
                     :disabled="!valid"
                     color="primary"
                     class="px-10"
-                    @click="signupPerson"
+                    type="submit"
                     :loading="loading"
                     large
             >
