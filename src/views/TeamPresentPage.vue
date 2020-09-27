@@ -122,7 +122,7 @@
                     v-model="fileUploadDialog"
                     max-width="570"
             >
-                <v-card>
+                <v-card :loading="fileUploadLoading" :disabled="fileUploadLoading">
                     <v-card-title>
                         <span class="headline">آپلود فایل جدید</span>
                     </v-card-title>
@@ -139,7 +139,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="fileUploadDialog = false">انصراف</v-btn>
-                        <v-btn color="blue darken-1" text @click="() => uploadFile(item.file, item.name)">تایید</v-btn>
+                        <v-btn color="blue darken-1" text @click="handleFileUpload ">تایید</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -165,6 +165,7 @@
                 },
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
+                fileUploadLoading: false,
             }
         },
         computed: {
@@ -172,9 +173,21 @@
         },
         methods: {
             ...mapActions('presentationModule', ['getTeamPresentation', 'uploadFileForTeamPresentation', 'setDescriptionForTeamPresentation', 'deleteFileFromTeamPresentation']),
+            handleFileUpload() {
+                this.fileUploadLoading = true;
+                this.uploadFile(this.item.file, this.item.name).then(() => {
+                    this.fileUploadLoading = false;
+                    this.fileUploadDialog = false;
+                })
+            },
             uploadFile(file, name) {
-                this.fileUploadDialog = false;
-                this.uploadFileForTeamPresentation({pk: this.teamPresentation.pk, file: file, name: name}).then(() => {
+                return this.uploadFileForTeamPresentation({
+                    pk: this.teamPresentation.pk,
+                    file: file,
+                    name: name
+                }).then(() => {
+                    return this.getTeamPresentation();
+                }).then(() => {
                     this.item.file = '';
                 });
             },
@@ -188,8 +201,10 @@
                     this.getTeamPresentation();
                 });
             },
-            deleteFile(file) {
-                this.deleteFileFromTeamPresentation(file);
+            deleteFile(id) {
+                return this.deleteFileFromTeamPresentation(id).then(() => {
+                    return this.getTeamPresentation();
+                });
             }
         },
         mounted() {
