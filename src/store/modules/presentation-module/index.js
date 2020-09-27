@@ -11,6 +11,7 @@ import {
 const state = {
     teamPresentation: {},
     currentPresentation: {},
+    // archivedPresentation: {},
 };
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
     setCurrentPresentation(state, item) {
         state.currentPresentation = item;
     },
+    // setArchivedPresentation(state, item){
+    //     state.archivedPresentation = item;
+    // },
     addCommentToCurrentPresentation(state, item) {
         state.currentPresentation.comments.push(item);
     },
@@ -54,7 +58,7 @@ const actions = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
-        }
+        };
         let response = await axios.post(PRESENTATION_FILE_UPLOAD + payload.pk, formData, config);
     },
     async setDescriptionForTeamPresentation(context, payload) {
@@ -63,7 +67,11 @@ const actions = {
     async deleteFileFromTeamPresentation(context, payload) {
         await axios.delete(DELETE_FILE_UPLOAD + payload);
         context.commit('removeFileFromTeamPresentation', payload)
-    }
+    },
+    // async getArchivedPresentation(context, payload) {
+    //     let response = await axios.get(GET_PRESENTATION_CURRENT + payload.pk);
+    //     context.commit('setArchivedPresentation', response.data[0]);
+    // }
 };
 
 const getters = {

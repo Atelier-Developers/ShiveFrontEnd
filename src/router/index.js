@@ -12,6 +12,7 @@ import TeamCreate from "../views/TeamCreate";
 import TeamEdit from "../views/TeamEdit";
 import Announcement from "../views/Announcement";
 import TeamPresentPage from "../views/TeamPresentPage";
+import ArchivedPresentationPage from "../views/ArchivedPresentationPage";
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,11 @@ const routes = [
         path: '/subject-management',
         name: 'SubjectManagement',
         component: SubjectManagement
+    },
+    {
+        path: '/archived-presentation-page',
+        name: 'ArchivedPresentationPage',
+        component:ArchivedPresentationPage
     },
     {
         path: '/archive',

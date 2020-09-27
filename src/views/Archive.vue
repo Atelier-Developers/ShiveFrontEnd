@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col cols="12" class="col-md-4">
-                    سال:
+                    <h3>ترم:</h3>
                     <v-select
                             v-model="selected_year"
                             :items="semesters"
@@ -21,11 +21,15 @@
                 >
                     <v-card>
                         <v-card-title v-if="project.subject !== null">{{ project.subject.title }}</v-card-title>
-                        <v-card-subtitle v-if="project.deadline !== null">سال {{ project.deadline }}</v-card-subtitle>
+                        <v-card-subtitle v-if="project.deadline !== null">{{ project.deadline }}</v-card-subtitle>
                         <v-divider/>
-                        <div>
-                            <TeamPersonTile v-for="person in project.team[0].profiles" :key="person.pk" :person="person"/>
-                        </div>
+                        <TeamPersonTile v-for="person in project.team[0].profiles" :key="person.pk"
+                                        :person="person"/>
+                        <v-card-actions class="justify-center">
+                            <v-btn color="primary"  @click="() => routeToArchivedPresentation(project)" text rounded>
+                                مشاهده
+                            </v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -47,7 +51,7 @@
                 let semYears = [];
                 this.semesters.forEach((semYear) => {
                     semYears.push(semYear.year);
-                })
+                });
 
                 return semYears;
             }
@@ -56,135 +60,26 @@
             return {
                 years_item: ['همه', 96, 97, 98],
                 selected_year: null,
-                archive_projects: [
-                    {
-                        title: "اعداد اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعداد دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعشار اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 97
-                    },
-                    {
-                        title: "اعشار دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 98
-                    },
-
-                    {
-                        title: "اعداد اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعداد دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعشار اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 97
-                    },
-                    {
-                        title: "اعشار دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 98
-                    },
-
-                    {
-                        title: "اعداد اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعداد دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 96
-                    },
-                    {
-                        title: "اعشار اول",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 97
-                    },
-                    {
-                        title: "اعشار دوم",
-                        members: [
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                            {name: 'علی', student_no: "9732507"},
-                        ],
-                        year: 98
-                    },
-                ]
+                archive_projects: [],
             }
         },
 
         methods: {
-            ...mapActions('archiveModule', ['getSemesters', 'getPresentations']),
+            ...mapActions('archiveModule', ['getSemesters', 'getPresentations', 'resetPresentations']),
 
             getSemPresentations(semesterId) {
                 console.log(semesterId);
                 this.getPresentations(semesterId).then(() => {
                 })
+            },
+            routeToArchivedPresentation(presentation) {
+                this.$router.push({name: 'ArchivedPresentationPage', params: {presentation: presentation}});
             }
         },
 
         mounted() {
-            console.log("")
             this.getSemesters().then(() => {
-                this.selected_year = this.semesters[0].year
+                this.selected_year = this.semesters[0];
                 this.getPresentations(this.semesters[0].id).then(() => {
                 })
             })

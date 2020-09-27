@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {ACCEPT_PENDING_PERSON, GET_PENDING_PERSON, LOGIN, REJECT_PENDING_PERSON} from "@/network/API";
 import {GET_PRESENTATIONS, GET_SEMESTERS} from "../../../network/API";
+import moment from "jalali-moment";
 
 const state = {
     semesters: [],
@@ -25,6 +26,9 @@ const actions = {
 
     async getPresentations(context, id) {
         let response = await axios.get(GET_PRESENTATIONS + id);
+        response.data.forEach((p) => {
+            p.deadline = moment(p.deadline, 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
+        });
         context.commit("setPresentations", response.data);
     },
 };
