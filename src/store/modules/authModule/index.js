@@ -19,7 +19,16 @@ const actions = {
         axios.defaults.headers.common['Authorization'] = state.token;
     },
     async signUp(context, payload) {
-        let response = await axios.post(SIGNUP, payload);
+        try {
+            let response = await axios.post(SIGNUP, payload);
+        } catch (e) {
+            if (e.response.status === 409){
+                throw Error("قبلا ثبت نام شده است!");
+            }
+            else if (e.response.status >= 500){
+                throw Error("خطا در برقزاری ارتباط با سرور!")
+            }
+        }
     },
     logout(context) {
         axios.defaults.headers.common['Authorization'] = '';

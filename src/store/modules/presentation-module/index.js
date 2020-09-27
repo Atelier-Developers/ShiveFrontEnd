@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_PRESENTATION_CURRENT} from "../../../network/API";
+import {GET_PRESENTATION_CURRENT, GET_PRESENTATION_TEAM} from "../../../network/API";
 
 const state = {
     teamPresentation: {},
@@ -28,11 +28,11 @@ const mutations = {
 };
 
 const actions = {
-    async getTeamPresentation(context, payload) {
-        let response = await axios.get(GET_PRESENTATION_CURRENT);
-        context.commit('setTeamPresentation', payload);
+    async getTeamPresentation(context,) {
+        let response = await axios.get(GET_PRESENTATION_TEAM);
+        context.commit('setTeamPresentation', response.data);
     },
-    async getCurrentPresentation(context, payload) {
+    async getCurrentPresentation(context,) {
         let response = await axios.get(GET_PRESENTATION_CURRENT);
         context.commit('setCurrentPresentation', response.data);
     },
