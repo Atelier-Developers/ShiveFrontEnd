@@ -23,3 +23,5 @@ export const UPDATE_PRESENTATION = baseUrl + "presentation/update/";
 export const PRESENTATION_FILE_UPLOAD = baseUrl + "presentation/upload/";
 export const GET_SEMESTERS = baseUrl + "semester/list/"
 export const GET_PRESENTATIONS = baseUrl + "presentation/semester/"
+export const CREATE_ANN = baseUrl + "ann/create/"
+export const UPLOAD_ANN = baseUrl + "ann/upload/"

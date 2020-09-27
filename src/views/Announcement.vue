@@ -75,12 +75,13 @@
                                 <v-text-field label="موضوع" v-model="announcement.title" outlined/>
                                 <v-textarea
                                         label="توضیحات"
+                                        v-model="announcement.desc"
                                         auto-grow
                                         outlined
                                         rows="3"
                                 ></v-textarea>
                                 <v-file-input
-                                        v-model="files"
+                                        v-model="announcement.files"
                                         color="primary"
                                         label="ضمیمه"
                                         multiple
@@ -120,6 +121,7 @@
     import InputFieldDialogButton from "../components/InputFieldDialogButton";
     import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
     import EmptyState from "../components/EmptyState";
+    import {mapActions} from "vuex";
 
     export default {
         name: "Announcement",
@@ -129,10 +131,10 @@
             return {
                 announcement: {
                     title: "",
-                    desc: ""
+                    desc: "",
+                    files: [],
                 },
 
-                files: [],
 
                 dialog: false,
 
@@ -175,12 +177,17 @@
         },
 
         methods: {
+            ...mapActions('annModule', ['createAnnouncement']),
+
             toggleDialog() {
                 this.dialog = !this.dialog;
             },
 
             submitAction() {
+                console.log(this.announcement.files[0].name)
+                this.createAnnouncement(this.announcement).then(() => {
 
+                })
             }
         }
     }
