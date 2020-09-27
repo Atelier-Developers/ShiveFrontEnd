@@ -25,9 +25,9 @@
               fab
               @click="sendNewStateToServer"
               :loading="loading"
-              color="accent"
+              color="primary"
       >
-        <v-icon>done</v-icon>
+        <v-icon color="accent">done</v-icon>
       </v-btn>
     </div>
   </div>

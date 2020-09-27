@@ -13,9 +13,9 @@
             <v-btn
                     fab
                     @click="routeToCreateTeam"
-                    color="accent"
+                    color="primary"
             >
-                <v-icon>add</v-icon>
+                <v-icon color="accent">add</v-icon>
             </v-btn>
         </div>
     </div>
@@ -36,6 +36,10 @@
 
         data() {
             return {
+                item: {
+                    description: '',
+
+                },
                 loading: false,
                 pageLoading: false
             }

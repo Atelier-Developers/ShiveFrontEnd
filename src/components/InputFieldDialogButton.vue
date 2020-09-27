@@ -4,9 +4,9 @@
                         <v-btn
                                 v-on="on"
                                 v-bind="buttonAttrs"
-                                color="accent"
+                                color="primary"
                         >
-                            <v-icon>{{icon}}</v-icon>
+                            <v-icon color="accent">{{icon}}</v-icon>
                         </v-btn>
         </template>
         <v-card :loading="loading" :disabled="loading">

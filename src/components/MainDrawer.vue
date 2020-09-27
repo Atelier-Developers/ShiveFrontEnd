@@ -86,7 +86,7 @@ export default {
         },
         {
           icon: "slideshow",
-          title: "ارائه",
+          title: "ارائه‌ی جاری",
           to: {
             name: "PresentPage"
           }

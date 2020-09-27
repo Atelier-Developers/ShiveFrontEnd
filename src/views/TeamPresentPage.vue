@@ -4,6 +4,12 @@
             <v-row justify="center">
                 <h1>کلاس‌های مجازی</h1>
             </v-row>
+            <v-row justify="center">
+                <h3>توسط</h3>
+            </v-row>
+            <v-row justify="center">
+                <h3>امیر مسعود باغی و امیر محمد توکلی</h3>
+            </v-row>
         </v-container>
 
         <v-container>
@@ -17,7 +23,7 @@
                     <v-container>
                         <v-row>
                             <v-col sm="6" md="4" lg="3" v-for="file in files" :key="file.id">
-                                <FileTile :is-deletable="true" :name="file.name" :type="file.type"/>
+                                <FileTile :is-deletable="true" :file="file" :delete-action="deleteFile"/>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -65,14 +71,14 @@
                             <v-card-text>
                                 <v-row>
                                     <v-col>
-                                        <v-textarea auto-grow rows="3" label="توضیحات خود را وارد کنید..."/>
+                                        <v-textarea auto-grow rows="3" label="توضیحات خود را وارد کنید..." v-model="item.description"/>
                                     </v-col>
                                 </v-row>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
-                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>
+                                <v-btn color="blue darken-1" text @click="() => editDescription(item.description)">تایید</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -87,31 +93,31 @@
                     نظرات
                 </v-card-title>
                 <v-divider/>
-                <v-card-text>
-                    <v-container>
-                        <v-card tile>
-                            <v-card-title>
-                                <h5>نظر خود را وارد نمایید:</h5>
-                            </v-card-title>
-                            <v-subheader class="text--black font-weight-bold">
-                                امیر مسعود باغی
-                            </v-subheader>
-                            <v-container>
-                                <v-textarea outlined label="کامنت جدید..." rows="4">
-                                </v-textarea>
-                            </v-container>
-                            <v-card-actions class="justify-center">
-                                <v-btn
-                                        class="mb-2"
-                                        color="primary"
-                                        rounded
-                                >
-                                    <v-icon dark color="accent">add</v-icon>
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-container>
-                </v-card-text>
+<!--                <v-card-text>-->
+<!--                    <v-container>-->
+<!--                        <v-card tile>-->
+<!--                            <v-card-title>-->
+<!--                                <h5>نظر خود را وارد نمایید:</h5>-->
+<!--                            </v-card-title>-->
+<!--                            <v-subheader class="text&#45;&#45;black font-weight-bold">-->
+<!--                                امیر مسعود باغی-->
+<!--                            </v-subheader>-->
+<!--                            <v-container>-->
+<!--                                <v-textarea outlined label="کامنت جدید..." v-model="comment" rows="4">-->
+<!--                                </v-textarea>-->
+<!--                            </v-container>-->
+<!--                            <v-card-actions class="justify-center">-->
+<!--                                <v-btn-->
+<!--                                        class="mb-2"-->
+<!--                                        color="primary"-->
+<!--                                        rounded-->
+<!--                                >-->
+<!--                                    <v-icon dark color="accent">add</v-icon>-->
+<!--                                </v-btn>-->
+<!--                            </v-card-actions>-->
+<!--                        </v-card>-->
+<!--                    </v-container>-->
+<!--                </v-card-text>-->
                 <v-card-text>
                     <v-container>
                         <v-card tile>
@@ -147,14 +153,14 @@
                     <v-card-text>
                         <v-row>
                             <v-col>
-                                <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>
+                                <v-file-input label="فایل جدید خود را انتخاب کنید" v-model="item.file" outlined dense/>
                             </v-col>
                         </v-row>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
-                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>
+                        <v-btn color="blue darken-1" text @click="fileUploadDialog = false">انصراف</v-btn>
+                        <v-btn color="blue darken-1" text @click="() => uploadFile(item.file)">تایید</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -171,6 +177,10 @@
         components: {FileTile},
         data() {
             return {
+                item: {
+                    description: '',
+                    file: '',
+                },
                 files: [
                     {
                         'id': 1,
@@ -211,7 +221,22 @@
             ...mapGetters('presentationModule', ['teamPresentation'])
         },
         methods: {
-            ...mapActions('presentationModule', ['getTeamPresentation']),
+            ...mapActions('presentationModule', ['getTeamPresentation', 'uploadFileForTeamPresentation', 'setDescriptionForTeamPresentation', 'deleteFileFromTeamPresentation']),
+            uploadFile(file) {
+                this.fileUploadDialog = false;
+                this.uploadFileForTeamPresentation(file).then(() => {
+                    this.item.file = '';
+                });
+            },
+            editDescription(description) {
+                this.descriptionEditDialog = false;
+                this.setDescriptionForTeamPresentation(description).then(() => {
+                    this.item.description = '';
+                });
+            },
+            deleteFile(file) {
+                this.deleteFileFromTeamPresentation(file);
+            }
         },
         mounted() {
             this.getTeamPresentation();
