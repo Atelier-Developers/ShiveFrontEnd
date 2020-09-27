@@ -25,8 +25,8 @@
                         </v-btn>
                     </template>
                     <v-card :loading="loading" :disabled="loading">
-                        <v-card-title class="headline">حذف تیم</v-card-title>
-                        <v-card-text>آیا از حذف این تیم مطمئن هستید؟
+                        <v-card-title class="headline">حذف فایل</v-card-title>
+                        <v-card-text>آیا از حذف این فایل مطمئن هستید؟
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
