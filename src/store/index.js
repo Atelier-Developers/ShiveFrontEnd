@@ -7,6 +7,7 @@ import authModule from './modules/authModule'
 import subjectModule from './modules/subject-module'
 import roleModule from './modules/role-module'
 import archiveModule from './modules/archive-module'
+import presentationModule from './modules/presentation-module'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
         teamModule,
         teamCreateEditModule,
         authModule,
+        presentationModule,
         subjectModule,
         roleModule,
         archiveModule

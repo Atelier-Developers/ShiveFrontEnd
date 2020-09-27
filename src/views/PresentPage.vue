@@ -1,8 +1,14 @@
 <template>
-    <div class>
+    <div>
         <v-container>
             <v-row justify="center">
                 <h1>کلاس‌های مجازی</h1>
+            </v-row>
+            <v-row justify="center">
+                    <h3>توسط</h3>
+            </v-row>
+            <v-row justify="center">
+                <h3>امیر مسعود باغی و امیر محمد توکلی</h3>
             </v-row>
         </v-container>
 
@@ -17,7 +23,7 @@
                     <v-container>
                         <v-row>
                             <v-col sm="6" md="4" lg="3" v-for="file in files" :key="file.id">
-                                <FileTile :name="file.name" :type="file.type"/>
+                                <FileTile :is-deletable="false" :file="file"/>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -44,39 +50,39 @@
                     انتخاباتی به تعریف و تمجید از سیاست‌های شکست‌خورده دولت خود پرداخته است.
 
                 </v-card-text>
-                <v-card-actions class="justify-end">
-                    <v-btn
-                            class="ml-5 mb-2"
-                            color="primary"
-                            rounded
-                            @click.stop="descriptionEditDialog = true"
-                    >
-                        <v-icon color="accent">create</v-icon>
-                    </v-btn>
+                <!--                <v-card-actions class="justify-end">-->
+                <!--                    <v-btn-->
+                <!--                            class="ml-5 mb-2"-->
+                <!--                            color="primary"-->
+                <!--                            rounded-->
+                <!--                            @click.stop="descriptionEditDialog = true"-->
+                <!--                    >-->
+                <!--                        <v-icon color="accent">create</v-icon>-->
+                <!--                    </v-btn>-->
 
-                    <v-dialog
-                            v-model="descriptionEditDialog"
-                            max-width="570"
-                    >
-                        <v-card>
-                            <v-card-title>
-                                <span class="headline">توضیحات جدید</span>
-                            </v-card-title>
-                            <v-card-text>
-                                <v-row>
-                                    <v-col>
-                                        <v-textarea auto-grow rows="3" label="توضیحات خود را وارد کنید..."/>
-                                    </v-col>
-                                </v-row>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
-                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-card-actions>
+                <!--                    <v-dialog-->
+                <!--                            v-model="descriptionEditDialog"-->
+                <!--                            max-width="570"-->
+                <!--                    >-->
+                <!--                        <v-card>-->
+                <!--                            <v-card-title>-->
+                <!--                                <span class="headline">توضیحات جدید</span>-->
+                <!--                            </v-card-title>-->
+                <!--                            <v-card-text>-->
+                <!--                                <v-row>-->
+                <!--                                    <v-col>-->
+                <!--                                        <v-textarea auto-grow rows="3" label="توضیحات خود را وارد کنید..."/>-->
+                <!--                                    </v-col>-->
+                <!--                                </v-row>-->
+                <!--                            </v-card-text>-->
+                <!--                            <v-card-actions>-->
+                <!--                                <v-spacer></v-spacer>-->
+                <!--                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>-->
+                <!--                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>-->
+                <!--                            </v-card-actions>-->
+                <!--                        </v-card>-->
+                <!--                    </v-dialog>-->
+                <!--                </v-card-actions>-->
             </v-card>
         </v-container>
 
@@ -94,10 +100,10 @@
                                 <h5>نظر خود را وارد نمایید:</h5>
                             </v-card-title>
                             <v-subheader class="text--black font-weight-bold">
-                                امیر مسعود باغی
+                                USERNAME_HERE
                             </v-subheader>
                             <v-container>
-                                <v-textarea label="کامنت جدید..." rows="2">
+                                <v-textarea outlined label="کامنت جدید..." rows="4">
                                 </v-textarea>
                             </v-container>
                             <v-card-actions class="justify-center">
@@ -105,6 +111,7 @@
                                         class="mb-2"
                                         color="primary"
                                         rounded
+                                        @click="() => postComment(comment)"
                                 >
                                     <v-icon dark color="accent">add</v-icon>
                                 </v-btn>
@@ -128,43 +135,44 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <div id="floating-button" class="mb-10 mr-3">
-            <v-btn
-                    fab
-                    @click="fileUploadDialog = true"
-                    color="primary"
-            >
-                <v-icon color="accent">add</v-icon>
-            </v-btn>
-            <v-dialog
-                    v-model="fileUploadDialog"
-                    max-width="570"
-            >
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">آپلود فایل جدید</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-row>
-                            <v-col>
-                                    <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
-                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </div>
+        <!--        <div id="floating-button" class="mb-10 mr-3">-->
+        <!--            <v-btn-->
+        <!--                    fab-->
+        <!--                    @click="fileUploadDialog = true"-->
+        <!--                    color="primary"-->
+        <!--            >-->
+        <!--                <v-icon color="accent">add</v-icon>-->
+        <!--            </v-btn>-->
+        <!--            <v-dialog-->
+        <!--                    v-model="fileUploadDialog"-->
+        <!--                    max-width="570"-->
+        <!--            >-->
+        <!--                <v-card>-->
+        <!--                    <v-card-title>-->
+        <!--                        <span class="headline">آپلود فایل جدید</span>-->
+        <!--                    </v-card-title>-->
+        <!--                    <v-card-text>-->
+        <!--                        <v-row>-->
+        <!--                            <v-col>-->
+        <!--                                <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>-->
+        <!--                            </v-col>-->
+        <!--                        </v-row>-->
+        <!--                    </v-card-text>-->
+        <!--                    <v-card-actions>-->
+        <!--                        <v-spacer></v-spacer>-->
+        <!--                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>-->
+        <!--                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>-->
+        <!--                    </v-card-actions>-->
+        <!--                </v-card>-->
+        <!--            </v-dialog>-->
+        <!--        </div>-->
     </div>
 </template>
 
 <script>
     import FileTile from "../components/FileTile";
     import VideoPlayer from "../components/VideoPlayer";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "PresentPage",
@@ -172,6 +180,7 @@
         props: ['id'],
         data() {
             return {
+                comment: '',
                 files: [
                     {
                         'id': 1,
@@ -207,7 +216,22 @@
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
             }
+        },
+        computed: {
+            ...mapGetters('presentationModule', ['currentPresentation'])
+        },
+        methods: {
+            ...mapActions('presentationModule', ['getCurrentPresentation', 'postCommentForCurrentPresentation']),
+            postComment(comment) {
+                this.postCommentForCurrentPresentation(comment).then(() => {
+                    this.comment = '';
+                })
+            }
+        },
+        mounted() {
+            this.getCurrentPresentation();
         }
+
     }
 </script>
 

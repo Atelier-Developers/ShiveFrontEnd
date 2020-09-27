@@ -1,10 +1,10 @@
 <template>
     <v-card tile>
-        <v-div class="primary">
+        <div class="primary">
             <v-card-title class="primary accent--text justify-center header-6">
-                {{name}}
+                {{file.name}}
             </v-card-title>
-        </v-div>
+        </div>
         <v-divider/>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
@@ -14,7 +14,7 @@
                 <v-btn color="primary" fab small>
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
-                <v-btn color="red" fab small>
+                <v-btn v-show="isDeletable" color="red" fab small @click="() => deleteAction(file)">
                     <v-icon color="accent">delete</v-icon>
                 </v-btn>
             </v-row>
@@ -25,7 +25,7 @@
 <script>
     export default {
         name: "FileTile",
-        props: ['name', 'type']
+        props: ['file', 'isDeletable', 'deleteAction']
     }
 </script>
 

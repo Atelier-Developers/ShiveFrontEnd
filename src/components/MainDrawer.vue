@@ -57,7 +57,14 @@ export default {
       drawer: false,
       items: [
         {
-          icon: "group",
+          icon: "people",
+          title: "تیم من",
+          to: {
+            name: "TeamPresentPage"
+          }
+        },
+        {
+          icon: "how_to_reg",
           title: "مدیریت تیم ها",
           to: {
             name: "TeamManagement"
@@ -79,7 +86,7 @@ export default {
         },
         {
           icon: "slideshow",
-          title: "ارائه",
+          title: "ارائه‌ی جاری",
           to: {
             name: "PresentPage"
           }
