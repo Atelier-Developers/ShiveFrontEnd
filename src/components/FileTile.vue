@@ -7,6 +7,9 @@
         </div>
         <v-divider/>
         <v-card-text>
+            {{file.profile.name}}
+        </v-card-text>
+        <v-card-text>
             <v-row justify="space-around" class="mx-2">
                 <v-btn color="primary" fab small>
                     <v-icon color="accent">play_arrow</v-icon>
@@ -14,7 +17,7 @@
                 <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
-                <v-dialog v-model="dialog" max-width="290">
+                <v-dialog v-model="dialog" max-width="290" persistent>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-if="isDeletable" color="red" v-bind="attrs"
                                v-on="on" fab small>
@@ -28,7 +31,7 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="primary darken-1" text @click="dialog = false">انصراف</v-btn>
-                            <v-btn color="error darken-1" text @click="() => deleteAction(file)">حذف</v-btn>
+                            <v-btn color="error darken-1" text @click="deleteFile">حذف</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -46,6 +49,15 @@
             return {
                 loading: false,
                 dialog: false,
+            }
+        },
+        methods: {
+            deleteFile(){
+                this.loading = true;
+                this.deleteAction(this.file.pk).finally(() => {
+                    this.loading = false;
+                    this.dialog = false;
+                })
             }
         }
     }

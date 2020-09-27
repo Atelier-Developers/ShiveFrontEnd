@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    DELETE_FILE_UPLOAD,
     GET_PRESENTATION_CURRENT,
     GET_PRESENTATION_TEAM,
     POST_COMMENT,
@@ -47,7 +48,7 @@ const actions = {
     },
     async uploadFileForTeamPresentation(context, payload) {
         const formData = new FormData();
-        formData.append('file',payload.file);
+        formData.append('file', payload.file);
         formData.append('name', payload.name);
         const config = {
             headers: {
@@ -59,7 +60,8 @@ const actions = {
     async setDescriptionForTeamPresentation(context, payload) {
         let response = await axios.put(UPDATE_PRESENTATION + payload.pk, payload.description);
     },
-    deleteFileFromTeamPresentation(context, payload) {
+    async deleteFileFromTeamPresentation(context, payload) {
+        await axios.delete(DELETE_FILE_UPLOAD + payload);
         context.commit('removeFileFromTeamPresentation', payload)
     }
 };
