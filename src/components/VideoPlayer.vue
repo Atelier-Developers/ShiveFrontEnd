@@ -1,5 +1,5 @@
 <template>
-  <div class="video-comment">
+  <div class="video-comment px-5 py-5">
     <div
         class="video-player"
         v-on:mousemove="mouse_move"
@@ -18,6 +18,7 @@
           class="video"
           id="video-player"
           v-on:timeupdate="video_time_update"
+          v-on:seeked="video_seeked"
           v-on:dblclick="fullscreen_click"
       >
         <source :src="video_src" type="video/mp4">
@@ -41,6 +42,35 @@
           منتظر کامنت‌های بعدی باشید...
         </div>
       </div>
+      <div v-if="play_pause_toggle" class="open-write" v-on:click="open_write">
+        <v-icon color="white">add_comment</v-icon>
+      </div>
+      <div v-if="play_pause_toggle" class="write-comment">
+        <div class="write-close" v-on:click="close_write">
+          <v-icon color="white" v-on:click="close_write_comment">close</v-icon>
+        </div>
+        <div class="comment-input">
+          <v-textarea
+              v-mode="new_comment.text"
+              label="نظر شما"
+          ></v-textarea>
+        </div>
+        <div class="write-options">
+          <div>
+            <v-checkbox
+                v-model="new_comment.all"
+                label="برای کل ویدیو ثبت شود؟"
+            ></v-checkbox>
+          </div>
+          <div class="send-btn">
+            <v-btn
+                elevation="2"
+            >ثبت
+            </v-btn>
+          </div>
+
+        </div>
+      </div>
       <div class="progress-bar">
         <div class="fullscreen">
           <v-icon color="white" v-if="full_screen_toggle" v-on:click="fullscreen_click">fullscreen</v-icon>
@@ -56,6 +86,21 @@
           <div class="handler" v-on:mousedown="handler_mouse_down">
             <div class="handler-center"></div>
           </div>
+          <!--          <div class="mini-comments">-->
+          <!--            <div class="mini-comment" v-for="comment in this.comments" :style="mini_comment_pos(comment)">-->
+          <!--              <div class="mini-comment-icon">-->
+
+          <!--              </div>-->
+          <!--              <div class="mini-comment-icon">-->
+          <!--                <div class="mini-comment-name">{{ comment.name }}</div>-->
+          <!--                <div class="mini-comment-time">{{ to_time(parseInt(comment.time)) }}</div>-->
+          <!--                <v-divider/>-->
+          <!--                <div class="mini-comment-text">-->
+          <!--                  {{ comment.text }}-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
         <div class="play-pause">
           <v-icon color="white" v-if="!play_pause_toggle" v-on:click="pause_play_click">pause</v-icon>
@@ -64,7 +109,7 @@
       </div>
     </div>
     <div class="comments" v-if="this.full_screen_toggle">
-      <div class="comment" v-for="comment in this.active_comments">
+      <div class="comment" v-for="comment in this.comments">
         <div class="comment-name">{{ comment.name }}</div>
         <div class="comment-time">{{ to_time(parseInt(comment.time)) }}</div>
         <v-divider/>
@@ -96,6 +141,10 @@ export default class VideoPlayer extends Vue {
   full_screen_toggle = true;
   active_comments = []
   comment_measures = {
+    open: 0,
+    close: 0,
+  };
+  write_measures = {
     open: 0,
     close: 0,
   }
@@ -131,6 +180,10 @@ export default class VideoPlayer extends Vue {
       text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
     },
   ]
+  new_comment = {
+    text:'',
+    all:false
+  }
 
   low_com = 0;
 
@@ -175,6 +228,14 @@ export default class VideoPlayer extends Vue {
 
   get in_player_open_comment() {
     return document.querySelector('.video-player .open-comment');
+  }
+
+  get close_write_comment() {
+    return document.querySelector('.video-player .write-comment');
+  }
+
+  get open_write_comment() {
+    return document.querySelector('.video-player .open-write');
   }
 
   video_end() {
@@ -287,6 +348,21 @@ export default class VideoPlayer extends Vue {
     document.querySelector('.video-player .open-comment').style.right = '-' + (this.comment_measures.open + 20) + 'px';
   }
 
+  close_write() {
+    if (this.write_measures.close === 0) {
+      this.write_measures.close = document.querySelector('.video-player .write-comment').offsetWidth + 20
+    }
+    document.querySelector('.video-player .write-comment').style.top = '-' + (this.write_measures.close) + 'px';
+    document.querySelector('.video-player .open-write').style.top = '0px';
+  }
+
+  open_write() {
+    if (this.write_measures.open === 0)
+      this.write_measures.open = document.querySelector('.video-player .open-write').offsetWidth + 20
+    document.querySelector('.video-player .write-comment').style.top = '20px';
+    document.querySelector('.video-player .open-write').style.top = '-' + (this.write_measures.open + 20) + 'px';
+  }
+
   check_comments(time) {
     for (let i = this.low_com; i < this.comments.length; i++) {
       if (Math.abs(this.comments[i].time - time) < 1) {
@@ -302,11 +378,27 @@ export default class VideoPlayer extends Vue {
     }
   }
 
+  mini_comment_pos(comment) {
+    let left = comment.time / this.player.duration * 100
+    return {
+      'left': left + '%'
+    }
+  }
+
+  video_seeked() {
+    for (let i = 0; i < this.comments.length; i++) {
+      if (Math.abs(this.comments[i].time - time) < 1) {
+        this.low_com = i;
+        break;
+      }
+    }
+  }
+
 }
 </script>
 
 <style scoped>
-.bar {
+.video-player .bar {
   position: relative;
   width: 100%;
   margin: 0 20px;
@@ -314,7 +406,7 @@ export default class VideoPlayer extends Vue {
   background-color: #606060;
 }
 
-.complete {
+.video-player .complete {
   position: absolute;
   background-color: red;
   height: 100%;
@@ -322,7 +414,7 @@ export default class VideoPlayer extends Vue {
   left: 0;
 }
 
-.handler {
+.video-player .handler {
   position: absolute;
   height: 22px;
   width: 22px;
@@ -334,7 +426,7 @@ export default class VideoPlayer extends Vue {
   transform: translate(-50%, -50%);
 }
 
-.handler-center {
+.video-player .handler-center {
   position: absolute;
   height: 11px;
   width: 11px;
@@ -351,6 +443,7 @@ export default class VideoPlayer extends Vue {
   max-width: 700px;
   position: relative;
   background-color: black;
+  overflow-y: hidden;
 }
 
 .video-player:focus {
@@ -381,6 +474,9 @@ export default class VideoPlayer extends Vue {
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) 42%, rgba(0, 0, 0, 0.7));
   color: white;
   transition: 1s;
+}
+.video-player .progress-bar:hover{
+  opacity: 1!important;
 }
 
 .video-player .progress-bar .time {
@@ -422,7 +518,7 @@ export default class VideoPlayer extends Vue {
   padding: 5px 10px;
   opacity: 1;
   transition: 1s;
-  animation: show 0.5s, delete 0.5s 4.5s;
+  animation: show 0.5s;
 }
 
 @keyframes show {
@@ -475,4 +571,38 @@ export default class VideoPlayer extends Vue {
   box-shadow: 0 0 5px rgb(27 18 18);
   cursor: pointer;
 }
+
+.video-player .write-comment {
+  background-color: rgba(255, 255, 255, 0.67);
+  box-shadow: 0 0 10px rgb(27 18 18);
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+.video-player .write-comment .write-options {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.video-player .write-comment .write-options .send-btn {
+  margin-left: 5px;
+}
+
+.video-player .open-write {
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.47);
+  transition: 0.5s;
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  box-shadow: 0 0 5px rgb(27 18 18);
+  cursor: pointer;
+}
+
 </style>
