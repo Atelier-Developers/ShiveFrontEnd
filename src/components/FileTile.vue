@@ -11,12 +11,28 @@
                 <v-btn color="primary" fab small>
                     <v-icon color="accent">play_arrow</v-icon>
                 </v-btn>
-                <v-btn color="primary" fab small>
+                <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
-                <v-btn v-show="isDeletable" color="red" fab small @click="() => deleteAction(file)">
-                    <v-icon color="accent">delete</v-icon>
-                </v-btn>
+                <v-dialog v-model="dialog" max-width="290">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-if="isDeletable" color="red" v-bind="attrs"
+                               v-on="on" fab small>
+                            <v-icon color="accent">delete</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-card :loading="loading" :disabled="loading">
+                        <v-card-title class="headline">حذف تیم</v-card-title>
+                        <v-card-text>آیا از حذف این تیم مطمئن هستید؟
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary darken-1" text @click="dialog = false">انصراف</v-btn>
+                            <v-btn color="error darken-1" text @click="() => deleteAction(file)">حذف</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+
             </v-row>
         </v-card-text>
     </v-card>
@@ -25,7 +41,13 @@
 <script>
     export default {
         name: "FileTile",
-        props: ['file', 'isDeletable', 'deleteAction']
+        props: ['file', 'isDeletable', 'deleteAction'],
+        data(){
+            return {
+                loading: false,
+                dialog: false,
+            }
+        }
     }
 </script>
 

@@ -1,6 +1,7 @@
 <template>
   <v-form
       ref="form"
+      @submit.prevent="loginPerson"
       v-model="valid"
       lazy-validation
       class="py-5 px-5"
@@ -36,7 +37,7 @@
           color="primary"
           class="px-10"
           :loading="loading"
-          @click="loginPerson"
+          type="submit"
           large
       >
         ورود
@@ -48,8 +49,9 @@
         اکانت ندارید؟ ثبت نام کنید
       </v-btn>
     </v-row>
-
-
+    <v-snackbar v-model="reqStatus.error" color="error">
+      {{reqStatus.msg}}
+    </v-snackbar>
   </v-form>
 </template>
 
@@ -62,8 +64,13 @@ export default {
   components: {ErrorBoundary},
   data() {
     return {
+      value: true,
       valid: false,
       loading: false,
+      reqStatus: {
+        error: false,
+        msg: "",
+      },
       user: {
         username: "",
         password: ""
@@ -79,15 +86,13 @@ export default {
       if (!this.$refs.form.validate())
         return;
       this.loading = true;
-      this.login(this.user).finally(() => {
+      this.login(this.user).catch((e) => {
+        this.reqStatus.msg = e.message;
+        this.reqStatus.error = true;
+      }).finally(() => {
         this.loading = false;
       })
     },
-    findError(err) {
-      console.log(err);
-      console.log("error")
-    }
-
   }
 }
 </script>

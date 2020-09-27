@@ -4,6 +4,8 @@
             max-width="600"
             height="150"
             outlined
+            :loading="loading"
+            :disabled="loading"
     >
         <div>
             <v-col cols="12">
@@ -20,7 +22,7 @@
         </div>
 
         <div class="row justify-center">
-            <date-picker v-model="item.deadline" :clearable="true" label="تاریخ" />
+            <date-picker v-model="item.deadline" :clearable="true" label="تاریخ"/>
         </div>
     </v-card>
 </template>
@@ -30,9 +32,14 @@
 
     export default {
         name: "SubjectDateChooser",
-        props: ['subjects', 'item'],
+        props: ['subjects', 'item', 'loading'],
         components: {
             datePicker: VuePersianDatetimePicker
+        },
+        mounted() {
+            if (typeof this.item.subject === 'object') {
+                this.item.subject = this.item.subject.pk;
+            }
         }
     }
 </script>

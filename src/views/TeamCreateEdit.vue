@@ -1,29 +1,26 @@
 <template>
-    <div class="mt-5">
-        <SubjectDateChooser :item="presentation" :subjects="allSubjects"/>
+    <div>
+        <SubjectDateChooser :item="item" :subjects="allSubjects" :loading="pageLoading"/>
         <v-container>
             <v-row>
                 <v-col cols="12" class="col-md-6">
                     <PersonList :loading="pageLoading" title="بدون تیم" :persons="pending" :actions="addToTeamAction"/>
                 </v-col>
                 <v-col cols="12" class="col-md-6">
-                    <PersonList :loading="pageLoading" title="تیم" :persons="teamMembers" :actions="removeFromTeamAction"/>
+                    <PersonList :loading="pageLoading" title="تیم" :persons="teamMembers"
+                                :actions="removeFromTeamAction"/>
                 </v-col>
             </v-row>
         </v-container>
 
-        <div id="floating-button" class="mb-10 mr-7">
+        <div id="floating-button" class="mb-10 mr-3">
             <v-btn
                     fab
                     dark
                     large
+                    :loading="loading"
                     color="primary"
-                    @click="() => actionFunction({
-                    deadline: presentation.deadline,
-                    subject: presentation.subject,
-                    pk: pk,
-                    profiles: teamMembers.map((m) => m.pk)
-                    })"
+                    @click="callActionFunction"
             >
                 <v-icon>done</v-icon>
             </v-btn>
@@ -44,6 +41,10 @@
             return {
                 loading: false,
                 pageLoading: false,
+                item: {
+                    subject: "",
+                    deadline: ""
+                }
             }
         },
         components: {
@@ -70,14 +71,24 @@
             allSubjects() {
                 if (this.isEdit) {
                     return this.selectableSubjects.concat(this.presentation.subject);
-                }
-                else {
+                } else {
                     return this.selectableSubjects
                 }
             }
         },
         methods: {
-            ...mapActions('teamCreateEditModule', ['addPersonToTeam', 'removePersonFromTeam', 'getSelectableSubjects', 'getPending', 'assignTeamMembers'])
+            ...mapActions('teamCreateEditModule', ['addPersonToTeam', 'removePersonFromTeam', 'getSelectableSubjects', 'getPending', 'assignTeamMembers']),
+            callActionFunction() {
+                this.loading = true;
+                this.actionFunction({
+                    deadline: this.item.deadline,
+                    subject: this.item.subject,
+                    pk: this.pk,
+                    profiles: this.teamMembers.map((m) => m.pk)
+                }).finally(() => {
+                    this.loading = false;
+                });
+            }
         },
         mounted() {
             this.pageLoading = true;
@@ -85,6 +96,8 @@
                 return this.getPending();
             }).then(() => {
                 return this.assignTeamMembers(this.members);
+            }).then(() => {
+                this.item = {...this.presentation, subject: this.presentation.subject.pk}
             }).finally(() => {
                 this.pageLoading = false;
             });
@@ -93,8 +106,4 @@
 </script>
 
 <style scoped>
-    #floating-button {
-        position: absolute;
-        bottom: 0;
-    }
 </style>
