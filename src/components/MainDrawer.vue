@@ -98,6 +98,14 @@ export default {
             name: "Archive"
           }
         },
+
+        {
+          icon: "announcement",
+          title: "اطلاعیه ها",
+          to: {
+            name: "Announcement"
+          }
+        },
       ]
     }
   },

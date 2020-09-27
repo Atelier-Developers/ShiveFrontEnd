@@ -10,6 +10,7 @@ import SubjectManagement from "../views/SubjectManagement";
 import Archive from "../views/Archive";
 import TeamCreate from "../views/TeamCreate";
 import TeamEdit from "../views/TeamEdit";
+import Announcement from "../views/Announcement";
 import TeamPresentPage from "../views/TeamPresentPage";
 
 Vue.use(VueRouter)
@@ -64,6 +65,11 @@ const routes = [
         path: '/archive',
         name: 'Archive',
         component: Archive
+    },
+    {
+        path: '/announcement',
+        name: 'Announcement',
+        component: Announcement
     }
 ]
 
