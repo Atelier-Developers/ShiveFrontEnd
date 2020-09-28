@@ -4,7 +4,6 @@
         class="video-player"
         v-on:mousemove="mouse_move"
         v-on:mouseup="video_player_mouse_up"
-        v-on:click="video_player_click"
     >
       <div class="back-ground-overlay"
            v-on:click="pause_play_click"
@@ -87,9 +86,9 @@
         <div class="load-item"></div>
         <div class="load-item"></div>
       </div>
-      <div class="write-comment">
+      <div v-if="this.play_pause_toggle" class="write-comment">
         <div class="write-close" v-on:click="close_write">
-          <v-icon color="white" v-on:click="close_write_comment">close</v-icon>
+          <v-icon color="white">close</v-icon>
         </div>
         <div class="comment-input">
           <v-textarea
@@ -169,6 +168,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   first_time_play = true;
 
   mounted() {
+    console.log("mounted has been called")
     this.getCommentsForVideo();
     let delta = 0.125;
     for (let i = 0; i < this.loading.children.length; i++) {
@@ -185,18 +185,14 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   get progress() {
-    if (this.progress_elems)
-      return this.progress_elems
-    else
-      this.progress_elems = {
-        bar: document.querySelector('.video-player .progress-bar .bar'),
-        progress_bar: document.querySelector('.video-player .progress-bar'),
-        complete: document.querySelector('.video-player .progress-bar .complete'),
-        handler: document.querySelector('.video-player .progress-bar .handler'),
-        time_pass: document.querySelector('.video-player .pass'),
-        length: document.querySelector('.video-player .length'),
-      }
-    return this.progress_elems
+    return this.progress_elems = {
+      bar: document.querySelector('.video-player .progress-bar .bar'),
+      progress_bar: document.querySelector('.video-player .progress-bar'),
+      complete: document.querySelector('.video-player .progress-bar .complete'),
+      handler: document.querySelector('.video-player .progress-bar .handler'),
+      time_pass: document.querySelector('.video-player .pass'),
+      length: document.querySelector('.video-player .length'),
+    }
   }
 
   get in_player_comment() {
@@ -207,23 +203,17 @@ export default class VideoPlayer extends VideoPlayerProps {
     return document.querySelector('.video-player .open-comment');
   }
 
-  get close_write_comment() {
-    return document.querySelector('.video-player .write-comment');
-  }
-
-  get open_write_comment() {
-    return document.querySelector('.video-player .open-write');
-  }
-
   get loading() {
     return document.querySelector('.video-player .video-loading');
   }
 
   video_end() {
+    console.log("video_end has been called")
     this.play_pause_toggle = true;
   }
 
   pause_play_click() {
+    console.log("pause_play_click has been called")
     if (this.play_pause_toggle)
       this.player.play();
     else
@@ -232,21 +222,25 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   video_time_update() {
+    console.log("video_time_update has been called")
     this.time = this.player.currentTime;
-    let percentage = this.time / this.video_length * 100;
-    this.progress.complete.style.width = percentage + '%';
+    let percentage = this.player.currentTime / this.video_length * 100;
+    console.log(percentage)
+    document.querySelector('.video-player .progress-bar .complete').style.width = percentage + '%';
     if (!this.holding_progress_handler)
-      this.progress.handler.style.left = percentage + '%';
+      document.querySelector('.video-player .progress-bar .handler').style.left = percentage + '%';
     this.progress.time_pass.innerText = this.to_time(parseInt(this.time));
     this.progress.length.innerText = this.to_time(parseInt(this.player.duration))
     this.check_comments(this.player.currentTime);
   }
 
   handler_mouse_down() {
+    console.log("handler_mouse_down has been called")
     this.holding_progress_handler = true;
   }
 
   getCommentsForVideo() {
+    console.log("getCommentsForVideo has been called")
     let _self = this
     axios.get(GET_COMMENTS_FOR_VIDEO + this.id).then((response) => {
           _self.comments = response.data.map((j) => {
@@ -265,70 +259,71 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   postComment() {
-    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    // console.log(this.comments)
-    // this.comments.push({
-    //   pk: -100,
-    //   text: this.new_comment,
-    //   name: 'کییییییییییرییییییییییییییی',
-    //   time: this.player.currentTime
-    // });
+    console.log("postComment has been called")
     axios.post(POST_COMMENT_FOR_VIDEO + this.id, {
       text: this.new_comment,
       time: this.player.currentTime
     }).then(() => {
       console.log("HELLLEOOEOEDJKFS:LKJDFS:LKDSFJ:LKFDSJL");
       this.new_comment = '';
+      this.getCommentsForVideo();
     });
   }
 
   video_player_mouse_up() {
+    console.log("video_player_mouse_up has been called")
     if (this.holding_progress_handler) {
       this.holding_progress_handler = false;
-      this.new_seek_time = this.new_seek_time / this.progress.handler.parentElement.offsetWidth * this.video_length;
+      this.new_seek_time = this.new_seek_time / document.querySelector('.video-player .progress-bar .handler').parentElement.offsetWidth * this.video_length;
       this.player.currentTime = this.new_seek_time;
     }
   }
 
   mouse_move(ev) {
-    this.progress.progress_bar.style.opacity = 1;
+    console.log("mouse_move has been called")
+    document.querySelector('.video-player .progress-bar').style.opacity = 1;
     if (this.holding_progress_handler) {
-      let left_offset = this.find_left_offset(this.progress.complete);
+      let left_offset = this.find_left_offset(document.querySelector('.video-player .progress-bar .complete'));
       let left = ev.clientX - left_offset;
-      if (0 <= left && left <= this.progress.handler.parentElement.offsetWidth)
-        this.progress.handler.style.left = left + 'px';
+      if (0 <= left && left <= document.querySelector('.video-player .progress-bar .handler').parentElement.offsetWidth)
+        document.querySelector('.video-player .progress-bar .handler').style.left = left + 'px';
       this.new_seek_time = left;
     }
     if (this.progress_bar_timeout)
       clearTimeout(this.progress_bar_timeout);
     this.progress_bar_timeout = setTimeout(function (elem) {
-      elem.progress_bar.style.opacity = 0;
+      document.querySelector('.video-player .progress-bar').style.opacity = 0;
     }, 1000, this.progress)
   }
 
 
-  video_player_click(ev) {
-
-  }
-
   find_left_offset(elem) {
-    let offset = 0
+    console.log("find_left_offset has been called")
+    console.log('********************************')
+    let offset = elem.offsetLeft
     while (elem) {
-      if (!(elem.classList.contains('v-card') || elem.classList.contains('row')))
-        offset += elem.offsetLeft;
-      elem = elem.parentElement;
+      if (elem.classList.contains('v-card') && this.full_screen_toggle)
+        break;
+      if (elem.classList.contains('video-comment') && !this.full_screen_toggle)
+        break;
+      console.log(elem);
+      console.log(elem.offsetLeft);
+      elem = elem.parentElement
+      offset += elem.offsetLeft;
     }
-    return offset + 10;
+    return offset;
   }
 
   click_bar(ev) {
-    let left_offset = this.find_left_offset(this.progress.handler.parentElement);
+    console.log("click_bar has been called")
+    let left_offset = this.find_left_offset(document.querySelector('.video-player .progress-bar .handler').parentElement);
     let left = ev.clientX - left_offset;
-    this.new_seek_time = left / this.progress.handler.parentElement.offsetWidth * this.video_length;
+    this.new_seek_time = left / document.querySelector('.video-player .progress-bar .handler').parentElement.offsetWidth * this.video_length;
     this.player.currentTime = this.new_seek_time;
   }
 
   to_time(time) {
+    console.log("to_time has been called")
     if (isNaN(time))
       return "--:--";
     let hour = parseInt(time / 3600)
@@ -344,23 +339,29 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   fullscreen_click() {
+    console.log("fullscreen_click has been called")
     if (this.full_screen_toggle)
       this.player.parentElement.requestFullscreen();
-    else
+    else {
       document.exitFullscreen();
+    }
+
+    this.full_screen_toggle = !this.full_screen_toggle;
+
     setTimeout(function (player) {
-      player.full_screen_toggle = !player.full_screen_toggle;
       let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
       for (let i = 0; i < mini_comments.length; i++) {
+        mini_comments[i].style.display = 'block';
         mini_comments[i].style.left =
-            ((player.comments[i].time + Math.random() * 4 - 2)
-                / player.player.duration * player.progress.bar.offsetWidth
-                + player.progress.bar.offsetLeft) + 'px';
+            ((parseFloat(player.comments[i].time))
+                / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+                + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
       }
-    }, 1000, this)
+    }, 500, this)
   }
 
   close_comments() {
+    console.log("close_comments has been called")
     if (this.comment_measures.close === 0) {
       this.comment_measures.close = this.in_player_comment.offsetWidth + 20
     }
@@ -369,6 +370,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   open_comments() {
+    console.log("open_comments has been called")
     if (this.comment_measures.open === 0)
       this.comment_measures.open = this.in_player_open_comment.offsetWidth + 20
     document.querySelector('.video-player .in-player').style.right = '0px';
@@ -376,6 +378,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   close_write() {
+    console.log("close_write has been called")
     if (this.write_measures.close === 0) {
       this.write_measures.close = document.querySelector('.video-player .write-comment').offsetWidth + 60
     }
@@ -384,6 +387,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   open_write() {
+    console.log("open_write has been called")
     if (this.write_measures.open === 0)
       this.write_measures.open = document.querySelector('.video-player .open-write').offsetWidth + 20
     document.querySelector('.video-player .write-comment').style.top = '20px';
@@ -391,6 +395,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   check_comments(time) {
+    console.log("check_comments has been called")
     for (let i = this.low_com; i < this.comments.length; i++) {
       if (this.active_comments.includes(this.comments[i], 0))
         continue;
@@ -409,6 +414,7 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 
   video_seeked() {
+    console.log("video_seeked has been called")
     for (let i = 0; i < this.comments.length; i++) {
       if (Math.abs(this.comments[i].time - this.player.currentTime) < 3) {
         this.low_com = i;
@@ -418,32 +424,32 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   loading_video() {
+    console.log("loading_video has been called")
     this.loading.style.display = 'block';
   }
 
   load_end() {
+    console.log("load_end has been called")
     if (this.player.currentTime < 0.5 && this.first_time_play) {
       this.first_time_play = false;
     }
     this.loading.style.display = 'none';
-    if (!this.mini_com_set) {
       let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
       for (let i = 0; i < mini_comments.length; i++) {
-        this.mini_com_set = true;
         if (this.comments[i].time > this.player.duration)
           continue;
         mini_comments[i].style.display = 'block';
         mini_comments[i].style.left =
-            ((parseInt(this.comments[i].time) + Math.random() * 4 - 2)
-                / this.player.duration * this.progress.bar.offsetWidth
-                + this.progress.bar.offsetLeft) + 'px';
+            ((parseFloat(this.comments[i].time))
+                / this.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+                + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
       }
 
-    }
 
   }
 
   go_to_comment_time(time) {
+    console.log("go_to_comment_time has been called")
     this.player.currentTime = time - 2;
     this.video_seeked()
   }
@@ -535,8 +541,8 @@ export default class VideoPlayer extends VideoPlayerProps {
   transition: 1s;
 }
 
-.video-player .progress-bar:hover {
-  opacity: 1 !important;
+.video-player .progress-bar {
+  opacity: 1;
 }
 
 .video-player .time {
