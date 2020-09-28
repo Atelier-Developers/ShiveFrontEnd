@@ -4,13 +4,13 @@
             <v-col cols="12" align="center">
                 <p>
                     <img
-                            src="../assets/sad.svg"
+                            src="../assets/padlock.png"
                             style="width:30vw;max-width:150px;"
                     >
                 </p>
 
                 <p class="text-faded">
-                    صفحه ی مورد نظر یافت نشد!
+                    شما اجازه ی دسترسی به این صفحه را ندارید!
                 </p>
 
                 <v-btn
@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: "Error404"
+        name: "NotAllowed"
     }
 </script>
 

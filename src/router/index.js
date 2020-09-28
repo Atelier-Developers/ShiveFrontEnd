@@ -14,6 +14,8 @@ import Announcement from "../views/Announcement";
 import TeamPresentPage from "../views/TeamPresentPage";
 import ArchivedPresentationPage from "../views/ArchivedPresentationPage";
 import VideoPlayerPage from '../views/VideoPlayerPage';
+import Error404 from "../views/Error404";
+import NotAllowed from "../views/NotAllowed";
 
 Vue.use(VueRouter)
 
@@ -82,7 +84,17 @@ const routes = [
         path: '/announcement',
         name: 'Announcement',
         component: Announcement
-    }
+    },
+    {
+        path: '/',
+        name: 'Error404',
+        component: Error404
+    },
+    {
+        path: '/notAllowed',
+        name: 'NotAllowed',
+        component: NotAllowed
+    },
 ]
 
 const router = new VueRouter({
