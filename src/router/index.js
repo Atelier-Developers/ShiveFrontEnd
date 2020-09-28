@@ -147,10 +147,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     const canNavigate = to.matched.some(route => {
-        console.log(route.meta.resource)
         return ability.can(route.meta.action || 'read', route.meta.resource)
     })
-    console.log(canNavigate)
     if (!canNavigate && to.name !== 'NotAllowed') {
         return next({name: "NotAllowed"})
     } else {

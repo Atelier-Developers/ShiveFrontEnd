@@ -19,7 +19,6 @@ const actions = {
             description: announcement.desc,
         });
 
-        console.log(response);
 
         let annId = response.data.pk;
 

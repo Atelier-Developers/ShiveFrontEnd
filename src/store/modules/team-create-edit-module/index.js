@@ -66,7 +66,6 @@ const actions = {
         context.commit("setSingleTeam", response.data);
     },
     async editTeamMembers(context, payload) {
-        console.log(payload);
         payload.deadline = moment.from(payload.deadline, 'fa', 'YYYY/MM/DD').format('YYYY-MM-DD');
         await axios.post(TEAMS_EDIT + payload.pk, payload);
     },
