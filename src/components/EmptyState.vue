@@ -1,14 +1,20 @@
 <template>
-    <v-row justify="center" align="center" class="fill-height">
-        <v-col cols="12">
-            <v-icon>home</v-icon>
-        </v-col>
-        <v-col cols="12">
-            <div>
-                موردی برای نمایش یافت نشد!
-            </div>
-        </v-col>
-    </v-row>
+    <v-container style="height: 80vh">
+        <v-row justify="center" align="center">
+            <v-col cols="12" align="center">
+                <p>
+                    <img
+                            src="../assets/empty-folder.png"
+                            style="width:30vw;max-width:150px;"
+                    >
+                </p>
+
+                <p class="text-faded">
+                    موردی یافت نشد!
+                </p>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>

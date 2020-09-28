@@ -86,7 +86,7 @@ const routes = [
         component: Announcement
     },
     {
-        path: '/',
+        path: '*',
         name: 'Error404',
         component: Error404
     },
