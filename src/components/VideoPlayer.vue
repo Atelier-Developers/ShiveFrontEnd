@@ -20,6 +20,9 @@
           v-on:timeupdate="video_time_update"
           v-on:seeked="video_seeked"
           v-on:dblclick="fullscreen_click"
+          v-on:loadstart="loading_video"
+          v-on:waiting="loading_video"
+          v-on:canplay="load_end"
       >
         <source :src="video_src" type="video/mp4">
       </video>
@@ -107,6 +110,13 @@
           <v-icon color="white" v-else v-on:click="pause_play_click">play_arrow</v-icon>
         </div>
       </div>
+      <div class="video-loading">
+        <div class="load-item"></div>
+        <div class="load-item"></div>
+        <div class="load-item"></div>
+        <div class="load-item"></div>
+        <div class="load-item"></div>
+      </div>
     </div>
     <div class="comments" v-if="this.full_screen_toggle">
       <div class="comment" v-for="comment in this.comments">
@@ -125,11 +135,18 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
+const VideoPlayerProps = Vue.extend({
+  props: {
+    video_src: String,
+    // comments: Array,
+  }
+})
+
 // Define the component in class-style
 @Component
-export default class VideoPlayer extends Vue {
-  video_src = 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4';
+export default class VideoPlayer extends VideoPlayerProps {
   video_elem = null;
+
 
   play_pause_toggle = false;
   holding_progress_handler = false;
@@ -181,18 +198,25 @@ export default class VideoPlayer extends Vue {
     },
   ]
   new_comment = {
-    text:'',
-    all:false
+    text: '',
+    all: false
   }
 
   low_com = 0;
 
   mounted() {
-    this.player.play();
+    setTimeout(function (player) {
+      player.player.play();
+    }, 1000, this);
+
     this.comments.sort(function (a, b) {
       return a.time - b.time;
     });
-    console.log(this.comments);
+    let delta = 0.125
+    console.log(this.loading)
+    for (let i = 0; i < this.loading.children.length; i++) {
+      this.loading.children[i].style.animationDelay = (-1.125 +delta*i) + 's';
+    }
   }
 
   get player() {
@@ -236,6 +260,10 @@ export default class VideoPlayer extends Vue {
 
   get open_write_comment() {
     return document.querySelector('.video-player .open-write');
+  }
+
+  get loading() {
+    return document.querySelector('.video-player .video-loading');
   }
 
   video_end() {
@@ -313,6 +341,8 @@ export default class VideoPlayer extends Vue {
   }
 
   to_time(time) {
+    if (time === NaN)
+      return "--:--";
     let hour = parseInt(time / 3600)
     time %= 3600;
     let minute = parseInt(time / 60);
@@ -394,6 +424,16 @@ export default class VideoPlayer extends Vue {
     }
   }
 
+  loading_video() {
+    console.log('loading')
+    this.loading.style.display = 'block';
+  }
+
+  load_end() {
+    console.log('end')
+    this.loading.style.display = 'none';
+  }
+
 }
 </script>
 
@@ -443,7 +483,7 @@ export default class VideoPlayer extends Vue {
   max-width: 700px;
   position: relative;
   background-color: black;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .video-player:focus {
@@ -475,8 +515,9 @@ export default class VideoPlayer extends Vue {
   color: white;
   transition: 1s;
 }
-.video-player .progress-bar:hover{
-  opacity: 1!important;
+
+.video-player .progress-bar:hover {
+  opacity: 1 !important;
 }
 
 .video-player .progress-bar .time {
@@ -603,6 +644,38 @@ export default class VideoPlayer extends Vue {
   left: 20px;
   box-shadow: 0 0 5px rgb(27 18 18);
   cursor: pointer;
+}
+
+.video-player .video-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateZ(0deg);
+  display: none;
+  animation: loading 10s infinite linear;
+}
+
+.video-player .video-loading .load-item {
+  position: absolute;
+  top: -50px;
+  transform-origin: 0px 50px;
+  left: 0;
+  transform: translate(-50%, -50%) rotateZ(0deg);
+  background-color: red;
+  animation: loading 3s infinite;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  box-shadow: 0 0 5px rgb(27 18 18);
+}
+
+@keyframes loading {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
 }
 
 </style>
