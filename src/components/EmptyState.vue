@@ -1,5 +1,5 @@
 <template>
-    <v-col style="height: 85vh" justify="center" align="center" class="fill-height">
+    <v-row justify="center" align="center" class="fill-height">
         <v-col cols="12">
             <v-icon>home</v-icon>
         </v-col>
@@ -8,7 +8,7 @@
                 موردی برای نمایش یافت نشد!
             </div>
         </v-col>
-    </v-col>
+    </v-row>
 </template>
 
 <script>
