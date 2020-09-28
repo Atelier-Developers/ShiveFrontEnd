@@ -20,7 +20,7 @@
             </v-card-text>
 
             <v-list>
-              <v-list-group v-if=" announcement.files.length != 0">
+              <v-list-group v-if=" announcement.files.length !== 0">
                 <template v-slot:activator>
                   <v-list-item-content>
                     <v-list-item-title>فایل های ضمیمه</v-list-item-title>
@@ -55,7 +55,7 @@
 
       <EmptyState v-else class="fill-height"/>
     </v-container>
-    <div id="floating-button" class="mb-10">
+    <div id="floating-button" class="mb-10" v-if="$can('create', 'announcment')">
       <v-btn
           fab
           @click="toggleDialog"
@@ -66,7 +66,7 @@
     </div>
 
     <v-dialog v-model="dialog" max-width="600px">
-      <v-card>
+      <v-card :loading="annDialogLoading">
         <v-card-title>
           <span class="headline">اطلاعیه ی جدید</span>
         </v-card-title>
@@ -139,7 +139,8 @@ export default {
         files: [],
       },
       dialog: false,
-      loading: false
+      loading: false,
+      annDialogLoading: false
     }
   },
   methods: {
@@ -148,14 +149,17 @@ export default {
       this.dialog = !this.dialog;
     },
     submitAction() {
+      this.annDialogLoading = true;
       this.createAnnouncement(this.announcement).then(() => {
         this.announcement = {
           title: "",
           desc: "",
           files: [],
         };
-        this.dialog = !this.dialog;
         this.getAnnouncements();
+      }).finally(() => {
+        this.annDialogLoading = false;
+        this.dialog = !this.dialog
       });
     }
   },

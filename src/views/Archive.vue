@@ -85,9 +85,10 @@
             this.loading = true;
             this.getSemesters().then(() => {
                 this.selected_year = this.semesters[0];
-                this.getPresentations(this.semesters[0].id).then(() => {
+                this.getPresentations(this.semesters[0].id).finally(() => {
+                    this.loading = false;
                 })
-            }).finally(() => {
+            }).catch(() => {
                 this.loading = false;
             })
         }
