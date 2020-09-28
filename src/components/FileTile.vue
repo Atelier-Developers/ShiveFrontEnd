@@ -24,7 +24,7 @@
                         <v-card-title>{{ file.name }}</v-card-title>
                         <v-row justify="center" no-gutters>
                             <v-col cols="12">
-                                <VideoPlayer v-if="videoDialog" :action="getCommentsForVideo" :video_src="file.file" :id="file.pk" :comments="comments"/>
+                                <VideoPlayer v-if="videoDialog"  :video_src="file.file" :id="file.pk" />
                             </v-col>
                         </v-row>
                     </v-card>
@@ -89,20 +89,20 @@
                     }
                 });
             },
-            getCommentsForVideo() {
-                axios.get(GET_COMMENTS_FOR_VIDEO + this.file.pk).then((response) => {
-                        this.comments = response.data.map((j) => {
-                            return {
-                                pk: j.id,
-                                text: j.text,
-                                name: j.profile.name,
-                                time: j.time,
-                            }
-                        });
-                        console.log(this.comments);
-                    }
-                )
-            },
+            // getCommentsForVideo() {
+            //     axios.get(GET_COMMENTS_FOR_VIDEO + this.file.pk).then((response) => {
+            //             this.comments = response.data.map((j) => {
+            //                 return {
+            //                     pk: j.id,
+            //                     text: j.text,
+            //                     name: j.profile.name,
+            //                     time: j.time,
+            //                 }
+            //             });
+            //             console.log(this.comments);
+            //         }
+            //     )
+            // },
             // postComment(comment) {
             //   axios.post(POST_COMMENT + this.file.pk, ).then((response) => {
             //     console.log(response);
@@ -110,7 +110,7 @@
             // },
         },
         mounted() {
-            this.getCommentsForVideo();
+            // this.getCommentsForVideo();
         }
     }
 </script>
