@@ -1,17 +1,23 @@
 <template>
-    <v-container style="height: 80vh">
+    <v-container>
         <v-row justify="center" align="center">
             <v-col cols="12" align="center">
                 <p>
                     <img
-                            src="../assets/empty-folder.png"
+                            src="../assets/padlock.png"
                             style="width:30vw;max-width:150px;"
                     >
                 </p>
 
                 <p class="text-faded">
-                    موردی یافت نشد!
+                    شما اجازه ی دسترسی به این صفحه را ندارید!
                 </p>
+
+                <v-btn
+                        color="primary"
+                        style="width:200px;"
+                        to="/"
+                >بازگشت</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -19,7 +25,7 @@
 
 <script>
     export default {
-        name: "EmptyState"
+        name: "NotAllowed"
     }
 </script>
 
