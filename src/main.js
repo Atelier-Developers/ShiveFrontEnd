@@ -9,7 +9,7 @@ import VuePageTransition from 'vue-page-transition'
 import {abilitiesPlugin} from '@casl/vue';
 import ReadMore from 'vue-read-more';
 import defineRulesFor, {ability} from "@/services/ability";
-
+import 'vue2-animate/dist/vue2-animate.min.css';
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
