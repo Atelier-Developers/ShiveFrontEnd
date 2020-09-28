@@ -138,14 +138,14 @@ const routes = [
         }
     },
     {
-        path: '*',
-        name: 'Error404',
-        component: Error404
-    },
-    {
         path: '/notAllowed',
         name: 'NotAllowed',
         component: NotAllowed
+    },
+    {
+        path: '*',
+        name: 'Error404',
+        component: Error404
     },
 ]
 
