@@ -60,12 +60,12 @@
           ></v-textarea>
         </div>
         <div class="write-options">
-<!--          <div>-->
-<!--            <v-checkbox-->
-<!--                v-model="new_comment.all"-->
-<!--                label="برای کل ویدیو ثبت شود؟"-->
-<!--            ></v-checkbox>-->
-<!--          </div>-->
+          <!--          <div>-->
+          <!--            <v-checkbox-->
+          <!--                v-model="new_comment.all"-->
+          <!--                label="برای کل ویدیو ثبت شود؟"-->
+          <!--            ></v-checkbox>-->
+          <!--          </div>-->
           <div class="send-btn">
             <v-btn
                 elevation="2"
@@ -294,7 +294,8 @@ export default class VideoPlayer extends VideoPlayerProps {
     this.time = this.player.currentTime;
     let percentage = this.time / this.video_length * 100;
     this.progress.complete.style.width = percentage + '%';
-    this.progress.handler.style.left = percentage + '%';
+    if (!this.holding_progress_handler)
+      this.progress.handler.style.left = percentage + '%';
     this.progress.time_pass.innerText = this.to_time(parseInt(this.time));
     this.progress.length.innerText = this.to_time(parseInt(this.player.duration))
     this.check_comments(this.player.currentTime);
@@ -339,17 +340,16 @@ export default class VideoPlayer extends VideoPlayerProps {
   find_left_offset(elem) {
     let offset = 0
     while (elem) {
-      offset += elem.offsetLeft;
+      if (!(elem.classList.contains('v-card') || elem.classList.contains('row')))
+        offset += elem.offsetLeft;
       elem = elem.parentElement;
-      if(elem.classList.include('video-player', 0))
-        break;
     }
-    return offset;
+    return offset + 10;
   }
 
   click_bar(ev) {
     let left_offset = this.find_left_offset(this.progress.handler.parentElement);
-    console.log(ev.clientX +', '+ left_offset)
+    console.log(ev.clientX + ', ' + left_offset)
     let left = ev.clientX - left_offset;
     this.new_seek_time = left / this.progress.handler.parentElement.offsetWidth * this.video_length;
     this.player.currentTime = this.new_seek_time;
@@ -480,9 +480,10 @@ export default class VideoPlayer extends VideoPlayerProps {
 </script>
 
 <style scoped>
-.video-comment{
+.video-comment {
   width: 100%;
 }
+
 .video-player .bar {
   position: relative;
   width: 100%;
