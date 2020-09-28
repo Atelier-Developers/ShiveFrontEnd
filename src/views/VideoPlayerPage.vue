@@ -1,5 +1,5 @@
 <template>
-    <VideoPlayer :video_src="videoSrc"/>
+    <VideoPlayer :video_src="videoSrc" :video_name="videoName"/>
 </template>
 
 <script>
@@ -12,6 +12,9 @@
         computed:{
             videoSrc() {
                 return this.$route.params.videoSrc;
+            },
+            videoName() {
+                return this.$route.params.videoName;
             }
         }
     }

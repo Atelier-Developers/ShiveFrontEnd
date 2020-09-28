@@ -11,7 +11,7 @@
         </v-card-text>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
-                <v-btn color="primary" fab small @click="() => routeToVideoPlayer(file.file)">
+                <v-btn color="primary" fab small @click="() => routeToVideoPlayer(file.file, file.name)">
                     <v-icon color="accent">play_arrow</v-icon>
                 </v-btn>
                 <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
@@ -45,24 +45,27 @@
     export default {
         name: "FileTile",
         props: ['file', 'isDeletable', 'deleteAction'],
-        data(){
+        data() {
             return {
                 loading: false,
                 dialog: false,
             }
         },
         methods: {
-            deleteFile(){
+            deleteFile() {
                 this.loading = true;
                 this.deleteAction(this.file.pk).finally(() => {
                     this.loading = false;
                     this.dialog = false;
                 })
             },
-            routeToVideoPlayer(videoSrc) {
-                this.$router.push({name: 'VideoPlayerPage', params: {
-                    videoSrc: videoSrc,
-                    }});
+            routeToVideoPlayer(videoSrc, videoName) {
+                this.$router.push({
+                    name: 'VideoPlayerPage', params: {
+                        videoSrc: videoSrc,
+                        videoName: videoName,
+                    }
+                });
             }
         }
     }

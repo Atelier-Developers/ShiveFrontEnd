@@ -60,12 +60,12 @@
           ></v-textarea>
         </div>
         <div class="write-options">
-          <div>
-            <v-checkbox
-                v-model="new_comment.all"
-                label="برای کل ویدیو ثبت شود؟"
-            ></v-checkbox>
-          </div>
+<!--          <div>-->
+<!--            <v-checkbox-->
+<!--                v-model="new_comment.all"-->
+<!--                label="برای کل ویدیو ثبت شود؟"-->
+<!--            ></v-checkbox>-->
+<!--          </div>-->
           <div class="send-btn">
             <v-btn
                 elevation="2"
@@ -252,8 +252,8 @@ export default class VideoPlayer extends VideoPlayerProps {
         progress_bar: document.querySelector('.video-player .progress-bar'),
         complete: document.querySelector('.video-player .progress-bar .complete'),
         handler: document.querySelector('.video-player .progress-bar .handler'),
-        time_pass: document.querySelector('.video-player .progress-bar .pass'),
-        length: document.querySelector('.video-player .progress-bar .length'),
+        time_pass: document.querySelector('.video-player .pass'),
+        length: document.querySelector('.video-player .length'),
       }
     return this.progress_elems
   }
@@ -401,7 +401,7 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   close_write() {
     if (this.write_measures.close === 0) {
-      this.write_measures.close = document.querySelector('.video-player .write-comment').offsetWidth + 20
+      this.write_measures.close = document.querySelector('.video-player .write-comment').offsetWidth + 60
     }
     document.querySelector('.video-player .write-comment').style.top = '-' + (this.write_measures.close) + 'px';
     document.querySelector('.video-player .open-write').style.top = '0px';
@@ -579,14 +579,12 @@ export default class VideoPlayer extends VideoPlayerProps {
 }
 
 .video-comment .comments.in-player {
-  background-color: rgba(255, 255, 255, 0.47);
-  overflow-y: scroll;
+  overflow-y: auto;
   position: absolute;
   width: 30%;
-  height: 70%;
+  height: 100%;
   right: 0;
   transition: 0.5s;
-  box-shadow: 0 0 10px rgb(27 18 18);
 }
 
 .video-comment .comment {
