@@ -2,7 +2,7 @@
     <v-card :loading="loading" :disabled="loading">
         <v-card-title class="row justify-center"><h3>{{title}}</h3></v-card-title>
         <v-divider></v-divider>
-        <v-card-text v-if="subjects.length === 0" class="text-center" v-else>
+        <v-card-text v-if="subjects.length === 0" class="text-center">
             لیست خالی است...
         </v-card-text>
         <v-list v-else>

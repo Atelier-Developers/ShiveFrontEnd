@@ -1,16 +1,16 @@
 <template>
-    <div>
+    <div v-if="!pageLoading">
         <v-container>
             <v-row justify="center">
                 <h1>{{teamPresentation.subject.title}}</h1>
             </v-row>
         </v-container>
         <v-container>
-            <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
+            <PresentationFileComponent :loading="pageLoading" class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
                                        :files="teamPresentation.files"/>
         </v-container>
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
+            <v-card class="mx-5 mx-sm-15" tile :loading="pageLoading">
                 <v-card-title class="pr-10">
                     <v-icon right>description</v-icon>
                     توضیحات
@@ -97,6 +97,7 @@
             </v-dialog>
         </div>
     </div>
+    <Spinner v-else />
 
 </template>
 
@@ -105,10 +106,11 @@
     import {mapActions, mapGetters} from "vuex";
     import PresentationFileComponent from "../components/PresentationFileComponent";
     import PresentationComment from "@/components/PresentationComment";
+    import Spinner from "../components/Spinner";
 
     export default {
         name: "TeamPresentPage",
-        components: {PresentationComment, PresentationFileComponent, FileTile},
+        components: {Spinner, PresentationComment, PresentationFileComponent, FileTile},
         data() {
             return {
                 item: {
@@ -119,6 +121,7 @@
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
                 fileUploadLoading: false,
+                pageLoading: true,
             }
         },
         computed: {
@@ -161,7 +164,10 @@
             }
         },
         mounted() {
-            this.getTeamPresentation();
+            this.pageLoading = true;
+            this.getTeamPresentation().finally(() => {
+                this.pageLoading = false;
+            });
         }
     }
 </script>
