@@ -72,7 +72,6 @@
             ...mapActions('archiveModule', ['getSemesters', 'getPresentations', 'resetPresentations']),
 
             getSemPresentations(semesterId) {
-                console.log(semesterId);
                 this.getPresentations(semesterId).then(() => {
                 })
             },

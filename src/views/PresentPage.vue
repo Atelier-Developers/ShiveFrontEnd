@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loading">
     <v-container>
       <v-row justify="center">
         <h1>{{ currentPresentation.subject.title }}</h1>
@@ -63,6 +63,7 @@
 
     </v-container>
   </div>
+  <Spinner v-else />
 </template>
 
 <script>
@@ -71,24 +72,24 @@ import VideoPlayer from "../components/VideoPlayer";
 import {mapActions, mapGetters} from "vuex";
 import PresentationFileComponent from "../components/PresentationFileComponent";
 import PresentationComment from "@/components/PresentationComment";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "PresentPage",
-  components: {PresentationComment, PresentationFileComponent, VideoPlayer, FileTile},
+  components: {Spinner, PresentationComment, PresentationFileComponent, VideoPlayer, FileTile},
   props: ['id'],
   data() {
     return {
       comment: '',
       descriptionEditDialog: false,
       fileUploadDialog: false,
-      loading: false
+      loading: true
     }
   },
   computed: {
     ...mapGetters('presentationModule', ['currentPresentation']),
     presenterNames() {
       let teamMemeberNames = this.currentPresentation.team[0].profiles.map((p) => p.name);
-      console.log(teamMemeberNames);
       let memberNames = teamMemeberNames.join(' و ');
       return memberNames;
     }

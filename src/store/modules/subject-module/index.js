@@ -14,7 +14,6 @@ const mutations = {
         let value = state.subjects.splice(state.subjects.indexOf(item), 1)[0];
     },
     changeOneSubject(state, item) {
-        console.log(item);
         state.subjects[state.subjects.indexOf(item.subject)].title = item.title;
     }
 };
