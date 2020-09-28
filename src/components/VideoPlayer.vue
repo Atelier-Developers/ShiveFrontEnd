@@ -55,7 +55,7 @@
         </div>
         <div class="comment-input">
           <v-textarea
-              v-mode="new_comment.text"
+              v-model="new_comment"
               label="نظر شما"
           ></v-textarea>
         </div>
@@ -69,6 +69,7 @@
           <div class="send-btn">
             <v-btn
                 elevation="2"
+                @click="postComment"
             >ثبت
             </v-btn>
           </div>
@@ -132,13 +133,15 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import axios from 'axios';
-import {GET_ANNOUNCEMENTS} from "../network/API";
+import {GET_ANNOUNCEMENTS, POST_COMMENT, POST_COMMENT_FOR_VIDEO} from "../network/API";
 
 
 const VideoPlayerProps = Vue.extend({
   props: {
     video_src: String,
     comments: Array,
+    id: Number,
+    action: Function,
   }
 })
 
@@ -162,10 +165,7 @@ export default class VideoPlayer extends VideoPlayerProps {
     open: 0,
     close: 0,
   }
-  new_comment = {
-    text: '',
-    all: false
-  }
+  new_comment = '';
 
   low_com = 0;
   mini_com_set = false;
@@ -250,6 +250,14 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   handler_mouse_down() {
     this.holding_progress_handler = true;
+  }
+
+  postComment(){
+    axios.post(POST_COMMENT_FOR_VIDEO + this.id, {text: this.new_comment, time: this.player.currentTime}).then((response) => {
+      console.log(response);
+      this.new_comment = '';
+      this.action();
+    })
   }
 
   video_player_mouse_up() {
@@ -441,7 +449,7 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 .video-player .complete {
   position: absolute;
-  background-color: red;
+  background-color: #309fb7;
   height: 100%;
   width: 0;
   left: 0;
@@ -463,7 +471,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   position: absolute;
   height: 11px;
   width: 11px;
-  background-color: red;
+  background-color: #309fb7;
   border-radius: 100%;
   box-shadow: inset 0 0 3px #515151;
   top: 50%;
@@ -656,7 +664,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   transform-origin: 0px 50px;
   left: 0;
   transform: translate(-50%, -50%) rotateZ(0deg);
-  background-color: red;
+  background-color: #309fb7;
   animation: loading 3s infinite;
   height: 10px;
   width: 10px;
