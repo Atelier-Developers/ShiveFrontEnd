@@ -4,7 +4,6 @@
         class="video-player"
         v-on:mousemove="mouse_move"
         v-on:mouseup="video_player_mouse_up"
-        v-on:keydown="video_player_key_press"
         v-on:click="video_player_click"
     >
       <div class="back-ground-overlay"
@@ -48,33 +47,7 @@
       <div v-if="play_pause_toggle" class="open-write" v-on:click="open_write">
         <v-icon color="white">add_comment</v-icon>
       </div>
-      <div v-if="play_pause_toggle" class="write-comment">
-        <div class="write-close" v-on:click="close_write">
-          <v-icon color="white" v-on:click="close_write_comment">close</v-icon>
-        </div>
-        <div class="comment-input">
-          <v-textarea
-              v-model="new_comment"
-              label="نظر شما"
-          ></v-textarea>
-        </div>
-        <div class="write-options">
-          <!--          <div>-->
-          <!--            <v-checkbox-->
-          <!--                v-model="new_comment.all"-->
-          <!--                label="برای کل ویدیو ثبت شود؟"-->
-          <!--            ></v-checkbox>-->
-          <!--          </div>-->
-          <div class="send-btn">
-            <v-btn
-                elevation="2"
-                @click="postComment"
-            >ثبت
-            </v-btn>
-          </div>
 
-        </div>
-      </div>
       <div class="time">
         <div class="pass">00:00</div>
         <div class="slash">/</div>
@@ -114,9 +87,36 @@
         <div class="load-item"></div>
         <div class="load-item"></div>
       </div>
+      <div class="write-comment">
+        <div class="write-close" v-on:click="close_write">
+          <v-icon color="white" v-on:click="close_write_comment">close</v-icon>
+        </div>
+        <div class="comment-input">
+          <v-textarea
+              v-model="new_comment"
+              label="نظر شما"
+          ></v-textarea>
+        </div>
+        <div class="write-options">
+          <!--          <div>-->
+          <!--            <v-checkbox-->
+          <!--                v-model="new_comment.all"-->
+          <!--                label="برای کل ویدیو ثبت شود؟"-->
+          <!--            ></v-checkbox>-->
+          <!--          </div>-->
+          <div class="send-btn">
+            <v-btn
+                elevation="2"
+                v-on:click="postComment"
+            >ثبت
+            </v-btn>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <div class="comments" v-if="this.full_screen_toggle">
-      <div class="comment" v-for="comment in this.comments" :key="comment.pk">
+    <div class="comments">
+      <div class="comment my-3" v-for="comment in this.comments" :key="comment.pk">
         <div class="comment-name">{{ comment.name }}</div>
         <div class="comment-time">{{ to_time(parseInt(comment.time)) }}</div>
         <v-divider/>
@@ -153,7 +153,9 @@ export default class VideoPlayer extends VideoPlayerProps {
   time = 0;
   duration = 0;
   full_screen_toggle = true;
+  new_comment = '';
   active_comments = []
+  comments = [];
   comment_measures = {
     open: 0,
     close: 0,
@@ -162,8 +164,6 @@ export default class VideoPlayer extends VideoPlayerProps {
     open: 0,
     close: 0,
   }
-  new_comment = '';
-  _comments = [];
   low_com = 0;
   mini_com_set = false;
   first_time_play = true;
@@ -171,14 +171,9 @@ export default class VideoPlayer extends VideoPlayerProps {
   mounted() {
     this.getCommentsForVideo();
     let delta = 0.125;
-    console.log(this.loading);
     for (let i = 0; i < this.loading.children.length; i++) {
       this.loading.children[i].style.animationDelay = (-1.125 + delta * i) + 's';
     }
-  }
-
-  get comments(){
-    return this._comments
   }
 
   get player() {
@@ -254,7 +249,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   getCommentsForVideo() {
     let _self = this
     axios.get(GET_COMMENTS_FOR_VIDEO + this.id).then((response) => {
-          _self._comments = response.data.map((j) => {
+          _self.comments = response.data.map((j) => {
             return {
               pk: j.id,
               text: j.text,
@@ -262,8 +257,7 @@ export default class VideoPlayer extends VideoPlayerProps {
               time: j.time,
             }
           });
-          console.log(_self._comments);
-          _self._comments.sort(function (a, b) {
+          _self.comments.sort(function (a, b) {
             return a.time - b.time;
           });
         }
@@ -271,22 +265,21 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   postComment() {
-    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    console.log(this.comments)
-    this._comments = this._comments.concat([
-      {
-        pk: -100,
-        text: this.new_comment,
-        name: 'کییییییییییرییییییییییییییی',
-        time: this.player.currentTime
-      }
-    ])
-    // axios.post(POST_COMMENT_FOR_VIDEO + this.id, {
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    // console.log(this.comments)
+    // this.comments.push({
+    //   pk: -100,
     //   text: this.new_comment,
+    //   name: 'کییییییییییرییییییییییییییی',
     //   time: this.player.currentTime
-    // }).then(() => {
-    //   console.log("HELLLEOOEOEDJKFS:LKJDFS:LKDSFJ:LKFDSJL");
     // });
+    axios.post(POST_COMMENT_FOR_VIDEO + this.id, {
+      text: this.new_comment,
+      time: this.player.currentTime
+    }).then(() => {
+      console.log("HELLLEOOEOEDJKFS:LKJDFS:LKDSFJ:LKFDSJL");
+      this.new_comment = '';
+    });
   }
 
   video_player_mouse_up() {
@@ -313,9 +306,6 @@ export default class VideoPlayer extends VideoPlayerProps {
     }, 1000, this.progress)
   }
 
-  video_player_key_press(ev) {
-    console.log(ev);
-  }
 
   video_player_click(ev) {
 
@@ -333,14 +323,13 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   click_bar(ev) {
     let left_offset = this.find_left_offset(this.progress.handler.parentElement);
-    console.log(ev.clientX + ', ' + left_offset)
     let left = ev.clientX - left_offset;
     this.new_seek_time = left / this.progress.handler.parentElement.offsetWidth * this.video_length;
     this.player.currentTime = this.new_seek_time;
   }
 
   to_time(time) {
-    if (time === NaN)
+    if (isNaN(time))
       return "--:--";
     let hour = parseInt(time / 3600)
     time %= 3600;
@@ -429,17 +418,14 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   loading_video() {
-    console.log('loading')
     this.loading.style.display = 'block';
   }
 
   load_end() {
     if (this.player.currentTime < 0.5 && this.first_time_play) {
-      console.log('end');
       this.first_time_play = false;
     }
     this.loading.style.display = 'none';
-    console.log('Running Here')
     if (!this.mini_com_set) {
       let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
       for (let i = 0; i < mini_comments.length; i++) {
