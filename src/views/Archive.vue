@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-container>
+            <h1 align="center">آرشیو</h1>
             <v-row>
                 <v-col cols="12" class="col-md-4">
                     <h3>ترم:</h3>
@@ -16,7 +17,8 @@
             </v-row>
         </v-container>
         <v-container>
-            <v-row>
+            <CardLoadingSkeleton v-if="loading" />
+            <v-row v-else-if="presentations.length !== 0">
                 <v-col cols="12" class="col-md-4" v-for="project in presentations"
                 >
                     <v-card>
@@ -40,10 +42,11 @@
 <script>
     import TeamPersonTile from "../components/TeamPersonTile";
     import {mapActions, mapGetters} from "vuex";
+    import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
 
     export default {
         name: "Archive",
-        components: {TeamPersonTile},
+        components: {CardLoadingSkeleton, TeamPersonTile},
         props: [],
         computed: {
             ...mapGetters('archiveModule', ['semesters', 'presentations']),
@@ -61,6 +64,7 @@
                 years_item: ['همه', 96, 97, 98],
                 selected_year: null,
                 archive_projects: [],
+                loading: false,
             }
         },
 
@@ -73,15 +77,18 @@
                 })
             },
             routeToArchivedPresentation(presentation) {
-                this.$router.push({name: 'ArchivedPresentationPage', params: {presentation: presentation}});
+                this.$router.push({name: 'ArchivedPresentationPage', params: {"presentation": presentation}});
             }
         },
 
         mounted() {
+            this.loading = true;
             this.getSemesters().then(() => {
                 this.selected_year = this.semesters[0];
                 this.getPresentations(this.semesters[0].id).then(() => {
                 })
+            }).finally(() => {
+                this.loading = false;
             })
         }
     }

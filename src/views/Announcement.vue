@@ -1,9 +1,10 @@
 <template>
     <div class="mx-3">
         <v-container>
-            <!--            <CardLoadingSkeleton v-if="pageLoading" />-->
-            <v-row v-if="announcement.length !== 0" class="fill-height">
-                <v-col cols="12" class="col-md-4 col-12" v-for="announcement in announcements">
+            <h1 align="center">اطلاعیه ها</h1>
+            <CardLoadingSkeleton v-if="loading" />
+            <v-row v-else-if="announcement.length !== 0" class="fill-height">
+                <v-col cols="12" class="col-md-4 col-12" v-for="announcement in announcements" :key="announcement.id">
                     <v-card tile>
                         <div class="primary">
                             <v-card-title class="primary accent--text justify-center header-6">
@@ -13,7 +14,7 @@
                         <v-divider/>
                         <v-card-text>
                             <v-row class="mx-2">
-                                <read-more more-str="ادامه ی مطلب" :text="announcement.desc" link="#"
+                                <read-more more-str="ادامه ی مطلب" :text="announcement.description" link="#"
                                            less-str="بستن مطلب" :max-chars="50"></read-more>
                             </v-row>
                         </v-card-text>
@@ -28,16 +29,17 @@
 
                                 <v-list-item
                                         v-for="file in announcement.files"
-                                        :key="file.name"
+                                        :key="file.id"
                                 >
                                     <v-list-item-content>
                                         <v-row class="px-sm-4 px-2" justify="space-between">
                                             <v-col cols="9">
-                                                <v-list-item-title v-text="file.name"></v-list-item-title>
+                                                <v-list-item-title v-text="file.title"/>
                                             </v-col>
 
                                             <v-col>
-                                                <v-btn color="primary" fab small>
+                                                <v-btn color="primary" fab small tag="a" target="_blank"
+                                                       :href="file.file">
                                                     <v-icon color="accent">get_app</v-icon>
                                                 </v-btn>
                                             </v-col>
@@ -57,9 +59,9 @@
             <v-btn
                     fab
                     @click="toggleDialog"
-                    color="accent"
+                    color="primary"
             >
-                <v-icon>add</v-icon>
+                <v-icon color="accent">add</v-icon>
             </v-btn>
         </div>
 
@@ -109,7 +111,9 @@
                 <v-card-actions>
                     <v-container class="mb-1">
                         <v-btn color="primary" text @click="toggleDialog">بستن</v-btn>
-                        <v-btn color="primary" text @click="submitAction">تایید</v-btn>
+                        <v-btn color="primary" :disabled="announcement.title === '' || announcement.desc === ''" text
+                               @click="submitAction">تایید
+                        </v-btn>
                     </v-container>
                 </v-card-actions>
             </v-card>
@@ -121,7 +125,7 @@
     import InputFieldDialogButton from "../components/InputFieldDialogButton";
     import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
     import EmptyState from "../components/EmptyState";
-    import {mapActions} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "Announcement",
@@ -134,61 +138,35 @@
                     desc: "",
                     files: [],
                 },
-
-
                 dialog: false,
-
-                announcements: [
-                    {
-                        "title": "آلت",
-                        "desc": "سخنگوی وزارت امور خارجه کشورمان در پیامی طعنه‌آمیز اعلام کرد رئیس‌جمهور آمریکا روز گذشته به‌گونه‌ای در مجمع عمومی سازمان ملل متحد سخنرانی کرده که گویی در یک تجمع انتخاباتی در کشورش مشغول سخنرانی بوده است! به گزارش گروه بین‌الملل خبرگزاری تسنیم، سعید خطیب‌زاده سخنگوی وزارت امور خارجه جمهوری اسلامی ایران شامگاه چهارشنبه در پیامی توئیتری اعلام کرد که دونالد ترامپ رئیس‌جمهور آمریکا در سخنرانی دیروز خود در هفتاد و پنجمین مجمع عمومی سازمان ملل متحد، بار دیگر سازمان «ملل متحد» را با «ایالات متحده» اشتباه گرفته و همچون تجمعات انتخاباتی به تعریف و تمجید از سیاست‌های شکست‌خورده دولت خود پرداخته است. ",
-                        files: [
-                            {
-                                name: "فایل آپلود شده"
-                            },
-
-                            {
-                                name: "فایل آپلود شده"
-                            }
-                        ]
-                    },
-
-                    {
-                        "title": "آلت",
-                        "desc": "سخنگوی وزارت امور خارجه کشورمان در پیامی طعنه‌آمیز اعلام کرد رئیس‌جمهور آمریکا روز گذشته به‌گونه‌ای در مجمع عمومی سازمان ملل متحد سخنرانی کرده که گویی در یک تجمع انتخاباتی در کشورش مشغول سخنرانی بوده است! به گزارش گروه بین‌الملل خبرگزاری تسنیم، سعید خطیب‌زاده سخنگوی وزارت امور خارجه جمهوری اسلامی ایران شامگاه چهارشنبه در پیامی توئیتری اعلام کرد که دونالد ترامپ رئیس‌جمهور آمریکا در سخنرانی دیروز خود در هفتاد و پنجمین مجمع عمومی سازمان ملل متحد، بار دیگر سازمان «ملل متحد» را با «ایالات متحده» اشتباه گرفته و همچون تجمعات انتخاباتی به تعریف و تمجید از سیاست‌های شکست‌خورده دولت خود پرداخته است. ",
-                        files: [
-                            {
-                                name: "فایل آپلود شده"
-                            }
-                        ]
-                    },
-
-                    {
-                        "title": "آلت",
-                        "desc": "سخنگوی وزارت امور خارجه کشورمان در پیامی طعنه‌آمیز اعلام کرد رئیس‌جمهور آمریکا روز گذشته به‌گونه‌ای در مجمع عمومی سازمان ملل متحد سخنرانی کرده که گویی در یک تجمع انتخاباتی در کشورش مشغول سخنرانی بوده است! به گزارش گروه بین‌الملل خبرگزاری تسنیم، سعید خطیب‌زاده سخنگوی وزارت امور خارجه جمهوری اسلامی ایران شامگاه چهارشنبه در پیامی توئیتری اعلام کرد که دونالد ترامپ رئیس‌جمهور آمریکا در سخنرانی دیروز خود در هفتاد و پنجمین مجمع عمومی سازمان ملل متحد، بار دیگر سازمان «ملل متحد» را با «ایالات متحده» اشتباه گرفته و همچون تجمعات انتخاباتی به تعریف و تمجید از سیاست‌های شکست‌خورده دولت خود پرداخته است.",
-                        files: [
-                            {
-                                name: "فایل آپلود شده"
-                            }
-                        ]
-                    },
-                ]
+                loading: false
             }
         },
-
         methods: {
-            ...mapActions('annModule', ['createAnnouncement']),
-
+            ...mapActions('annModule', ['createAnnouncement', 'getAnnouncements']),
             toggleDialog() {
                 this.dialog = !this.dialog;
             },
-
             submitAction() {
-                console.log(this.announcement.files[0].name)
                 this.createAnnouncement(this.announcement).then(() => {
-
-                })
+                    this.announcement = {
+                        title: "",
+                        desc: "",
+                        files: [],
+                    };
+                    this.dialog = !this.dialog;
+                    this.getAnnouncements();
+                });
             }
+        },
+        computed: {
+            ...mapGetters('annModule', ['announcements'])
+        },
+        mounted() {
+            this.loading = true;
+            this.getAnnouncements().finally(() => {
+                this.loading = false;
+            });
         }
     }
 </script>

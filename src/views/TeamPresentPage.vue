@@ -4,12 +4,6 @@
             <v-row justify="center">
                 <h1>{{teamPresentation.subject.title}}</h1>
             </v-row>
-            <!--            <v-row justify="center">-->
-            <!--                <h3 class="subtitle-1">توسط</h3>-->
-            <!--            </v-row>-->
-            <!--            <v-row justify="center">-->
-            <!--                <h3 class="subtitle-1">امیر مسعود باغی و امیر محمد توکلی</h3>-->
-            <!--            </v-row>-->
         </v-container>
         <v-container>
             <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
@@ -70,31 +64,6 @@
                     نظرات
                 </v-card-title>
                 <v-divider/>
-                <!--                <v-card-text>-->
-                <!--                    <v-container>-->
-                <!--                        <v-card tile>-->
-                <!--                            <v-card-title>-->
-                <!--                                <h5>نظر خود را وارد نمایید:</h5>-->
-                <!--                            </v-card-title>-->
-                <!--                            <v-subheader class="text&#45;&#45;black font-weight-bold">-->
-                <!--                                امیر مسعود باغی-->
-                <!--                            </v-subheader>-->
-                <!--                            <v-container>-->
-                <!--                                <v-textarea outlined label="کامنت جدید..." v-model="comment" rows="4">-->
-                <!--                                </v-textarea>-->
-                <!--                            </v-container>-->
-                <!--                            <v-card-actions class="justify-center">-->
-                <!--                                <v-btn-->
-                <!--                                        class="mb-2"-->
-                <!--                                        color="primary"-->
-                <!--                                        rounded-->
-                <!--                                >-->
-                <!--                                    <v-icon dark color="accent">add</v-icon>-->
-                <!--                                </v-btn>-->
-                <!--                            </v-card-actions>-->
-                <!--                        </v-card>-->
-                <!--                    </v-container>-->
-                <!--                </v-card-text>-->
                 <v-card-text>
                     <v-container>
                         <v-card tile v-for="comment in teamPresentation.comments">

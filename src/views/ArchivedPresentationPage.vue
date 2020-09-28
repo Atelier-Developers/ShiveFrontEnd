@@ -38,30 +38,6 @@
                     نظرات
                 </v-card-title>
                 <v-divider/>
-<!--                <v-card-text>-->
-<!--                    <v-container>-->
-<!--                        <v-card tile>-->
-<!--                            <v-card-title>-->
-<!--                                <h5>نظر خود را وارد نمایید:</h5>-->
-<!--                            </v-card-title>-->
-<!--                            <v-container>-->
-<!--                                <v-textarea outlined label="کامنت جدید..." :rules="[v => !!v || 'الزامی']"-->
-<!--                                            required v-model="comment" rows="4">-->
-<!--                                </v-textarea>-->
-<!--                            </v-container>-->
-<!--                            <v-card-actions class="justify-center">-->
-<!--                                <v-btn-->
-<!--                                        class="mb-2"-->
-<!--                                        color="primary"-->
-<!--                                        rounded-->
-<!--                                        @click="() => postComment(comment)"-->
-<!--                                >-->
-<!--                                    <v-icon dark color="accent">add</v-icon>-->
-<!--                                </v-btn>-->
-<!--                            </v-card-actions>-->
-<!--                        </v-card>-->
-<!--                    </v-container>-->
-<!--                </v-card-text>-->
                 <v-card-text>
                     <v-container>
                         <v-card tile v-for="comment in presentation.comments">
@@ -85,7 +61,7 @@
     import PresentationFileComponent from "../components/PresentationFileComponent";
 
     export default {
-        name: "PresentPage",
+        name: "ArchivedPresentationPage",
         components: {PresentationFileComponent, VideoPlayer, FileTile},
         data() {
             return {
@@ -99,25 +75,12 @@
                 return teamMemberNames.join(' و ');
             },
             presentation() {
-                return this.$router.params.presentation;
+                return this.$route.params.presentation;
             }
-
-
         },
         methods: {
-            // ...mapActions('presentationModule', ['getCurrentPresentation', 'postCommentForCurrentPresentation']),
-            // postComment(comment) {
-            //     this.postCommentForCurrentPresentation({
-            //         pk: this.presentation.pk,
-            //         comment: {text: comment}
-            //     }).then(() => {
-            //         this.comment = '';
-            //         this.getCurrentPresentation();
-            //     })
-            // }
         },
         mounted() {
-            // this.getCurrentPresentation();
         }
 
     }

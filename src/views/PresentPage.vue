@@ -13,10 +13,10 @@
         </v-container>
 
         <v-container>
-            <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="false" :files="currentPresentation.files"/>
+            <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="false" :loading="loading" :files="currentPresentation.files"/>
         </v-container>
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
+            <v-card class="mx-5 mx-sm-15" tile :loading="loading">
                 <v-card-title class="pr-10">
                     <v-icon right>description</v-icon>
                     توضیحات
@@ -28,44 +28,11 @@
                 <v-card-text class="text-center" v-else>
                     توضیحی وارد نشده است...
                 </v-card-text>
-                <!--                <v-card-actions class="justify-end">-->
-                <!--                    <v-btn-->
-                <!--                            class="ml-5 mb-2"-->
-                <!--                            color="primary"-->
-                <!--                            rounded-->
-                <!--                            @click.stop="descriptionEditDialog = true"-->
-                <!--                    >-->
-                <!--                        <v-icon color="accent">create</v-icon>-->
-                <!--                    </v-btn>-->
-
-                <!--                    <v-dialog-->
-                <!--                            v-model="descriptionEditDialog"-->
-                <!--                            max-width="570"-->
-                <!--                    >-->
-                <!--                        <v-card>-->
-                <!--                            <v-card-title>-->
-                <!--                                <span class="headline">توضیحات جدید</span>-->
-                <!--                            </v-card-title>-->
-                <!--                            <v-card-text>-->
-                <!--                                <v-row>-->
-                <!--                                    <v-col>-->
-                <!--                                        <v-textarea auto-grow rows="3" label="توضیحات خود را وارد کنید..."/>-->
-                <!--                                    </v-col>-->
-                <!--                                </v-row>-->
-                <!--                            </v-card-text>-->
-                <!--                            <v-card-actions>-->
-                <!--                                <v-spacer></v-spacer>-->
-                <!--                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>-->
-                <!--                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>-->
-                <!--                            </v-card-actions>-->
-                <!--                        </v-card>-->
-                <!--                    </v-dialog>-->
-                <!--                </v-card-actions>-->
             </v-card>
         </v-container>
 
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
+            <v-card class="mx-5 mx-sm-15" tile :loading="loading">
                 <v-card-title class="pr-10">
                     <v-icon right>comment</v-icon>
                     نظرات
@@ -77,16 +44,14 @@
                             <v-card-title>
                                 <h5>نظر خود را وارد نمایید:</h5>
                             </v-card-title>
-                            <!--                            <v-subheader class="text&#45;&#45;black font-weight-bold">-->
-                            <!--                                USERNAME_HERE-->
-                            <!--                            </v-subheader>-->
                             <v-container>
-                                <v-textarea outlined label="کامنت جدید..." :rules="[v => !!v || 'الزامی']"
+                                <v-textarea outlined label="کامنت جدید..."
                                             required v-model="comment" rows="4">
                                 </v-textarea>
                             </v-container>
                             <v-card-actions class="justify-center">
                                 <v-btn
+                                        :disabled="comment === ''"
                                         class="mb-2"
                                         color="primary"
                                         rounded
@@ -100,7 +65,7 @@
                 </v-card-text>
                 <v-card-text>
                     <v-container>
-                        <v-card tile v-for="comment in currentPresentation.comments">
+                        <v-card tile v-for="comment in currentPresentation.comments" :key="comment.pk" :loading="loading">
                             <v-card-title>
                                 <h5>{{comment.profile.name}}</h5>
                             </v-card-title>
@@ -112,37 +77,6 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <!--        <div id="floating-button" class="mb-10 mr-3">-->
-        <!--            <v-btn-->
-        <!--                    fab-->
-        <!--                    @click="fileUploadDialog = true"-->
-        <!--                    color="primary"-->
-        <!--            >-->
-        <!--                <v-icon color="accent">add</v-icon>-->
-        <!--            </v-btn>-->
-        <!--            <v-dialog-->
-        <!--                    v-model="fileUploadDialog"-->
-        <!--                    max-width="570"-->
-        <!--            >-->
-        <!--                <v-card>-->
-        <!--                    <v-card-title>-->
-        <!--                        <span class="headline">آپلود فایل جدید</span>-->
-        <!--                    </v-card-title>-->
-        <!--                    <v-card-text>-->
-        <!--                        <v-row>-->
-        <!--                            <v-col>-->
-        <!--                                <v-file-input label="فایل جدید خود را انتخاب کنید" outlined dense/>-->
-        <!--                            </v-col>-->
-        <!--                        </v-row>-->
-        <!--                    </v-card-text>-->
-        <!--                    <v-card-actions>-->
-        <!--                        <v-spacer></v-spacer>-->
-        <!--                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>-->
-        <!--                        <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">تایید</v-btn>-->
-        <!--                    </v-card-actions>-->
-        <!--                </v-card>-->
-        <!--            </v-dialog>-->
-        <!--        </div>-->
     </div>
 </template>
 
@@ -161,6 +95,7 @@
                 comment: '',
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
+                loading: false
             }
         },
         computed: {
@@ -185,7 +120,10 @@
             }
         },
         mounted() {
-            this.getCurrentPresentation();
+            this.loading = true;
+            this.getCurrentPresentation().finally(() => {
+                this.loading = false;
+            });
         }
 
     }
