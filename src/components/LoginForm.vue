@@ -79,14 +79,16 @@ export default {
   },
   methods: {
     sendToSignup() {
-      this.$router.push({name: 'Signup'})
+      this.$router.replace({name: 'Signup'})
     },
     ...mapActions('authModule', ['login']),
     loginPerson() {
       if (!this.$refs.form.validate())
         return;
       this.loading = true;
-      this.login(this.user).catch((e) => {
+      this.login(this.user).then(() => {
+        this.$router.replace({name: "Announcement"})
+      }).catch((e) => {
         this.reqStatus.msg = e.message;
         this.reqStatus.error = true;
       }).finally(() => {

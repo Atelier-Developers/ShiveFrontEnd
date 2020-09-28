@@ -57,6 +57,13 @@ export default {
       drawer: false,
       items: [
         {
+          icon: "announcement",
+          title: "اطلاعیه ها",
+          to: {
+            name: "Announcement"
+          }
+        },
+        {
           icon: "people",
           title: "تیم من",
           to: {
@@ -99,13 +106,6 @@ export default {
           }
         },
 
-        {
-          icon: "announcement",
-          title: "اطلاعیه ها",
-          to: {
-            name: "Announcement"
-          }
-        },
       ]
     }
   },

@@ -102,13 +102,15 @@
         methods: {
             ...mapActions('authModule', ['signUp']),
             sendToLogin() {
-                this.$router.push({name: 'Login'})
+                this.$router.replace({name: 'Login'})
             },
             signupPerson() {
                 if (!this.$refs.form.validate())
                     return;
                 this.loading = true;
-                this.signUp(this.user).catch((e) => {
+                this.signUp(this.user).then(() => {
+                  this.$router.replace({name: 'Login'})
+                }).catch((e) => {
                     this.reqStatus.msg = e.message;
                     this.reqStatus.error = true;
                 }).finally(() => {
