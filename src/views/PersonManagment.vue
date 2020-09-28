@@ -1,6 +1,5 @@
 <template>
   <div class="mx-3">
-    <VideoPlayer></VideoPlayer>
     <v-container>
       <h1 align="center">مدیریت کاربران</h1>
       <v-row dense>

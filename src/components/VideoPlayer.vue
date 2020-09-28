@@ -131,6 +131,9 @@
 <script>
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import axios from 'axios';
+import {GET_ANNOUNCEMENTS} from "../network/API";
+
 
 const VideoPlayerProps = Vue.extend({
   props: {
@@ -222,17 +225,17 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   low_com = 0;
   mini_com_set = false;
-  first_time_play = true
+  first_time_play = true;
 
   mounted() {
-    this.comments.sort(function (a, b) {
-      return a.time - b.time;
-    });
-    let delta = 0.125
-    console.log(this.loading)
-    for (let i = 0; i < this.loading.children.length; i++) {
-      this.loading.children[i].style.animationDelay = (-1.125 + delta * i) + 's';
-    }
+      this.comments.sort(function (a, b) {
+        return a.time - b.time;
+      });
+      let delta = 0.125;
+      console.log(this.loading);
+      for (let i = 0; i < this.loading.children.length; i++) {
+        this.loading.children[i].style.animationDelay = (-1.125 + delta * i) + 's';
+      }
   }
 
   get player() {

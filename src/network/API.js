@@ -27,3 +27,4 @@ export const CREATE_ANN = baseUrl + "ann/create/";
 export const UPLOAD_ANN = baseUrl + "ann/upload/";
 export const GET_ANNOUNCEMENTS = baseUrl + "ann/list/";
 export const DELETE_FILE_UPLOAD = baseUrl + "presentation/delete-file/";
+// export const GET_COMMENTS_FOR_VIDEO

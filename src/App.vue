@@ -129,6 +129,62 @@ export default {
   font-weight: 500;
 }
 
+/*@font-face {*/
+/*  font-family: Shabnam;*/
+/*  src: url('./fonts/Shabnam-Bold-FD.eot');*/
+/*  src: url('./fonts/Shabnam-Bold-FD.eot?#iefix') format('embedded-opentype'),*/
+/*  url('./fonts/Shabnam-Bold-FD.woff2') format('woff2'),*/
+/*  url('./fonts/Shabnam-Bold-FD.woff') format('woff'),*/
+/*  url('./fonts/Shabnam-Bold-FD.ttf') format('truetype');*/
+/*  font-weight: bold;*/
+/*}*/
+
+
+/*@font-face {*/
+/*  font-family: Shabnam;*/
+/*  src: url('./fonts/Shabnam-FD.eot');*/
+/*  src: url('./fonts/Shabnam-FD.eot?#iefix') format('embedded-opentype'),*/
+/*  url('./fonts/Shabnam-FD.woff2') format('woff2'),*/
+/*  url('./fonts/Shabnam-FD.woff') format('woff'),*/
+/*  url('./fonts/Shabnam-FD.ttf') format('truetype');*/
+/*  font-weight: normal;*/
+/*}*/
+
+
+/*@font-face {*/
+/*  font-family: Shabnam;*/
+/*  src: url('./fonts/Shabnam-Light-FD.eot');*/
+/*  src: url('./fonts/Shabnam-Light-FD.eot?#iefix') format('embedded-opentype'),*/
+/*  url('./fonts/Shabnam-Light-FD.woff2') format('woff2'),*/
+/*  url('./fonts/Shabnam-Light-FD.woff') format('woff'),*/
+/*  url('./fonts/Shabnam-Light-FD.ttf') format('truetype');*/
+/*  font-weight: 300;*/
+/*}*/
+
+
+/*@font-face {*/
+/*  font-family: Shabnam;*/
+/*  src: url('./fonts/Shabnam-Medium-FD.eot');*/
+/*  src: url('./fonts/Shabnam-Medium-FD.eot?#iefix') format('embedded-opentype'),*/
+/*  url('./fonts/Shabnam-Medium-FD.woff2') format('woff2'),*/
+/*  url('./fonts/Shabnam-Medium-FD.woff') format('woff'),*/
+/*  url('./fonts/Shabnam-Medium-FD.ttf') format('truetype');*/
+/*  font-weight: 500;*/
+/*}*/
+
+
+/*@font-face {*/
+/*  font-family: Shabnam;*/
+/*  src: url('./fonts/Shabnam-Thin-FD.eot');*/
+/*  src: url('./fonts/Shabnam-Thin-FD.eot?#iefix') format('embedded-opentype'),*/
+/*  url('./fonts/Shabnam-Thin-FD.woff2') format('woff2'),*/
+/*  url('./fonts/Shabnam-Thin-FD.woff') format('woff'),*/
+/*  url('./fonts/Shabnam-Thin-FD.ttf') format('truetype');*/
+/*  font-weight: 100;*/
+/*}*/
+
+
+
 .faLang {
   $body-font-family: Shabnam, Tahoma !important;
 
