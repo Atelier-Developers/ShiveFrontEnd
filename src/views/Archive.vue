@@ -73,7 +73,7 @@
                 })
             },
             routeToArchivedPresentation(presentation) {
-                this.$router.push({name: 'ArchivedPresentationPage', params: {presentation: presentation}});
+                this.$router.push({name: 'ArchivedPresentationPage', params: {"presentation": presentation}});
             }
         },
 

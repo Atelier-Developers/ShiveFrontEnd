@@ -85,7 +85,7 @@
     import PresentationFileComponent from "../components/PresentationFileComponent";
 
     export default {
-        name: "PresentPage",
+        name: "ArchivedPresentationPage",
         components: {PresentationFileComponent, VideoPlayer, FileTile},
         data() {
             return {
@@ -99,25 +99,12 @@
                 return teamMemberNames.join(' و ');
             },
             presentation() {
-                return this.$router.params.presentation;
+                return this.$route.params.presentation;
             }
-
-
         },
         methods: {
-            // ...mapActions('presentationModule', ['getCurrentPresentation', 'postCommentForCurrentPresentation']),
-            // postComment(comment) {
-            //     this.postCommentForCurrentPresentation({
-            //         pk: this.presentation.pk,
-            //         comment: {text: comment}
-            //     }).then(() => {
-            //         this.comment = '';
-            //         this.getCurrentPresentation();
-            //     })
-            // }
         },
         mounted() {
-            // this.getCurrentPresentation();
         }
 
     }

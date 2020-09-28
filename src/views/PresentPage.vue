@@ -81,12 +81,13 @@
                             <!--                                USERNAME_HERE-->
                             <!--                            </v-subheader>-->
                             <v-container>
-                                <v-textarea outlined label="کامنت جدید..." :rules="[v => !!v || 'الزامی']"
+                                <v-textarea outlined label="کامنت جدید..."
                                             required v-model="comment" rows="4">
                                 </v-textarea>
                             </v-container>
                             <v-card-actions class="justify-center">
                                 <v-btn
+                                        :disabled="comment === ''"
                                         class="mb-2"
                                         color="primary"
                                         rounded

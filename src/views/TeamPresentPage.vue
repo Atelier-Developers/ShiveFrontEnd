@@ -4,12 +4,6 @@
             <v-row justify="center">
                 <h1>{{teamPresentation.subject.title}}</h1>
             </v-row>
-            <!--            <v-row justify="center">-->
-            <!--                <h3 class="subtitle-1">توسط</h3>-->
-            <!--            </v-row>-->
-            <!--            <v-row justify="center">-->
-            <!--                <h3 class="subtitle-1">امیر مسعود باغی و امیر محمد توکلی</h3>-->
-            <!--            </v-row>-->
         </v-container>
         <v-container>
             <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
