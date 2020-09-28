@@ -65,7 +65,7 @@
                 </v-card-text>
                 <v-card-text>
                     <v-container>
-                        <v-card tile v-for="comment in currentPresentation.comments" :key="comment.pk" :loading="loading">
+                        <v-card tile v-for="comment in currentPresentation.comments" :key="comment.pk" :loading="loading" class="my-4">
                             <v-card-title>
                                 <h5>{{comment.profile.name}}</h5>
                             </v-card-title>

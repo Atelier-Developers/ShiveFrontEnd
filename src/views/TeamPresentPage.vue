@@ -66,7 +66,7 @@
                 <v-divider/>
                 <v-card-text>
                     <v-container>
-                        <v-card tile v-for="comment in teamPresentation.comments">
+                        <v-card tile v-for="comment in teamPresentation.comments" class="my-4">
                             <v-card-title>
                                 <h5>{{comment.profile.name}}</h5>
                             </v-card-title>
