@@ -1,9 +1,9 @@
 <template>
     <div class="mx-3">
         <v-container>
-            <!--            <CardLoadingSkeleton v-if="pageLoading" />-->
             <h1 align="center">اطلاعیه ها</h1>
-            <v-row v-if="announcement.length !== 0" class="fill-height">
+            <CardLoadingSkeleton v-if="loading" />
+            <v-row v-else-if="announcement.length !== 0" class="fill-height">
                 <v-col cols="12" class="col-md-4 col-12" v-for="announcement in announcements" :key="announcement.id">
                     <v-card tile>
                         <div class="primary">
@@ -111,7 +111,9 @@
                 <v-card-actions>
                     <v-container class="mb-1">
                         <v-btn color="primary" text @click="toggleDialog">بستن</v-btn>
-                        <v-btn color="primary" :disabled="announcement.title === '' || announcement.desc === ''" text @click="submitAction">تایید</v-btn>
+                        <v-btn color="primary" :disabled="announcement.title === '' || announcement.desc === ''" text
+                               @click="submitAction">تایید
+                        </v-btn>
                     </v-container>
                 </v-card-actions>
             </v-card>
@@ -137,6 +139,7 @@
                     files: [],
                 },
                 dialog: false,
+                loading: false
             }
         },
         methods: {
@@ -146,10 +149,10 @@
             },
             submitAction() {
                 this.createAnnouncement(this.announcement).then(() => {
-                    this.announcement =  {
+                    this.announcement = {
                         title: "",
-                            desc: "",
-                            files: [],
+                        desc: "",
+                        files: [],
                     };
                     this.dialog = !this.dialog;
                     this.getAnnouncements();
@@ -160,7 +163,10 @@
             ...mapGetters('annModule', ['announcements'])
         },
         mounted() {
-            this.getAnnouncements();
+            this.loading = true;
+            this.getAnnouncements().finally(() => {
+                this.loading = false;
+            });
         }
     }
 </script>
