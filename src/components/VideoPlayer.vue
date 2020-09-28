@@ -138,7 +138,7 @@ import {GET_ANNOUNCEMENTS} from "../network/API";
 const VideoPlayerProps = Vue.extend({
   props: {
     video_src: String,
-    // comments: Array,
+    comments: Array,
   }
 })
 
