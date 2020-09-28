@@ -23,6 +23,7 @@
           v-on:loadstart="loading_video"
           v-on:waiting="loading_video"
           v-on:canplay="load_end"
+          :autoplay='true'
       >
         <source :src="video_src" type="video/mp4">
       </video>
@@ -41,7 +42,7 @@
             {{ comment.text }}
           </div>
         </div>
-        <div v-if="active_comments.length == 0">
+        <div v-if="active_comments.length === 0">
           منتظر کامنت‌های بعدی باشید...
         </div>
       </div>
@@ -74,36 +75,32 @@
 
         </div>
       </div>
+      <div class="time">
+        <div class="pass">00:00</div>
+        <div class="slash">/</div>
+        <div class="length">00:00</div>
+      </div>
       <div class="progress-bar">
+        <div class="mini-comments">
+          <div class="mini-comment" v-for="comment in this.comments">
+            <div class="mini-comment-icon" v-on:click="go_to_comment_time(comment.time)">
+            </div>
+            <div class="mini-comment-box">
+              <div class="mini-comment-text">
+                <b>{{ comment.name }}:</b> {{ comment.text }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="fullscreen">
           <v-icon color="white" v-if="full_screen_toggle" v-on:click="fullscreen_click">fullscreen</v-icon>
           <v-icon color="white" v-else v-on:click="fullscreen_click">fullscreen_exit</v-icon>
         </div>
         <div class="bar" v-on:click="click_bar">
-          <div class="time">
-            <div class="pass">00:00</div>
-            <div class="slash">/</div>
-            <div class="length">00:00</div>
-          </div>
           <div class="complete"></div>
           <div class="handler" v-on:mousedown="handler_mouse_down">
             <div class="handler-center"></div>
           </div>
-          <!--          <div class="mini-comments">-->
-          <!--            <div class="mini-comment" v-for="comment in this.comments" :style="mini_comment_pos(comment)">-->
-          <!--              <div class="mini-comment-icon">-->
-
-          <!--              </div>-->
-          <!--              <div class="mini-comment-icon">-->
-          <!--                <div class="mini-comment-name">{{ comment.name }}</div>-->
-          <!--                <div class="mini-comment-time">{{ to_time(parseInt(comment.time)) }}</div>-->
-          <!--                <v-divider/>-->
-          <!--                <div class="mini-comment-text">-->
-          <!--                  {{ comment.text }}-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
         </div>
         <div class="play-pause">
           <v-icon color="white" v-if="!play_pause_toggle" v-on:click="pause_play_click">pause</v-icon>
@@ -145,9 +142,6 @@ const VideoPlayerProps = Vue.extend({
 // Define the component in class-style
 @Component
 export default class VideoPlayer extends VideoPlayerProps {
-  video_elem = null;
-
-
   play_pause_toggle = false;
   holding_progress_handler = false;
   new_seek_time = -1;
@@ -175,7 +169,7 @@ export default class VideoPlayer extends VideoPlayerProps {
     {
       pk: 2,
       name: 'کص خان',
-      time: 11,
+      time: 21,
       text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
     },
     {
@@ -196,6 +190,30 @@ export default class VideoPlayer extends VideoPlayerProps {
       time: 11,
       text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
     },
+    {
+      pk: 5,
+      name: 'کص خان',
+      time: 30,
+      text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
+    },
+    {
+      pk: 5,
+      name: 'کص خان',
+      time: 40,
+      text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
+    },
+    {
+      pk: 5,
+      name: 'کص خان',
+      time: 60,
+      text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
+    },
+    {
+      pk: 5,
+      name: 'کص خان',
+      time: 90,
+      text: 'امروز ایرنا خبر داده است: سازمان هواپیمایی عراق امروز (پم کرد که از فردا جمعه (بیست و پنجم سپتامبر-چهارم د شد.'
+    },
   ]
   new_comment = {
     text: '',
@@ -203,29 +221,22 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   low_com = 0;
+  mini_com_set = false;
+  first_time_play = true
 
   mounted() {
-    setTimeout(function (player) {
-      player.player.play();
-    }, 1000, this);
-
     this.comments.sort(function (a, b) {
       return a.time - b.time;
     });
     let delta = 0.125
     console.log(this.loading)
     for (let i = 0; i < this.loading.children.length; i++) {
-      this.loading.children[i].style.animationDelay = (-1.125 +delta*i) + 's';
+      this.loading.children[i].style.animationDelay = (-1.125 + delta * i) + 's';
     }
   }
 
   get player() {
-    if (this.video_elem)
-      return this.video_elem;
-    else {
-      this.video_elem = document.getElementById('video-player');
-    }
-    return this.video_elem;
+    return document.getElementById('video-player')
   }
 
   get video_length() {
@@ -237,6 +248,7 @@ export default class VideoPlayer extends VideoPlayerProps {
       return this.progress_elems
     else
       this.progress_elems = {
+        bar: document.querySelector('.video-player .progress-bar .bar'),
         progress_bar: document.querySelector('.video-player .progress-bar'),
         complete: document.querySelector('.video-player .progress-bar .complete'),
         handler: document.querySelector('.video-player .progress-bar .handler'),
@@ -284,7 +296,7 @@ export default class VideoPlayer extends VideoPlayerProps {
     this.progress.complete.style.width = percentage + '%';
     this.progress.handler.style.left = percentage + '%';
     this.progress.time_pass.innerText = this.to_time(parseInt(this.time));
-    this.progress.length.innerText = this.to_time(parseInt(this.video_elem.duration))
+    this.progress.length.innerText = this.to_time(parseInt(this.player.duration))
     this.check_comments(this.player.currentTime);
   }
 
@@ -357,10 +369,19 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   fullscreen_click() {
     if (this.full_screen_toggle)
-      this.video_elem.parentElement.requestFullscreen();
+      this.player.parentElement.requestFullscreen();
     else
       document.exitFullscreen();
-    this.full_screen_toggle = !this.full_screen_toggle;
+    setTimeout(function (player) {
+      player.full_screen_toggle = !player.full_screen_toggle;
+      let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+      for (let i = 0; i < mini_comments.length; i++) {
+        mini_comments[i].style.left =
+            ((player.comments[i].time + Math.random() * 4 - 2)
+                / player.player.duration * player.progress.bar.offsetWidth
+                + player.progress.bar.offsetLeft) + 'px';
+      }
+    }, 1000, this)
   }
 
   close_comments() {
@@ -395,29 +416,25 @@ export default class VideoPlayer extends VideoPlayerProps {
 
   check_comments(time) {
     for (let i = this.low_com; i < this.comments.length; i++) {
-      if (Math.abs(this.comments[i].time - time) < 1) {
+      if (this.active_comments.includes(this.comments[i], 0))
+        continue;
+      if (Math.abs(this.comments[i].time - time) < 3) {
         this.active_comments.push(this.comments[i]);
         this.low_com += 1;
       }
     }
 
-    for (let i = 0; i < this.active_comments.length; i++) {
-      if (Math.abs(this.active_comments[i].time - time + 5) < 1) {
-        this.active_comments.splice(i, 1);
+    for (let j = 0; j < this.active_comments.length; j++) {
+      if (Math.abs(this.active_comments[j].time - time) > 3) {
+        this.active_comments.splice(j, 1);
       }
     }
   }
 
-  mini_comment_pos(comment) {
-    let left = comment.time / this.player.duration * 100
-    return {
-      'left': left + '%'
-    }
-  }
 
   video_seeked() {
     for (let i = 0; i < this.comments.length; i++) {
-      if (Math.abs(this.comments[i].time - time) < 1) {
+      if (Math.abs(this.comments[i].time - this.player.currentTime) < 3) {
         this.low_com = i;
         break;
       }
@@ -430,8 +447,27 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   load_end() {
-    console.log('end')
+    if (this.player.currentTime < 0.5 && this.first_time_play) {
+      console.log('end');
+      this.first_time_play = false;
+    }
     this.loading.style.display = 'none';
+    if (!this.mini_com_set) {
+      let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+      for (let i = 0; i < mini_comments.length; i++) {
+        mini_comments[i].style.left =
+            ((this.comments[i].time + Math.random() * 4 - 2)
+                / this.player.duration * this.progress.bar.offsetWidth
+                + this.progress.bar.offsetLeft) + 'px';
+      }
+
+      this.mini_com_set = true;
+    }
+  }
+
+  go_to_comment_time(time) {
+    this.player.currentTime = time - 2;
+    this.video_seeked()
   }
 
 }
@@ -520,13 +556,14 @@ export default class VideoPlayer extends VideoPlayerProps {
   opacity: 1 !important;
 }
 
-.video-player .progress-bar .time {
+.video-player .time {
   display: flex;
   position: absolute;
   flex-direction: row-reverse;
-  bottom: 15px;
+  bottom: 55px;
   font-size: 14px;
-  left: -5px;
+  left: 10px;
+  color: white;
 }
 
 .video-player .back-ground-overlay {
@@ -546,7 +583,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   overflow-y: scroll;
   position: absolute;
   width: 30%;
-  height: 100%;
+  height: 70%;
   right: 0;
   transition: 0.5s;
   box-shadow: 0 0 10px rgb(27 18 18);
@@ -677,5 +714,64 @@ export default class VideoPlayer extends VideoPlayerProps {
     transform: translate(-50%, -50%) rotateZ(360deg);
   }
 }
+
+.video-player .mini-comments {
+  transition: 0.5s;
+}
+
+.video-player .mini-comment {
+  position: absolute;
+  bottom: 10px;
+  color: black;
+  font-size: 11.5px;
+  transition: 0.5s;
+}
+
+.video-player .mini-comment .mini-comment-icon {
+  background-color: white;
+  position: absolute;
+  left: 0;
+  bottom: 15px;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  box-shadow: 0 0 5px rgba(27, 18, 18, 0.5);
+  transition: 0.5s;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transform-origin: -50% -50%;
+}
+
+.video-player .mini-comment .mini-comment-box {
+  opacity: 0;
+  background-color: white;
+  transition: 0.5s;
+  width: 150px;
+  height: 75px;
+  margin-bottom: 50px;
+  margin-left: -75px;
+  overflow: hidden;
+  text-align: justify;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(27, 18, 18, 0.5);
+}
+
+.video-player .mini-comment .mini-comment-box .mini-comment-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 100%;
+}
+
+
+.video-player .mini-comment .mini-comment-icon:hover {
+  box-shadow: 0 0 5px rgba(27, 18, 18, 1);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-player .mini-comment .mini-comment-icon:hover + .mini-comment-box {
+  opacity: 1;
+}
+
 
 </style>
