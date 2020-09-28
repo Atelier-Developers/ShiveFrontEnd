@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-container>
+            <h1 align="center">آرشیو</h1>
             <v-row>
                 <v-col cols="12" class="col-md-4">
                     <h3>ترم:</h3>
