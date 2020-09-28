@@ -1,5 +1,5 @@
 <template>
-    <v-card  tile>
+    <v-card  tile :loading="loading">
         <v-card-title class="pr-10">
             <v-icon right>file_copy</v-icon>
             فایل‌های ارائه
@@ -27,7 +27,7 @@
     export default {
         name: "PresentationFileComponent",
         components: {FileTile},
-        props: ['files', 'isDeletable', 'deleteFile']
+        props: ['files', 'isDeletable', 'deleteFile', 'loading']
     }
 </script>
 

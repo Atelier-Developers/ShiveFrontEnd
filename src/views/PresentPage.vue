@@ -13,10 +13,10 @@
         </v-container>
 
         <v-container>
-            <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="false" :files="currentPresentation.files"/>
+            <PresentationFileComponent class="mx-5 mx-sm-15" :is-deletable="false" :loading="loading" :files="currentPresentation.files"/>
         </v-container>
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
+            <v-card class="mx-5 mx-sm-15" tile :loading="loading">
                 <v-card-title class="pr-10">
                     <v-icon right>description</v-icon>
                     توضیحات
@@ -32,7 +32,7 @@
         </v-container>
 
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
+            <v-card class="mx-5 mx-sm-15" tile :loading="loading">
                 <v-card-title class="pr-10">
                     <v-icon right>comment</v-icon>
                     نظرات
@@ -65,7 +65,7 @@
                 </v-card-text>
                 <v-card-text>
                     <v-container>
-                        <v-card tile v-for="comment in currentPresentation.comments">
+                        <v-card tile v-for="comment in currentPresentation.comments" :key="comment.pk" :loading="loading">
                             <v-card-title>
                                 <h5>{{comment.profile.name}}</h5>
                             </v-card-title>
@@ -95,6 +95,7 @@
                 comment: '',
                 descriptionEditDialog: false,
                 fileUploadDialog: false,
+                loading: false
             }
         },
         computed: {
@@ -119,7 +120,10 @@
             }
         },
         mounted() {
-            this.getCurrentPresentation();
+            this.loading = true;
+            this.getCurrentPresentation().finally(() => {
+                this.loading = false;
+            });
         }
 
     }
