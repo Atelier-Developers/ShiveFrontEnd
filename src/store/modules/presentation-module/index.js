@@ -11,7 +11,6 @@ import {
 const state = {
     teamPresentation: {},
     currentPresentation: {},
-    // archivedPresentation: {},
 };
 
 const mutations = {
@@ -21,9 +20,6 @@ const mutations = {
     setCurrentPresentation(state, item) {
         state.currentPresentation = item;
     },
-    // setArchivedPresentation(state, item){
-    //     state.archivedPresentation = item;
-    // },
     addCommentToCurrentPresentation(state, item) {
         state.currentPresentation.comments.push(item);
     },
@@ -68,10 +64,6 @@ const actions = {
         await axios.delete(DELETE_FILE_UPLOAD + payload);
         context.commit('removeFileFromTeamPresentation', payload)
     },
-    // async getArchivedPresentation(context, payload) {
-    //     let response = await axios.get(GET_PRESENTATION_CURRENT + payload.pk);
-    //     context.commit('setArchivedPresentation', response.data[0]);
-    // }
 };
 
 const getters = {

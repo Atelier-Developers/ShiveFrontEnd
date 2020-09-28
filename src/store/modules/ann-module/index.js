@@ -1,13 +1,15 @@
 import axios from 'axios';
 import {ACCEPT_PENDING_PERSON, GET_PENDING_PERSON, LOGIN, REJECT_PENDING_PERSON} from "@/network/API";
-import {CREATE_ANN, UPLOAD_ANN} from "../../../network/API";
+import {CREATE_ANN, GET_ANNOUNCEMENTS, UPLOAD_ANN} from "../../../network/API";
 
 const state = {
     announcements: [],
 };
 
 const mutations = {
-
+    setAnnouncements(state, item) {
+        state.announcements = item;
+    }
 };
 
 const actions = {
@@ -25,24 +27,25 @@ const actions = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
-        }
+        };
 
-        let index = 0;
-        for (index = 0; index < announcement.files.length; ++index) {
-            let file = announcement.files[index]
+        for (const file of announcement.files) {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('title', file.name);
             let uploadResponse = await axios.post(UPLOAD_ANN + annId, formData, config);
         }
+
+    },
+    async getAnnouncements(context, payload) {
+        let response = await axios.get(GET_ANNOUNCEMENTS);
+        context.commit('setAnnouncements', response.data);
     }
 
 };
 
 const getters = {
-    pending: (state) => state.pending,
-    accepted: (state) => state.accepted,
-    rejected: (state) => state.rejected
+    announcements: (state) => state.announcements,
 };
 
 
