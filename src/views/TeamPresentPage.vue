@@ -1,101 +1,116 @@
 <template>
     <div v-if="!pageLoading">
-        <v-container>
-            <v-row justify="center">
-                <h1>{{teamPresentation.subject.title}}</h1>
-            </v-row>
-        </v-container>
-        <v-container>
-            <PresentationFileComponent :loading="pageLoading" class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
-                                       :files="teamPresentation.files"/>
-        </v-container>
-        <v-container>
-            <v-card class="mx-5 mx-sm-15" tile :loading="pageLoading">
-                <v-card-title class="pr-10">
-                    <v-icon right>description</v-icon>
-                    توضیحات
-                </v-card-title>
-                <v-divider/>
-                <v-card-text v-if="teamPresentation.description">
+        <template v-if="teamPresentation !== undefined">
+            <v-container>
+                <v-row justify="center">
+                    <h1>{{teamPresentation.subject.title}}</h1>
+                </v-row>
+            </v-container>
+            <v-container>
+                <PresentationFileComponent :loading="pageLoading" class="mx-5 mx-sm-15" :is-deletable="true" :delete-file="deleteFile"
+                                           :files="teamPresentation.files"/>
+            </v-container>
+            <v-container>
+                <v-card class="mx-5 mx-sm-15" tile :loading="pageLoading">
+                    <v-card-title class="pr-10">
+                        <v-icon right>description</v-icon>
+                        توضیحات
+                    </v-card-title>
+                    <v-divider/>
+                    <v-card-text v-if="teamPresentation.description">
                    <span style="white-space: pre">
                     {{teamPresentation.description}}
                    </span>
-                </v-card-text>
-                <v-card-text class="text-center" v-else>
-                    توضیحی وارد نشده است...
-                </v-card-text>
-                <v-card-actions class="justify-end">
-                    <v-btn
-                            class="ml-5 mb-2"
-                            color="primary"
-                            rounded
-                            @click.stop="descriptionEditDialog = true"
-                    >
-                        <v-icon color="accent">create</v-icon>
-                    </v-btn>
-
-                    <v-dialog
-                            v-model="descriptionEditDialog"
-                            max-width="570"
-                    >
-                        <v-card>
-                            <v-card-title>
-                                <span class="headline">توضیحات جدید</span>
-                            </v-card-title>
-                            <v-card-text>
-                                <v-textarea outlined auto-grow rows="3" label="توضیحات خود را وارد کنید..."
-                                            v-model="item.description"/>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
-                                <v-btn color="blue darken-1" text @click="() => editDescription(item.description)">
-                                    تایید
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-card-actions>
-            </v-card>
-        </v-container>
-
-        <v-container>
-          <PresentationComment :comments="teamPresentation.comments" class="mx-5 mx-sm-15"/>
-        </v-container>
-        <div id="floating-button" class="mb-10 mr-3">
-            <v-btn
-                    fab
-                    @click="fileUploadDialog = true"
-                    color="primary"
-            >
-                <v-icon color="accent">add</v-icon>
-            </v-btn>
-            <v-dialog
-                    v-model="fileUploadDialog"
-                    max-width="570"
-            >
-                <v-card :loading="fileUploadLoading" :disabled="fileUploadLoading">
-                    <v-card-title>
-                        <span class="headline">آپلود فایل جدید</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-text-field label="نام فایل" v-model="item.name" outlined dense/>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-file-input label="فایل جدید خود را انتخاب کنید" v-model="item.file" outlined dense/>
-                            </v-col>
-                        </v-row>
                     </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="fileUploadDialog = false">انصراف</v-btn>
-                        <v-btn color="blue darken-1" text @click="handleFileUpload ">تایید</v-btn>
+                    <v-card-text class="text-center" v-else>
+                        توضیحی وارد نشده است...
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn
+                                class="ml-5 mb-2"
+                                color="primary"
+                                rounded
+                                @click.stop="descriptionEditDialog = true"
+                        >
+                            <v-icon color="accent">create</v-icon>
+                        </v-btn>
+
+                        <v-dialog
+                                v-model="descriptionEditDialog"
+                                max-width="570"
+                        >
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">توضیحات جدید</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-textarea outlined auto-grow rows="3" label="توضیحات خود را وارد کنید..."
+                                                v-model="item.description"/>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue darken-1" text @click="descriptionEditDialog = false">انصراف</v-btn>
+                                    <v-btn color="blue darken-1" text @click="() => editDescription(item.description)">
+                                        تایید
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-card-actions>
                 </v-card>
-            </v-dialog>
-        </div>
+            </v-container>
+
+            <v-container>
+                <PresentationComment :comments="teamPresentation.comments" class="mx-5 mx-sm-15"/>
+            </v-container>
+            <div id="floating-button" class="mb-10 mr-3">
+                <v-btn
+                        fab
+                        @click="fileUploadDialog = true"
+                        color="primary"
+                >
+                    <v-icon color="accent">add</v-icon>
+                </v-btn>
+                <v-dialog
+                        v-model="fileUploadDialog"
+                        max-width="570"
+                >
+                    <v-card :loading="fileUploadLoading" :disabled="fileUploadLoading">
+                        <v-card-title>
+                            <span class="headline">آپلود فایل جدید</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-text-field label="نام فایل" v-model="item.name" outlined dense/>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-file-input label="فایل جدید خود را انتخاب کنید" v-model="item.file" outlined dense/>
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="fileUploadDialog = false">انصراف</v-btn>
+                            <v-btn color="blue darken-1" text @click="handleFileUpload ">تایید</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </div>
+        </template>
+        <v-row v-else justify="center" align="center" class="fill-height">
+            <div>
+                <v-row>
+                    <v-col cols="12" class="text-center">
+                        <v-icon size="100">group</v-icon>
+                    </v-col>
+
+                    <v-col cols="12" class="text-center display-1">
+                        هنوز تیم شما تعیین نشده است!
+                    </v-col>
+                </v-row>
+            </div>
+        </v-row>
     </div>
     <Spinner v-else />
 

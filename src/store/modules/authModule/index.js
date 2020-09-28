@@ -21,8 +21,10 @@ const actions = {
         } catch (e) {
             if (e.response.status === 400) {
                 throw Error("نام کاربری یا رمز عبور اشتباه است!");
+            } else if (e.response.status === 401 ){
+                throw Error('اکانت شما هنوز تایید نشده است!');
             } else if (e.response.status >= 500) {
-                throw Error("خطا در برقزاری ارتباط با سرور!")
+                throw Error("خطا در برقزاری ارتباط با سرور!");
             }
         }
 

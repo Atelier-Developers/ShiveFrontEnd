@@ -16,7 +16,7 @@
                 <v-btn
                         color="primary"
                         style="width:200px;"
-                        to="/"
+                        @click="routeBack"
                 >بازگشت</v-btn>
             </v-col>
         </v-row>
@@ -25,7 +25,12 @@
 
 <script>
     export default {
-        name: "Error404"
+        name: "Error404",
+        methods:{
+            routeBack() {
+                this.$router.back();
+            }
+        }
     }
 </script>
 

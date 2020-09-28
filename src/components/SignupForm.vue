@@ -26,7 +26,7 @@
                         v-model="user.student_no"
                         label="شماره دانشجویی"
                         type="number"
-                        :rules="[v => !!v || 'الزامی']"
+                        :rules="[v => !!v || 'الزامی', v => this.studentValidation(v) || 'شماره دانشجویی نامعتبر']"
                         outlined
                         required
                 />
@@ -37,7 +37,7 @@
                         label="تلفن همراه"
                         type="number"
                         suffix="+98"
-                        :rules="[v => !!v || 'الزامی']"
+                        :rules="[v => !!v || 'الزامی', v => this.phoneValidation(v) || 'شماره تلفن نامعتبر']"
                         outlined
                         required
                 />
@@ -99,6 +99,11 @@
                 }
             }
         },
+        computed: {
+            isPhoneValid(){
+                return RegExp('^9\\d{9}$');
+            },
+        },
         methods: {
             ...mapActions('authModule', ['signUp']),
             sendToLogin() {
@@ -116,7 +121,13 @@
                 }).finally(() => {
                     this.loading = false;
                 })
-            }
+            },
+            phoneValidation(v) {
+                return this.isPhoneValid.test(v);
+            },
+            studentValidation(v) {
+                return v.length === 7;
+            },
         }
     }
 </script>
