@@ -11,7 +11,7 @@
         </v-card-text>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
-                <v-dialog v-model="videoDialog" max-width="90vw" width="900px">
+                <v-dialog v-if="isVideo" v-model="videoDialog" max-width="90vw" width="900px">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
                                 v-on="on"
@@ -89,25 +89,11 @@
                     }
                 });
             },
-            // getCommentsForVideo() {
-            //     axios.get(GET_COMMENTS_FOR_VIDEO + this.file.pk).then((response) => {
-            //             this.comments = response.data.map((j) => {
-            //                 return {
-            //                     pk: j.id,
-            //                     text: j.text,
-            //                     name: j.profile.name,
-            //                     time: j.time,
-            //                 }
-            //             });
-            //             console.log(this.comments);
-            //         }
-            //     )
-            // },
-            // postComment(comment) {
-            //   axios.post(POST_COMMENT + this.file.pk, ).then((response) => {
-            //     console.log(response);
-            //   });
-            // },
+        },
+        computed:{
+            isVideo() {
+                return (/\.(mov|avi|wmv|flv|3gp|mp4|mpg)$/i).test(this.file.file)
+            }
         },
         mounted() {
             // this.getCommentsForVideo();

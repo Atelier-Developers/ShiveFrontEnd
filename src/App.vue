@@ -22,6 +22,9 @@
         <router-view class="fill-height"></router-view>
       </vue-page-transition>
     </v-main>
+    <v-main v-else>
+      <Spinner/>
+    </v-main>
   </v-app>
 </template>
 
@@ -30,10 +33,11 @@
 import MainDrawer from "@/components/MainDrawer";
 import {mapActions, mapGetters} from "vuex";
 import defineRulesFor from "@/services/ability";
+import Spinner from "./components/Spinner";
 
 export default {
   name: 'App',
-  components: {MainDrawer},
+  components: {Spinner, MainDrawer},
   data: () => ({
     responsive: false,
     loading: true,

@@ -31,6 +31,9 @@
         <v-icon color="accent">done</v-icon>
       </v-btn>
     </div>
+    <v-snackbar v-model="snackBar.stat" :color="snackBar.color">
+      {{snackBar.msg}}
+    </v-snackbar>
   </div>
 
 </template>
@@ -49,6 +52,11 @@ export default {
     return {
       loading: false,
       pageLoading: false,
+      snackBar: {
+        stat: false,
+        color: '',
+        msg: '',
+      }
     }
   },
   computed: {
@@ -93,6 +101,14 @@ export default {
       this.loading = true
       this.acceptPersonProfile().then(async () => {
         return this.rejectPersonProfile();
+      }).then(() => {
+        this.snackBar.stat = true;
+        this.snackBar.color = 'success';
+        this.snackBar.msg = 'تغییرات با موفقیت اعمال شد!'
+      }).catch(() => {
+        this.snackBar.stat = false;
+        this.snackBar.color = 'error';
+        this.snackBar.msg = 'خطا! دوباره تلاش کنید'
       }).finally(() => {
         this.loading = false;
       });

@@ -22,7 +22,7 @@
                     color="primary"
                     @click="callActionFunction"
             >
-                <v-icon>done</v-icon>
+                <v-icon color="accent">done</v-icon>
             </v-btn>
         </div>
     </div>
@@ -85,6 +85,8 @@
                     subject: this.item.subject,
                     pk: this.pk,
                     profiles: this.teamMembers.map((m) => m.pk)
+                }).then(() => {
+                    this.$router.replace({name: 'TeamManagement'});
                 }).finally(() => {
                     this.loading = false;
                 });

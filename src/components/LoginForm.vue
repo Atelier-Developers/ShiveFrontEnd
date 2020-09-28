@@ -20,7 +20,7 @@
             :rules="[v => !!v || 'الزامی']"
             outlined
             required
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12">
         <v-text-field
@@ -30,7 +30,7 @@
             :rules="[v => !!v || 'الزامی']"
             required
             type="password"
-        ></v-text-field>
+        />
       </v-col>
       <v-btn
           :disabled="!valid"
@@ -104,6 +104,7 @@ export default {
         this.loading = false;
       })
     },
+
   }
 }
 </script>

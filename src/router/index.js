@@ -17,10 +17,20 @@ import {ability} from "@/services/ability";
 
 import Error404 from "../views/Error404";
 import NotAllowed from "../views/NotAllowed";
+import Index from "../views/Index";
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/',
+        name: 'Index',
+        component: Index,
+        meta: {
+            action: "access",
+            resource: 'authenticate'
+        }
+    },
     {
         path: '/login',
         name: 'Login',
@@ -128,14 +138,14 @@ const routes = [
         }
     },
     {
-        path: '*',
-        name: 'Error404',
-        component: Error404
-    },
-    {
         path: '/notAllowed',
         name: 'NotAllowed',
         component: NotAllowed
+    },
+    {
+        path: '*',
+        name: 'Error404',
+        component: Error404
     },
 ]
 
