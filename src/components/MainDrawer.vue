@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-      v-if="isAuthenticated"
+      v-if="isShowing"
       class="primary"
       app
       :mobile-breakpoint="960"
@@ -17,6 +17,7 @@
           v-for="item in items"
           :key="item.title"
           :to="item.to"
+          v-if="item.permission"
           link
       >
         <v-list-item-icon>
@@ -48,65 +49,76 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "MainDrawer",
-  props: ['responsive'],
+  props: ['responsive', 'isShowing'],
   computed: {
     ...mapGetters('authModule', ['isAuthenticated']),
-  },
-  data() {
-    return {
-      drawer: false,
-      items: [
+    items() {
+      return [
         {
           icon: "announcement",
           title: "اطلاعیه ها",
           to: {
             name: "Announcement"
-          }
+          },
+          permission: this.$can('read', 'all')
         },
         {
           icon: "people",
           title: "تیم من",
           to: {
             name: "TeamPresentPage"
-          }
+          },
+          permission: this.$can('read', 'teampresentation')
         },
         {
           icon: "how_to_reg",
           title: "مدیریت تیم ها",
           to: {
             name: "TeamManagement"
-          }
+          },
+          permission: this.$can('read', 'team')
         },
         {
           icon: "face",
           title: "مدیریت کاربران",
           to: {
             name: "UserManagement"
-          }
+          },
+          permission: this.$can('read', 'user')
         },
         {
           icon: "subject",
           title: "مدیریت موضوعات ارائه",
           to: {
             name: "SubjectManagement"
-          }
+          },
+          permission: this.$can('read', 'subject')
+
         },
         {
           icon: "slideshow",
           title: "ارائه‌ی جاری",
           to: {
             name: "PresentPage"
-          }
+          },
+          permission: this.$can('read', 'all')
         },
         {
           icon: "archive",
           title: "آرشیو",
           to: {
             name: "Archive"
-          }
+          },
+          permission: this.$can('read', 'all')
         },
 
       ]
+    }
+
+  },
+  data() {
+    return {
+      drawer: false,
     }
   },
   methods: {

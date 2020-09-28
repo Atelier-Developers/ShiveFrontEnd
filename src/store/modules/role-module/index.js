@@ -14,7 +14,6 @@ const mutations = {
 const actions = {
     async getRole(context) {
         let response = await axios.get(GET_ROLE);
-        console.log(response.data.role)
         context.commit("setRole", response.data.role);
     },
 };
