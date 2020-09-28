@@ -344,12 +344,15 @@ export default class VideoPlayer extends VideoPlayerProps {
     while (elem) {
       offset += elem.offsetLeft;
       elem = elem.parentElement;
+      if(elem.classList.include('video-player', 0))
+        break;
     }
     return offset;
   }
 
   click_bar(ev) {
     let left_offset = this.find_left_offset(this.progress.handler.parentElement);
+    console.log(ev.clientX +', '+ left_offset)
     let left = ev.clientX - left_offset;
     this.new_seek_time = left / this.progress.handler.parentElement.offsetWidth * this.video_length;
     this.player.currentTime = this.new_seek_time;
@@ -458,6 +461,9 @@ export default class VideoPlayer extends VideoPlayerProps {
     if (!this.mini_com_set) {
       let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
       for (let i = 0; i < mini_comments.length; i++) {
+        if (this.comments[i].time > this.player.duration)
+          continue;
+        mini_comments[i].style.display = 'block';
         mini_comments[i].style.left =
             ((this.comments[i].time + Math.random() * 4 - 2)
                 / this.player.duration * this.progress.bar.offsetWidth
@@ -477,6 +483,9 @@ export default class VideoPlayer extends VideoPlayerProps {
 </script>
 
 <style scoped>
+.video-comment{
+  width: 100%;
+}
 .video-player .bar {
   position: relative;
   width: 100%;
@@ -577,7 +586,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   left: 0;
 }
 
-.video-comment .comments {
+.video-comment .comments.in-player {
   padding: 5px 10px;
 }
 
@@ -586,6 +595,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   position: absolute;
   width: 30%;
   height: 100%;
+  margin: 10px 5px;
   right: 0;
   transition: 0.5s;
 }
@@ -593,11 +603,12 @@ export default class VideoPlayer extends VideoPlayerProps {
 .video-comment .comment {
   background-color: rgba(255, 255, 255, 1);
   border-radius: 5px;
-  margin: 10px 5px;
+  margin: 10px 0px;
   padding: 5px 10px;
   opacity: 1;
   transition: 1s;
   animation: show 0.5s;
+  color: black;
 }
 
 @keyframes show {
@@ -726,6 +737,7 @@ export default class VideoPlayer extends VideoPlayerProps {
   color: black;
   font-size: 11.5px;
   transition: 0.5s;
+  display: none;
 }
 
 .video-player .mini-comment .mini-comment-icon {
