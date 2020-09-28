@@ -126,8 +126,6 @@ const routes = [
         meta: {
             resource: 'all'
         }
-    }
-        component: Announcement
     },
     {
         path: '*',
@@ -153,8 +151,8 @@ router.beforeEach((to, from, next) => {
         return ability.can(route.meta.action || 'read', route.meta.resource)
     })
     console.log(canNavigate)
-    if (!canNavigate && to.name !== 'Login') {
-        return next({name: "Login"})
+    if (!canNavigate && to.name !== 'NotAllowed') {
+        return next({name: "NotAllowed"})
     } else {
         next()
     }
