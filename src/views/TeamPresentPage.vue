@@ -17,7 +17,9 @@
                 </v-card-title>
                 <v-divider/>
                 <v-card-text v-if="teamPresentation.description">
+                   <span style="white-space: pre">
                     {{teamPresentation.description}}
+                   </span>
                 </v-card-text>
                 <v-card-text class="text-center" v-else>
                     توضیحی وارد نشده است...
@@ -58,25 +60,7 @@
         </v-container>
 
         <v-container>
-            <v-card class="mx-5 mx-sm-15" tile>
-                <v-card-title class="pr-10">
-                    <v-icon right>comment</v-icon>
-                    نظرات
-                </v-card-title>
-                <v-divider/>
-                <v-card-text>
-                    <v-container>
-                        <v-card tile v-for="comment in teamPresentation.comments">
-                            <v-card-title>
-                                <h5>{{comment.profile.name}}</h5>
-                            </v-card-title>
-                            <v-card-text>
-                                {{comment.text}}
-                            </v-card-text>
-                        </v-card>
-                    </v-container>
-                </v-card-text>
-            </v-card>
+          <PresentationComment :comments="teamPresentation.comments" class="mx-5 mx-sm-15"/>
         </v-container>
         <div id="floating-button" class="mb-10 mr-3">
             <v-btn
@@ -120,10 +104,11 @@
     import FileTile from "../components/FileTile";
     import {mapActions, mapGetters} from "vuex";
     import PresentationFileComponent from "../components/PresentationFileComponent";
+    import PresentationComment from "@/components/PresentationComment";
 
     export default {
         name: "TeamPresentPage",
-        components: {PresentationFileComponent, FileTile},
+        components: {PresentationComment, PresentationFileComponent, FileTile},
         data() {
             return {
                 item: {
