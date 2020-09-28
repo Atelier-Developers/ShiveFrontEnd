@@ -13,6 +13,7 @@ import TeamEdit from "../views/TeamEdit";
 import Announcement from "../views/Announcement";
 import TeamPresentPage from "../views/TeamPresentPage";
 import ArchivedPresentationPage from "../views/ArchivedPresentationPage";
+import VideoPlayerPage from '../views/VideoPlayerPage';
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,11 @@ const routes = [
         path: '/archived-presentation-page',
         name: 'ArchivedPresentationPage',
         component:ArchivedPresentationPage
+    },
+    {
+        path: '/video-player',
+        name: 'VideoPlayerPage',
+        component: VideoPlayerPage,
     },
     {
         path: '/archive',

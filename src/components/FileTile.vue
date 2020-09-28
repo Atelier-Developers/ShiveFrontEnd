@@ -11,7 +11,7 @@
         </v-card-text>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
-                <v-btn color="primary" fab small>
+                <v-btn color="primary" fab small @click="() => routeToVideoPlayer(file.file)">
                     <v-icon color="accent">play_arrow</v-icon>
                 </v-btn>
                 <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
@@ -58,6 +58,11 @@
                     this.loading = false;
                     this.dialog = false;
                 })
+            },
+            routeToVideoPlayer(videoSrc) {
+                this.$router.push({name: 'VideoPlayerPage', params: {
+                    videoSrc: videoSrc,
+                    }});
             }
         }
     }
