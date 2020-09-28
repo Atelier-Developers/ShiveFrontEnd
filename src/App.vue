@@ -1,6 +1,6 @@
 <template>
   <v-app class="faLang" v-bind:style="{ background: $vuetify.theme.themes.light.background}">
-    <MainDrawer ref="drawer" :responsive="responsive"/>
+    <MainDrawer ref="drawer" :responsive="responsive" :is-showing="isAuthenticated"/>
     <v-app-bar
         app
         clipped-right
@@ -14,7 +14,7 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon v-if="responsive" @click="toggleDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="responsive && isAuthenticated" @click="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-main v-if="!loading">
@@ -36,7 +36,7 @@ export default {
   components: {MainDrawer},
   data: () => ({
     responsive: false,
-    loading: false,
+    loading: true,
   }),
   computed: {
     ...mapGetters('roleModule', ['role']),

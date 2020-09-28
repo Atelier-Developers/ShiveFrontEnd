@@ -55,7 +55,7 @@
 
       <EmptyState v-else class="fill-height"/>
     </v-container>
-    <div id="floating-button" class="mb-10">
+    <div id="floating-button" class="mb-10" v-if="$can('create', 'announcment')">
       <v-btn
           fab
           @click="toggleDialog"

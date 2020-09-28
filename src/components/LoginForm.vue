@@ -50,14 +50,15 @@
       </v-btn>
     </v-row>
     <v-snackbar v-model="reqStatus.error" color="error">
-      {{reqStatus.msg}}
+      {{ reqStatus.msg }}
     </v-snackbar>
   </v-form>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ErrorBoundary from "vue-error-boundary";
+import defineRulesFor from "@/services/ability";
 
 export default {
   name: "LoginForm",
@@ -77,16 +78,24 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('roleModule', ['role']),
+  },
   methods: {
     sendToSignup() {
       this.$router.replace({name: 'Signup'})
     },
     ...mapActions('authModule', ['login']),
+    ...mapActions('roleModule', ['getRole']),
     loginPerson() {
       if (!this.$refs.form.validate())
         return;
       this.loading = true;
       this.login(this.user).then(() => {
+        return this.getRole().then(() => {
+          return this.$ability.update(defineRulesFor(this.role).rules);
+        })
+      }).then(() => {
         this.$router.replace({name: "Announcement"})
       }).catch((e) => {
         this.reqStatus.msg = e.message;
