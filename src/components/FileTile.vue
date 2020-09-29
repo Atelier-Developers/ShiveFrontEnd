@@ -80,13 +80,6 @@
                 loading: false,
                 dialog: false,
                 videoDialog: false,
-                videoOptions: {
-                    // src: 'https://shive.atelier-team.ir/apiv1/file/26',
-                    poster: '../assets/logo.png',
-                    controlBar: true,
-                    spinner: 'circles',
-                    fullscreen: true,
-                },
             }
         },
         methods: {
