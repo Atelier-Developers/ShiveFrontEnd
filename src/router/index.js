@@ -137,7 +137,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log(to.name);
     const canNavigate = to.matched.some(route => {
         return ability.can(route.meta.action || 'read', route.meta.resource)
     });

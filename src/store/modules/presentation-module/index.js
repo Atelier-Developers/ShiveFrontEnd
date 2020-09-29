@@ -41,7 +41,6 @@ const actions = {
     },
     async getCurrentPresentation(context,) {
         let response = await axios.get(GET_PRESENTATION_CURRENT);
-        console.log(response.data)
         let data = response.data.length === 0 ? null : response.data[0];
         context.commit('setCurrentPresentation', data);
     },

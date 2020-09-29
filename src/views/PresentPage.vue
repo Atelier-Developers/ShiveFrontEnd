@@ -114,7 +114,6 @@ export default {
   mounted() {
     this.loading = true;
     this.getCurrentPresentation().finally(() => {
-      console.log(this.currentPresentation)
       this.loading = false;
     });
   }

@@ -220,7 +220,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   video_time_update() {
-    console.log(`seek: ${this.player.seekable.start(0)}, ${this.player.seekable.end(0)}`);
     this.time = this.player.currentTime;
     let percentage = this.player.currentTime / this.video_length * 100;
     document.querySelector('.video-player .progress-bar .complete').style.width = percentage + '%';
@@ -264,7 +263,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   meta(){
-    console.log("META")
   }
 
   video_player_mouse_up() {
