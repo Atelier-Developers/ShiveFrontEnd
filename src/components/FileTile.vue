@@ -8,10 +8,13 @@
         <v-divider/>
 
         <v-card-text>
-            {{ file.profile.name }}
+             توسط: {{ file.profile.name }}
         </v-card-text>
         <v-card-text>
-            {{fileSize}}
+             سایز: {{fileSize}}
+        </v-card-text>
+        <v-card-text>
+            تاریخ آپلود: {{fileDate}}
         </v-card-text>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
@@ -61,11 +64,10 @@
 </template>
 
 <script>
-    import Vue from 'vue';
     import VueVideo from 'vue-video-module';
     import VideoPlayer from "@/components/VideoPlayer";
-    import axios from 'axios';
-    import {GET_COMMENTS_FOR_VIDEO, GET_VIDEO, POST_COMMENT} from "../network/API";
+    import {GET_VIDEO} from "../network/API";
+    import moment from "jalali-moment";
 
     // let Vue = require('vue');
     // let VueVideo = require('vue-video-module');
@@ -118,6 +120,15 @@
                     sizeInString += ' مگابایت'
                 }
                 return sizeInString;
+            },
+            fileDate() {
+                let str = this.file.date;
+                let date = moment(str);
+                let dateComponent = date.utc().format('YYYY-MM-DD');
+                let timeComponent = date.utc().format('HH:mm:ss');
+                let dateInFarsi = moment(dateComponent, 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
+                let timeInFarsi = moment(timeComponent, 'HH:mm:ss').locale('fa').format('HH:mm:ss');
+                return  timeInFarsi + ' ' + dateInFarsi;
             }
 
         },
