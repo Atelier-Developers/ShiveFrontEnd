@@ -21,7 +21,7 @@
                         </v-btn>
                     </template>
                     <v-card>
-                        <v-card-title>{{ file.name }}</v-card-title>
+                        <v-card-title class="justify-center">{{ file.name }}</v-card-title>
                         <v-row justify="center" no-gutters>
                             <v-col cols="12">
                                 <VideoPlayer v-if="videoDialog"  :video_src="file.file" :id="file.pk" />
