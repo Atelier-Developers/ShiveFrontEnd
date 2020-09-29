@@ -17,10 +17,10 @@
             <v-row justify="space-around" class="mx-2">
                 <v-dialog v-if="isVideo" v-model="videoDialog" max-width="90vw" width="900px">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                                v-on="on"
-                                v-bind="attrs"
-                                color="primary" fab small @click="videoDialog = true">
+                        <v-btn class="mb-2"
+                               v-on="on"
+                               v-bind="attrs"
+                               color="primary" fab small @click="videoDialog = true">
                             <v-icon color="accent">play_arrow</v-icon>
                         </v-btn>
                     </template>
@@ -33,12 +33,12 @@
                         </v-row>
                     </v-card>
                 </v-dialog>
-                <v-btn color="primary" fab small tag="a" target="_blank" :href="file.file">
+                <v-btn class="mb-2" color="primary" fab small tag="a" target="_blank" :href="file.file">
                     <v-icon class="rotated" color="accent">publish</v-icon>
                 </v-btn>
                 <v-dialog v-model="dialog" max-width="290" persistent>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-if="isDeletable" color="red" v-bind="attrs"
+                        <v-btn v-if="isDeletable" color="red" v-bind="attrs" class="mb-2"
                                v-on="on" fab small>
                             <v-icon color="accent">delete</v-icon>
                         </v-btn>
@@ -117,11 +117,10 @@
                 let sizeInMB = this.file.size / 1000000;
                 let sizeInString;
                 if (sizeInMB < 1) {
-                    sizeInMB = this.file.size/ 1000;
+                    sizeInMB = this.file.size / 1000;
                     sizeInString = sizeInMB.toString().slice(0, 5);
                     sizeInString += ' کیلوبایت'
-                }
-                else {
+                } else {
                     sizeInString = sizeInMB.toString().slice(0, 5);
                     sizeInString += ' مگابایت'
                 }
