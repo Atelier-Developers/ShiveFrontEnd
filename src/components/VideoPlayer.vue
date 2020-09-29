@@ -20,7 +20,8 @@
           v-on:loadstart="loading_video"
           v-on:waiting="loading_video"
           v-on:canplay="load_end"
-          :autoplay='true'
+          v-on:loadedmetadata="meta"
+          :autoplay="true"
       >
         <source :src="video_src" type="video/mp4">
       </video>
@@ -168,7 +169,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   first_time_play = true;
 
   mounted() {
-    console.log("mounted has been called")
     this.getCommentsForVideo();
     let delta = 0.125;
     for (let i = 0; i < this.loading.children.length; i++) {
@@ -208,12 +208,10 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   video_end() {
-    console.log("video_end has been called")
     this.play_pause_toggle = true;
   }
 
   pause_play_click() {
-    console.log("pause_play_click has been called")
     if (this.play_pause_toggle)
       this.player.play();
     else
@@ -222,10 +220,9 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   video_time_update() {
-    console.log("video_time_update has been called")
+    console.log(`seek: ${this.player.seekable.start(0)}, ${this.player.seekable.end(0)}`);
     this.time = this.player.currentTime;
     let percentage = this.player.currentTime / this.video_length * 100;
-    console.log(percentage)
     document.querySelector('.video-player .progress-bar .complete').style.width = percentage + '%';
     if (!this.holding_progress_handler)
       document.querySelector('.video-player .progress-bar .handler').style.left = percentage + '%';
@@ -235,12 +232,10 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   handler_mouse_down() {
-    console.log("handler_mouse_down has been called")
     this.holding_progress_handler = true;
   }
 
   getCommentsForVideo() {
-    console.log("getCommentsForVideo has been called")
     let _self = this
     axios.get(GET_COMMENTS_FOR_VIDEO + this.id).then((response) => {
           _self.comments = response.data.map((j) => {
@@ -259,19 +254,20 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   postComment() {
-    console.log("postComment has been called")
     axios.post(POST_COMMENT_FOR_VIDEO + this.id, {
       text: this.new_comment,
       time: this.player.currentTime
     }).then(() => {
-      console.log("HELLLEOOEOEDJKFS:LKJDFS:LKDSFJ:LKFDSJL");
       this.new_comment = '';
       this.getCommentsForVideo();
     });
   }
 
+  meta(){
+    console.log("META")
+  }
+
   video_player_mouse_up() {
-    console.log("video_player_mouse_up has been called")
     if (this.holding_progress_handler) {
       this.holding_progress_handler = false;
       this.new_seek_time = this.new_seek_time / document.querySelector('.video-player .progress-bar .handler').parentElement.offsetWidth * this.video_length;
@@ -280,7 +276,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   mouse_move(ev) {
-    console.log("mouse_move has been called")
     document.querySelector('.video-player .progress-bar').style.opacity = 1;
     if (this.holding_progress_handler) {
       let left_offset = this.find_left_offset(document.querySelector('.video-player .progress-bar .complete'));
@@ -298,16 +293,12 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 
   find_left_offset(elem) {
-    console.log("find_left_offset has been called")
-    console.log('********************************')
     let offset = elem.offsetLeft
     while (elem) {
       if (elem.classList.contains('v-card') && this.full_screen_toggle)
         break;
       if (elem.classList.contains('video-comment') && !this.full_screen_toggle)
         break;
-      console.log(elem);
-      console.log(elem.offsetLeft);
       elem = elem.parentElement
       offset += elem.offsetLeft;
     }
@@ -315,15 +306,13 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   click_bar(ev) {
-    console.log("click_bar has been called")
     let left_offset = this.find_left_offset(document.querySelector('.video-player .progress-bar .handler').parentElement);
     let left = ev.clientX - left_offset;
     this.new_seek_time = left / document.querySelector('.video-player .progress-bar .handler').parentElement.offsetWidth * this.video_length;
-    this.player.currentTime = this.new_seek_time;
+    this.player.currentTime = parseInt(this.new_seek_time);
   }
 
   to_time(time) {
-    console.log("to_time has been called")
     if (isNaN(time))
       return "--:--";
     let hour = parseInt(time / 3600)
@@ -339,7 +328,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   fullscreen_click() {
-    console.log("fullscreen_click has been called")
     if (this.full_screen_toggle)
       this.player.parentElement.requestFullscreen();
     else {
@@ -361,7 +349,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   close_comments() {
-    console.log("close_comments has been called")
     if (this.comment_measures.close === 0) {
       this.comment_measures.close = this.in_player_comment.offsetWidth + 20
     }
@@ -370,7 +357,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   open_comments() {
-    console.log("open_comments has been called")
     if (this.comment_measures.open === 0)
       this.comment_measures.open = this.in_player_open_comment.offsetWidth + 20
     document.querySelector('.video-player .in-player').style.right = '0px';
@@ -378,7 +364,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   close_write() {
-    console.log("close_write has been called")
     if (this.write_measures.close === 0) {
       this.write_measures.close = document.querySelector('.video-player .write-comment').offsetWidth + 60
     }
@@ -387,7 +372,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   open_write() {
-    console.log("open_write has been called")
     if (this.write_measures.open === 0)
       this.write_measures.open = document.querySelector('.video-player .open-write').offsetWidth + 20
     document.querySelector('.video-player .write-comment').style.top = '20px';
@@ -395,7 +379,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   check_comments(time) {
-    console.log("check_comments has been called")
     for (let i = this.low_com; i < this.comments.length; i++) {
       if (this.active_comments.includes(this.comments[i], 0))
         continue;
@@ -414,7 +397,6 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 
   video_seeked() {
-    console.log("video_seeked has been called")
     for (let i = 0; i < this.comments.length; i++) {
       if (Math.abs(this.comments[i].time - this.player.currentTime) < 3) {
         this.low_com = i;
@@ -424,12 +406,10 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   loading_video() {
-    console.log("loading_video has been called")
     this.loading.style.display = 'block';
   }
 
   load_end() {
-    console.log("load_end has been called")
     if (this.player.currentTime < 0.5 && this.first_time_play) {
       this.first_time_play = false;
     }
@@ -449,7 +429,6 @@ export default class VideoPlayer extends VideoPlayerProps {
   }
 
   go_to_comment_time(time) {
-    console.log("go_to_comment_time has been called")
     this.player.currentTime = time - 2;
     this.video_seeked()
   }
