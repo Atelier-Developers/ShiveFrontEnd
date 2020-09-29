@@ -57,12 +57,10 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import ErrorBoundary from "vue-error-boundary";
 import defineRulesFor from "@/services/ability";
 
 export default {
   name: "LoginForm",
-  components: {ErrorBoundary},
   data() {
     return {
       value: true,
