@@ -132,10 +132,9 @@
                 let str = this.file.date;
                 let date = moment(str);
                 let dateComponent = date.utc().format('YYYY-MM-DD');
-                let timeComponent = date.utc().format('HH:mm:ss');
+                // let timeComponent = date.utc().format('HH:mm:ss');
                 let dateInFarsi = moment(dateComponent, 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
-                let timeInFarsi = moment(timeComponent, 'HH:mm:ss').locale('fa').format('HH:mm:ss');
-                return  timeInFarsi + ' ' + dateInFarsi;
+                return dateInFarsi;
             }
 
         },
