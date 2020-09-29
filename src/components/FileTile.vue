@@ -6,8 +6,12 @@
             </v-card-title>
         </div>
         <v-divider/>
+
         <v-card-text>
             {{ file.profile.name }}
+        </v-card-text>
+        <v-card-text>
+            {{fileSize}}
         </v-card-text>
         <v-card-text>
             <v-row justify="space-around" class="mx-2">
@@ -24,11 +28,8 @@
                         <v-card-title class="justify-center">{{ file.name }}</v-card-title>
                         <v-row justify="center" no-gutters>
                             <v-col cols="12">
-                                <VideoPlayer v-if="videoDialog"  :video_src="videoLink" :id="file.pk" />
+                                <VideoPlayer v-if="videoDialog" :video_src="file.link" :id="file.pk"/>
                             </v-col>
-<!--                            <div class="video-container">-->
-<!--                                <vue-video ref="video1" :options="videoOptions"/>-->
-<!--                            </div>-->
                         </v-row>
                     </v-card>
                 </v-dialog>
@@ -80,7 +81,7 @@
                 dialog: false,
                 videoDialog: false,
                 videoOptions: {
-                    src: 'https://shive.atelier-team.ir/apiv1/file/26',
+                    // src: 'https://shive.atelier-team.ir/apiv1/file/26',
                     poster: '../assets/logo.png',
                     controlBar: true,
                     spinner: 'circles',
@@ -105,12 +106,26 @@
             //     });
             // },
         },
-        computed:{
+        computed: {
             isVideo() {
-                return (/\.(mov|avi|wmv|flv|3gp|mp4|mpg)$/i).test(this.file.file)
+                return (/\.(mp4)$/i).test(this.file.file)
             },
             videoLink() {
                 return GET_VIDEO + this.file.pk;
+            },
+            fileSize() {
+                let sizeInMB = this.file.size / 1000000;
+                let sizeInString;
+                if (sizeInMB < 1) {
+                    sizeInMB = this.file.size/ 1000;
+                    sizeInString = sizeInMB.toString().slice(0, 5);
+                    sizeInString += ' کیلوبایت'
+                }
+                else {
+                    sizeInString = sizeInMB.toString().slice(0, 5);
+                    sizeInString += ' مگابایت'
+                }
+                return sizeInString;
             }
 
         },
