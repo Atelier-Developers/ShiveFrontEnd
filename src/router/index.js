@@ -17,19 +17,17 @@ import {ability} from "@/services/ability";
 
 import Error404 from "../views/Error404";
 import NotAllowed from "../views/NotAllowed";
-import Index from "../views/Index";
+
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/',
-        name: 'Index',
-        component: Index,
-        meta: {
-            action: "access",
-            resource: 'authenticate'
-        }
+      path: "/",
+      redirect: {
+          name: "Announcement"
+      }
     },
     {
         path: '/login',
@@ -156,11 +154,15 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    console.log(to.name);
     const canNavigate = to.matched.some(route => {
         return ability.can(route.meta.action || 'read', route.meta.resource)
-    })
-    if (!canNavigate && to.name !== 'NotAllowed') {
-        return next({name: "NotAllowed"})
+    });
+    if(!canNavigate && to.name === "Announcement" && !store.getters["authModule/isAuthenticated"]){
+        next({name: "Login"});
+    }
+    else if (!canNavigate && to.name !== 'NotAllowed') {
+        next({name: "NotAllowed"})
     } else {
         next()
     }
