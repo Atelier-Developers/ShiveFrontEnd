@@ -29,3 +29,4 @@ export const GET_ANNOUNCEMENTS = baseUrl + "ann/list/";
 export const DELETE_FILE_UPLOAD = baseUrl + "presentation/delete-file/";
 export const GET_COMMENTS_FOR_VIDEO = baseUrl + "video/comment/list/";
 export const POST_COMMENT_FOR_VIDEO = baseUrl + "video/comment/create/";
+export const GET_VIDEO = baseUrl + "file/";

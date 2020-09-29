@@ -24,8 +24,11 @@
                         <v-card-title class="justify-center">{{ file.name }}</v-card-title>
                         <v-row justify="center" no-gutters>
                             <v-col cols="12">
-                                <VideoPlayer v-if="videoDialog"  :video_src="file.file" :id="file.pk" />
+                                <VideoPlayer v-if="videoDialog"  :video_src="videoLink" :id="file.pk" />
                             </v-col>
+<!--                            <div class="video-container">-->
+<!--                                <vue-video ref="video1" :options="videoOptions"/>-->
+<!--                            </div>-->
                         </v-row>
                     </v-card>
                 </v-dialog>
@@ -57,13 +60,18 @@
 </template>
 
 <script>
+    import Vue from 'vue';
+    import VueVideo from 'vue-video-module';
     import VideoPlayer from "@/components/VideoPlayer";
     import axios from 'axios';
-    import {GET_COMMENTS_FOR_VIDEO, POST_COMMENT} from "../network/API";
+    import {GET_COMMENTS_FOR_VIDEO, GET_VIDEO, POST_COMMENT} from "../network/API";
+
+    // let Vue = require('vue');
+    // let VueVideo = require('vue-video-module');
 
     export default {
         name: "FileTile",
-        components: {VideoPlayer},
+        components: {VideoPlayer, VueVideo},
         props: ['file', 'isDeletable', 'deleteAction'],
         data() {
             return {
@@ -71,6 +79,13 @@
                 loading: false,
                 dialog: false,
                 videoDialog: false,
+                videoOptions: {
+                    src: 'https://shive.atelier-team.ir/apiv1/file/26',
+                    poster: '../assets/logo.png',
+                    controlBar: true,
+                    spinner: 'circles',
+                    fullscreen: true,
+                },
             }
         },
         methods: {
@@ -81,19 +96,23 @@
                     this.dialog = false;
                 })
             },
-            routeToVideoPlayer(videoSrc, videoName) {
-                this.$router.push({
-                    name: 'VideoPlayerPage', params: {
-                        videoSrc: videoSrc,
-                        videoName: videoName,
-                    }
-                });
-            },
+            // routeToVideoPlayer(videoPk, videoName) {
+            //     this.$router.push({
+            //         name: 'VideoPlayerPage', params: {
+            //             videoSrc: GET_VIDEO + videoPk,
+            //             videoName: videoName,
+            //         }
+            //     });
+            // },
         },
         computed:{
             isVideo() {
                 return (/\.(mov|avi|wmv|flv|3gp|mp4|mpg)$/i).test(this.file.file)
+            },
+            videoLink() {
+                return GET_VIDEO + this.file.pk;
             }
+
         },
         mounted() {
             // this.getCommentsForVideo();
@@ -102,6 +121,7 @@
 </script>
 
 <style scoped>
+
     .rotated {
         transform: rotateZ(180deg);
     }
