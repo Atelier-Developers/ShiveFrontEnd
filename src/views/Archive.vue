@@ -17,7 +17,7 @@
             </v-row>
         </v-container>
         <v-container>
-            <CardLoadingSkeleton v-if="loading" />
+            <CardLoadingSkeleton v-if="loading"/>
             <v-row v-else-if="presentations.length !== 0">
                 <v-col cols="12" class="col-md-4" v-for="project in presentations" :key="project.pk"
                 >
@@ -28,13 +28,14 @@
                         <TeamPersonTile v-for="person in project.team[0].profiles" :key="person.pk"
                                         :person="person"/>
                         <v-card-actions class="justify-center">
-                            <v-btn color="primary"  @click="() => routeToArchivedPresentation(project)" text rounded>
+                            <v-btn color="primary" @click="() => routeToArchivedPresentation(project)" text rounded>
                                 مشاهده
                             </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
+            <EmptyState v-else />
         </v-container>
     </div>
 </template>
@@ -43,10 +44,11 @@
     import TeamPersonTile from "../components/TeamPersonTile";
     import {mapActions, mapGetters} from "vuex";
     import CardLoadingSkeleton from "../components/CardLoadingSkeleton";
+    import EmptyState from "../components/EmptyState";
 
     export default {
         name: "Archive",
-        components: {CardLoadingSkeleton, TeamPersonTile},
+        components: {EmptyState, CardLoadingSkeleton, TeamPersonTile},
         props: [],
         computed: {
             ...mapGetters('archiveModule', ['semesters', 'presentations']),

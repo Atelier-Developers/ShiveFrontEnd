@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-3">
         <SubjectDateChooser :item="item" :subjects="allSubjects" :loading="pageLoading"/>
         <v-container>
             <v-row>

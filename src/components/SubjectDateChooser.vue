@@ -22,7 +22,7 @@
         </div>
 
         <div class="row justify-center">
-            <date-picker v-model="item.deadline" :clearable="true" label="تاریخ"/>
+            <date-picker v-model="item.deadline" :clearable="true" label="تاریخ" color="#009fb7" />
         </div>
     </v-card>
 </template>

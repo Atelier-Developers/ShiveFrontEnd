@@ -3,7 +3,7 @@
     <v-container>
       <h1 align="center">اطلاعیه ها</h1>
       <CardLoadingSkeleton v-if="loading"/>
-      <v-row v-else-if="announcement.length !== 0" class="fill-height">
+      <v-row v-else-if="announcements.length !== 0" class="fill-height">
         <v-col cols="12" class="col-md-4 col-12" v-for="announcement in announcements" :key="announcement.id">
           <v-card tile>
             <div class="primary">
@@ -130,6 +130,9 @@ import {mapActions, mapGetters} from "vuex";
 export default {
   name: "Announcement",
   components: {EmptyState, CardLoadingSkeleton, InputFieldDialogButton},
+  computed: {
+    ...mapGetters('annModule', ['announcements'])
+  },
 
   data() {
     return {
@@ -163,9 +166,7 @@ export default {
       });
     }
   },
-  computed: {
-    ...mapGetters('annModule', ['announcements'])
-  },
+
   mounted() {
     this.loading = true;
     this.getAnnouncements().finally(() => {
