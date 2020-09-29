@@ -1,38 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from "@/views/Login";
-import Signup from "@/views/Signup";
-import PersonManagement from "@/views/PersonManagment";
-import TeamManagement from "@/views/TeamManagement";
-import PresentPage from "../views/PresentPage";
-import SubjectManagement from "../views/SubjectManagement";
-import Archive from "../views/Archive";
-import TeamCreate from "../views/TeamCreate";
-import TeamEdit from "../views/TeamEdit";
-import Announcement from "../views/Announcement";
-import TeamPresentPage from "../views/TeamPresentPage";
-import ArchivedPresentationPage from "../views/ArchivedPresentationPage";
-import VideoPlayerPage from '../views/VideoPlayerPage';
 import {ability} from "@/services/ability";
-
-import Error404 from "../views/Error404";
-import NotAllowed from "../views/NotAllowed";
-
 import store from '../store/index'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-      path: "/",
-      redirect: {
-          name: "Announcement"
-      }
+        path: "/",
+        redirect: {
+            name: "Announcement"
+        }
     },
     {
         path: '/login',
         name: 'Login',
-        component: Login,
+        component: () => import("@/views/Login"),
         meta: {
             action: "access",
             resource: 'authenticate'
@@ -41,7 +24,7 @@ const routes = [
     {
         path: '/signup',
         name: 'Signup',
-        component: Signup,
+        component: () => import("@/views/Signup"),
         meta: {
             action: "access",
             resource: 'authenticate'
@@ -50,7 +33,7 @@ const routes = [
     {
         path: '/user-management',
         name: 'UserManagement',
-        component: PersonManagement,
+        component: () => import("@/views/PersonManagment"),
         meta: {
             resource: 'user'
         }
@@ -58,7 +41,7 @@ const routes = [
     {
         path: '/team-management',
         name: 'TeamManagement',
-        component: TeamManagement,
+        component: () => import("@/views/TeamManagement"),
         meta: {
             resource: "team"
         }
@@ -66,7 +49,7 @@ const routes = [
     {
         path: '/present-page',
         name: 'PresentPage',
-        component: PresentPage,
+        component: () => import("../views/PresentPage"),
         meta: {
             resource: 'all'
         }
@@ -74,7 +57,7 @@ const routes = [
     {
         path: '/team-present-page',
         name: 'TeamPresentPage',
-        component: TeamPresentPage,
+        component: () => import("../views/TeamPresentPage"),
         meta: {
             action: 'read',
             resource: 'teampresentation'
@@ -83,7 +66,7 @@ const routes = [
     {
         path: '/team-create',
         name: 'TeamCreate',
-        component: TeamCreate,
+        component: () => import("../views/TeamCreate"),
         meta: {
             action: "create",
             resource: "team"
@@ -92,7 +75,7 @@ const routes = [
     {
         path: '/team-edit/:id',
         name: 'TeamEdit',
-        component: TeamEdit,
+        component: () => import("../views/TeamEdit"),
         meta: {
             action: "edit",
             resource: "team"
@@ -101,7 +84,7 @@ const routes = [
     {
         path: '/subject-management',
         name: 'SubjectManagement',
-        component: SubjectManagement,
+        component: () => import("../views/SubjectManagement"),
         meta: {
             resource: 'subject'
         }
@@ -109,7 +92,7 @@ const routes = [
     {
         path: '/archived-presentation-page',
         name: 'ArchivedPresentationPage',
-        component: ArchivedPresentationPage,
+        component: () => import("../views/ArchivedPresentationPage"),
         meta: {
             resource: 'all'
         }
@@ -117,12 +100,12 @@ const routes = [
     {
         path: '/video-player',
         name: 'VideoPlayerPage',
-        component: VideoPlayerPage,
+        component: () => import('../views/VideoPlayerPage'),
     },
     {
         path: '/archive',
         name: 'Archive',
-        component: Archive,
+        component: () => import("../views/Archive"),
         meta: {
             resource: 'all'
         }
@@ -130,7 +113,7 @@ const routes = [
     {
         path: '/announcement',
         name: 'Announcement',
-        component: Announcement,
+        component: () => import("../views/Announcement"),
         meta: {
             resource: 'all'
         }
@@ -138,12 +121,12 @@ const routes = [
     {
         path: '/notAllowed',
         name: 'NotAllowed',
-        component: NotAllowed
+        component: () => import("../views/NotAllowed")
     },
     {
         path: '*',
         name: 'Error404',
-        component: Error404
+        component: () => import("../views/Error404")
     },
 ]
 
@@ -158,10 +141,9 @@ router.beforeEach((to, from, next) => {
     const canNavigate = to.matched.some(route => {
         return ability.can(route.meta.action || 'read', route.meta.resource)
     });
-    if(!canNavigate && to.name === "Announcement" && !store.getters["authModule/isAuthenticated"]){
+    if (!canNavigate && to.name === "Announcement" && !store.getters["authModule/isAuthenticated"]) {
         next({name: "Login"});
-    }
-    else if (!canNavigate && to.name !== 'NotAllowed') {
+    } else if (!canNavigate && to.name !== 'NotAllowed') {
         next({name: "NotAllowed"})
     } else {
         next()
