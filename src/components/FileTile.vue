@@ -1,7 +1,7 @@
 <template>
   <v-card tile>
     <div class="primary">
-      <v-card-title class="primary accent--text justify-center header-6">
+      <v-card-title class="primary white--text justify-center header-6">
         {{ file.name }}
       </v-card-title>
     </div>
