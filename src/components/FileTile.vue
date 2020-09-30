@@ -103,7 +103,7 @@
         },
         computed: {
             isVideo() {
-                return (/\.(mp4)$/i).test(this.file.file)
+                return (/\.(mp4|mov)$/i).test(this.file.file)
             },
             videoLink() {
                 return GET_VIDEO + this.file.pk;

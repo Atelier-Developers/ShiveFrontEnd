@@ -21,7 +21,7 @@
         <v-container>
             <CardLoadingSkeleton v-if="loading"/>
             <v-row v-else-if="presentations.length !== 0">
-                <v-col cols="12" class="col-md-4" v-for="project in presentations" :key="project.pk"
+                <v-col cols="12" class="col-md-4 col-sm-6" v-for="project in presentations" :key="project.pk"
                 >
                     <v-card>
                         <v-card-title v-if="project.subject !== null">{{ project.subject.title }}</v-card-title>

@@ -23,7 +23,7 @@
           v-on:loadedmetadata="meta"
           :autoplay="true"
       >
-        <source :src="video_src" type="video/mp4">
+        <source :src="video_src">
       </video>
       <div v-if="!this.full_screen_toggle" class="open-comment" v-on:click="open_comments">
         <v-icon color="white">comment</v-icon>
