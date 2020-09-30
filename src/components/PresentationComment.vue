@@ -15,7 +15,7 @@
             <h5>{{ comment.profile.name }}</h5>
           </v-card-title>
           <v-card-text>
-            <span style="white-space: pre">
+            <span style="white-space: pre-wrap">
             {{ comment.text }}
             </span>
           </v-card-text>

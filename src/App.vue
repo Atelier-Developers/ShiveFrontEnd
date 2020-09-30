@@ -86,6 +86,7 @@ export default {
 
 p, span {
   word-break: break-word;
+  /*white-space: pre-wrap;*/
 }
 
 @font-face {
