@@ -64,6 +64,9 @@ export default {
   },
   methods: {},
   mounted() {
+    if (this.presentation === undefined){
+      this.$router.replace({name: "Archive"})
+    }
   }
 
 }

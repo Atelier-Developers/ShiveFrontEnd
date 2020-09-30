@@ -27,7 +27,7 @@ const actions = {
     async getPresentations(context, id) {
         let response = await axios.get(GET_PRESENTATIONS + id);
         response.data.forEach((p) => {
-            p.deadline = moment(p.deadline, 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
+            p.deadline = moment.from(p.deadline, 'en','YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
         });
         context.commit("setPresentations", response.data);
     },

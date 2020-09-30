@@ -8,13 +8,12 @@
         color="primary"
         dark
     >
-
+      <v-app-bar-nav-icon v-if="responsive && isAuthenticated" @click="toggleDrawer"></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         شیوه ارائه مطالب فنی
       </div>
 
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon v-if="responsive && isAuthenticated" @click="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-main v-if="!loading">
@@ -80,6 +79,9 @@ export default {
 .overlay-left, .overlay-right, .overlay-top, .overlay-bottom {
   background: #fed766 !important;
   z-index: 2;
+}
+.v-card__title{
+  word-break: normal!important;
 }
 
 p, span {
