@@ -57,16 +57,16 @@ const actions = {
         context.commit("setTeamMembers", payload);
     },
     async sendTeamMembers(context, payload) {
-        payload.deadline = moment.from(payload.deadline, 'fa', 'YYYY/MM/DD').format('YYYY-MM-DD');
+        payload.deadline = moment.from(payload.deadline, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD');
         await axios.post(TEAMS_CREATE, payload);
     },
     async setSingleTeam(context, payload) {
         let response = await axios.get(GET_SINGLE_TEAM + payload);
-        response.data.presentation.deadline = moment(response.data.presentation.deadline, 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
+        response.data.presentation.deadline = moment.from(response.data.presentation.deadline, 'en','YYYY-MM-DD').locale('fa').format('YYYY/MM/DD');
         context.commit("setSingleTeam", response.data);
     },
     async editTeamMembers(context, payload) {
-        payload.deadline = moment.from(payload.deadline, 'fa', 'YYYY/MM/DD').format('YYYY-MM-DD');
+        payload.deadline = moment.from(payload.deadline, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD');
         await axios.post(TEAMS_EDIT + payload.pk, payload);
     },
 };
