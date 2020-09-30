@@ -8,7 +8,7 @@
         <v-card-text class="text-center">
             <v-container v-if="files.length !== 0">
                 <v-row>
-                    <v-col sm="6" md="4" lg="3" v-for="file in files" :key="file.id">
+                    <v-col class="col-12 col-sm-6 col-md-4" v-for="file in files" :key="file.id">
                         <FileTile :is-deletable="isDeletable" :file="file" :delete-action="deleteFile"/>
                     </v-col>
                 </v-row>
