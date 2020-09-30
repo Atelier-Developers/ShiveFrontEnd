@@ -217,6 +217,18 @@ export default class VideoPlayer extends VideoPlayerProps {
     else
       this.player.pause();
     this.play_pause_toggle = !this.play_pause_toggle;
+
+    setTimeout(function (player) {
+      let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+      for (let i = 0; i < mini_comments.length; i++) {
+        mini_comments[i].style.display = 'block';
+        mini_comments[i].style.left =
+            ((parseFloat(player.comments[i].time))
+                / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+                + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
+      }
+    }, 100, this)
+
   }
 
   video_time_update() {
@@ -248,6 +260,18 @@ export default class VideoPlayer extends VideoPlayerProps {
           _self.comments.sort(function (a, b) {
             return a.time - b.time;
           });
+
+          setTimeout(function (player) {
+            let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+            for (let i = 0; i < mini_comments.length; i++) {
+              mini_comments[i].style.display = 'block';
+              mini_comments[i].style.left =
+                  ((parseFloat(player.comments[i].time))
+                      / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+                      + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
+            }
+          }, 100, this)
+
         }
     )
   }
@@ -262,7 +286,7 @@ export default class VideoPlayer extends VideoPlayerProps {
     });
   }
 
-  meta(){
+  meta() {
   }
 
   video_player_mouse_up() {
@@ -285,7 +309,8 @@ export default class VideoPlayer extends VideoPlayerProps {
     if (this.progress_bar_timeout)
       clearTimeout(this.progress_bar_timeout);
     this.progress_bar_timeout = setTimeout(function (elem) {
-      document.querySelector('.video-player .progress-bar').style.opacity = 0;
+      if (document.querySelector('.video-player .progress-bar'))
+        document.querySelector('.video-player .progress-bar').style.opacity = 0;
     }, 1000, this.progress)
   }
 
@@ -343,7 +368,7 @@ export default class VideoPlayer extends VideoPlayerProps {
                 / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
                 + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
       }
-    }, 500, this)
+    }, 100, this)
   }
 
   close_comments() {
@@ -411,17 +436,19 @@ export default class VideoPlayer extends VideoPlayerProps {
     if (this.player.currentTime < 0.5 && this.first_time_play) {
       this.first_time_play = false;
     }
+    console.log('before setting')
     this.loading.style.display = 'none';
-      let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
-      for (let i = 0; i < mini_comments.length; i++) {
-        if (this.comments[i].time > this.player.duration)
-          continue;
-        mini_comments[i].style.display = 'block';
-        mini_comments[i].style.left =
-            ((parseFloat(this.comments[i].time))
-                / this.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
-                + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
-      }
+    let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+    for (let i = 0; i < mini_comments.length; i++) {
+      console.log('setttttting')
+      if (this.comments[i].time > this.player.duration)
+        continue;
+      mini_comments[i].style.display = 'block';
+      mini_comments[i].style.left =
+          ((parseFloat(this.comments[i].time))
+              / this.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+              + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
+    }
 
 
   }
@@ -506,12 +533,14 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 .video-player .progress-bar {
   position: absolute;
+  top: unset !important;
   bottom: 0px;
   right: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 50px;
   padding: 0 15px 12px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) 42%, rgba(0, 0, 0, 0.7));
   color: white;
@@ -520,6 +549,10 @@ export default class VideoPlayer extends VideoPlayerProps {
 
 .video-player .progress-bar {
   opacity: 1;
+}
+
+.video-player .progress-bar:hover {
+  opacity: 1 !important;
 }
 
 .video-player .time {
@@ -691,14 +724,13 @@ export default class VideoPlayer extends VideoPlayerProps {
   color: black;
   font-size: 11.5px;
   transition: 0.5s;
-  display: none;
 }
 
 .video-player .mini-comment .mini-comment-icon {
   background-color: white;
   position: absolute;
   left: 0;
-  bottom: 15px;
+  bottom: 20px;
   height: 20px;
   width: 20px;
   border-radius: 100%;
