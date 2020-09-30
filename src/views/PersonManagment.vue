@@ -28,7 +28,7 @@
               :loading="loading"
               color="primary"
       >
-        <v-icon color="accent">done</v-icon>
+        <v-icon>done</v-icon>
       </v-btn>
     </div>
     <v-snackbar v-model="snackBar.stat" :color="snackBar.color">

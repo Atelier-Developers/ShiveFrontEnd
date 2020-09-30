@@ -24,7 +24,7 @@
                    v-on="on"
                    v-bind="attrs"
                    color="primary" fab small @click="videoDialog = true">
-              <v-icon color="accent">play_arrow</v-icon>
+              <v-icon>play_arrow</v-icon>
             </v-btn>
           </template>
           <v-card>
@@ -37,13 +37,13 @@
           </v-card>
         </v-dialog>
         <v-btn class="mb-2" color="primary" fab small tag="a" target="_blank" :href="file.file">
-          <v-icon class="rotated" color="accent">publish</v-icon>
+          <v-icon class="rotated">publish</v-icon>
         </v-btn>
         <v-dialog v-model="dialog" max-width="290" persistent>
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-if="isDeletable" color="red" v-bind="attrs" class="mb-2"
                    v-on="on" fab small>
-              <v-icon color="accent">delete</v-icon>
+              <v-icon>delete</v-icon>
             </v-btn>
           </template>
           <v-card :loading="loading" :disabled="loading">

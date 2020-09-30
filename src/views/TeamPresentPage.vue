@@ -33,7 +33,7 @@
                 rounded
                 @click.stop="openDescriptionEditDialog"
             >
-              <v-icon color="accent">create</v-icon>
+              <v-icon>create</v-icon>
             </v-btn>
 
             <v-dialog
@@ -70,7 +70,7 @@
             @click="fileUploadDialog = true"
             color="primary"
         >
-          <v-icon color="accent">add</v-icon>
+          <v-icon>add</v-icon>
         </v-btn>
         <v-dialog
             v-model="fileUploadDialog"
