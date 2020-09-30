@@ -25,7 +25,7 @@
             <v-card-actions>
                 <v-container class="mb-1">
                     <v-btn color="primary" text @click="dialog = false">بستن</v-btn>
-                    <v-btn color="primary" text @click="submitAction">تایید</v-btn>
+                    <v-btn :disabled="subject.title === '' || subject.title === null"  color="primary" text @click="submitAction">تایید</v-btn>
                 </v-container>
             </v-card-actions>
         </v-card>

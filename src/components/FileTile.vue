@@ -43,7 +43,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-if="isDeletable" color="red" v-bind="attrs" class="mb-2"
                    v-on="on" fab small>
-              <v-icon>delete</v-icon>
+              <v-icon color="white">delete</v-icon>
             </v-btn>
           </template>
           <v-card :loading="loading" :disabled="loading">

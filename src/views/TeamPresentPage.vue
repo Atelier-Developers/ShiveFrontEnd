@@ -83,17 +83,17 @@
             <v-card-text>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="نام فایل" v-model="item.name" outlined dense/>
+                  <v-text-field :rules="[v => !!v || 'الزامی']" label="نام فایل" v-model="newItem.name" outlined dense/>
                 </v-col>
                 <v-col cols="12">
-                  <v-file-input label="فایل جدید خود را انتخاب کنید" v-model="item.file" outlined dense/>
+                  <v-file-input :rules="[v => !!v || 'الزامی']" label="فایل جدید خود را انتخاب کنید" v-model="newItem.file" outlined dense/>
                 </v-col>
               </v-row>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="fileUploadDialog = false">انصراف</v-btn>
-              <v-btn color="blue darken-1" text @click="handleFileUpload ">تایید</v-btn>
+              <v-btn :disabled="disabled" type="submit" color="blue darken-1" text @click="handleFileUpload">تایید</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -131,9 +131,15 @@ export default {
     return {
       item: {
         description: '',
-        file: '',
+        file: null,
         name: ''
       },
+
+      newItem: {
+        file: null,
+        name: ''
+      },
+
       descriptionLoading: false,
       descriptionEditDialog: false,
       fileUploadDialog: false,
@@ -143,12 +149,16 @@ export default {
   },
   computed: {
     ...mapGetters('presentationModule', ['teamPresentation']),
+
+    disabled() {
+      return this.newItem.file === null || this.newItem.name === null || this.newItem.name === '';
+    }
   },
   methods: {
     ...mapActions('presentationModule', ['getTeamPresentation', 'uploadFileForTeamPresentation', 'setDescriptionForTeamPresentation', 'deleteFileFromTeamPresentation']),
     handleFileUpload() {
       this.fileUploadLoading = true;
-      this.uploadFile(this.item.file, this.item.name).then(() => {
+      this.uploadFile(this.newItem.file, this.newItem.name).then(() => {
         this.fileUploadLoading = false;
         this.fileUploadDialog = false;
       })
@@ -165,7 +175,8 @@ export default {
       }).then(() => {
         return this.getTeamPresentation();
       }).then(() => {
-        this.item.file = '';
+        this.newItem.file = null;
+        this.newItem.name = '';
       });
     },
     editDescription(description) {
@@ -185,7 +196,9 @@ export default {
       return this.deleteFileFromTeamPresentation(id).then(() => {
         return this.getTeamPresentation();
       });
-    }
+    },
+
+
   },
   mounted() {
     this.pageLoading = true;

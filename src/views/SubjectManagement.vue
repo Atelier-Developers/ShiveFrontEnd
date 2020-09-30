@@ -10,7 +10,7 @@
         <div id="floating-button" class="mb-10">
             <InputFieldDialogButton v-if="$can('create', 'subject')" title="موضوع جدید" input-place-holder="تیتر"
                                     :button-attrs="addSubjectButtonAttributes"
-                                    :action="addToSubjects" :subject="{...subject}" icon="add">
+                                    :action="addToSubjects" :subject="subject" icon="add">
             </InputFieldDialogButton>
         </div>
     </div>
