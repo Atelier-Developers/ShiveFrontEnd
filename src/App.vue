@@ -80,6 +80,9 @@ export default {
   background: #fed766 !important;
   z-index: 2;
 }
+.v-card__title{
+  word-break: normal!important;
+}
 
 
 @font-face {
