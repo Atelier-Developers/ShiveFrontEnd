@@ -217,6 +217,18 @@ export default class VideoPlayer extends VideoPlayerProps {
     else
       this.player.pause();
     this.play_pause_toggle = !this.play_pause_toggle;
+
+    setTimeout(function (player) {
+      let mini_comments = document.querySelectorAll('.video-player .mini-comments .mini-comment')
+      for (let i = 0; i < mini_comments.length; i++) {
+        mini_comments[i].style.display = 'block';
+        mini_comments[i].style.left =
+            ((parseFloat(player.comments[i].time))
+                / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
+                + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
+      }
+    }, 100, this)
+
   }
 
   video_time_update() {
@@ -258,7 +270,7 @@ export default class VideoPlayer extends VideoPlayerProps {
                       / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
                       + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
             }
-          }, 500, this)
+          }, 100, this)
 
         }
     )
@@ -356,7 +368,7 @@ export default class VideoPlayer extends VideoPlayerProps {
                 / player.player.duration * document.querySelector('.video-player .progress-bar .bar').offsetWidth
                 + document.querySelector('.video-player .progress-bar .bar').offsetLeft) + 'px';
       }
-    }, 500, this)
+    }, 100, this)
   }
 
   close_comments() {
