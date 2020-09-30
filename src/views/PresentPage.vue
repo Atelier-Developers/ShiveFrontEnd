@@ -56,7 +56,7 @@
                         rounded
                         @click="() => postComment(comment)"
                 >
-                  <v-icon dark color="accent">add</v-icon>
+                  <v-icon dark>add</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>

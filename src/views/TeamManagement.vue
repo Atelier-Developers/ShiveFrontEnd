@@ -17,7 +17,7 @@
                     @click="routeToCreateTeam"
                     color="primary"
             >
-                <v-icon color="accent">add</v-icon>
+                <v-icon>add</v-icon>
             </v-btn>
         </div>
     </div>

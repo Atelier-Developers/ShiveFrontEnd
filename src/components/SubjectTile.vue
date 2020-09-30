@@ -30,7 +30,7 @@
 
                 <InputFieldDialogButton v-else input-place-holder="تیتر" :title=action.dialog.title
                                         :action="action.onClick" :button-attrs="action.dialog.buttonAttrs"
-                                        :icon="action.icon" :subject="{...subject}"/>
+                                        :icon="action.icon" color="accent" :subject="{...subject}"/>
             </v-list-item-action>
         </template>
     </v-list-item>

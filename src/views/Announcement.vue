@@ -7,7 +7,7 @@
         <v-col cols="12" class="col-md-4 col-12" v-for="announcement in announcements" :key="announcement.id">
           <v-card tile>
             <div class="primary">
-              <v-card-title class="primary accent--text justify-center header-6">
+              <v-card-title class="primary white--text justify-center header-6">
                 {{ announcement.title }}
               </v-card-title>
             </div>
@@ -40,7 +40,7 @@
                       <v-col>
                         <v-btn color="primary" fab small tag="a" target="_blank"
                                :href="file.file">
-                          <v-icon color="accent">get_app</v-icon>
+                          <v-icon>get_app</v-icon>
                         </v-btn>
                       </v-col>
                     </v-row>
@@ -61,7 +61,7 @@
           @click="toggleDialog"
           color="primary"
       >
-        <v-icon color="accent">add</v-icon>
+        <v-icon>add</v-icon>
       </v-btn>
     </div>
 

@@ -1,12 +1,12 @@
 <template>
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" max-width="600px">
         <template v-slot:activator="{ on }">
                         <v-btn
                                 v-on="on"
                                 v-bind="buttonAttrs"
                                 color="primary"
                         >
-                            <v-icon color="accent">{{icon}}</v-icon>
+                            <v-icon :color="color">{{icon}}</v-icon>
                         </v-btn>
         </template>
         <v-card :loading="loading" :disabled="loading">
@@ -35,7 +35,7 @@
 <script>
     export default {
         name: 'Home',
-        props: ['title', 'buttonAttrs', 'subject', 'action',  'inputPlaceHolder', 'icon'],
+        props: ['title', 'buttonAttrs', 'subject', 'action',  'inputPlaceHolder', 'icon', 'color'],
         data() {
             return {
                 loading: false,

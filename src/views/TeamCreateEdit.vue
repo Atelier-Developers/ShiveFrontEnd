@@ -22,7 +22,7 @@
                     color="primary"
                     @click="callActionFunction"
             >
-                <v-icon color="accent">done</v-icon>
+                <v-icon>done</v-icon>
             </v-btn>
         </div>
     </div>
