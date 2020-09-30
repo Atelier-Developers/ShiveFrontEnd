@@ -6,7 +6,9 @@
                 <v-col cols="12" class="col-md-4">
                     <h3>ترم:</h3>
                     <v-select
+                            :loading="loading"
                             v-model="selected_year"
+                            :disabled="loading"
                             :items="semesters"
                             item-text="year"
                             item-value="id"
