@@ -14,7 +14,7 @@
             <v-divider/>
             <v-card-text>
               <v-row class="mx-2">
-                <read-more style="white-space: pre" more-str="ادامه ی مطلب" :text="announcement.description" link="#"
+                <read-more more-str="ادامه ی مطلب" :text="announcement.description" link="#"
                            less-str="بستن مطلب" :max-chars="50"></read-more>
               </v-row>
             </v-card-text>

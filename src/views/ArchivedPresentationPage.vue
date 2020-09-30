@@ -23,7 +23,7 @@
         </v-card-title>
         <v-divider/>
         <v-card-text v-if="presentation.description">
-                   <span style="white-space: pre">
+                   <span style="white-space: pre-wrap">
                     {{ presentation.description }}
                    </span>
         </v-card-text>

@@ -80,7 +80,14 @@ export default {
   background: #fed766 !important;
   z-index: 2;
 }
+.v-card__title{
+  word-break: normal!important;
+}
 
+p, span {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 @font-face {
   font-family: Shabnam;
