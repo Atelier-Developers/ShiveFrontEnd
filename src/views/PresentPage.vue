@@ -39,7 +39,7 @@
       <v-container>
         <PresentationComment :comments="currentPresentation.comments" class="mx-5 mx-sm-15" :loading="loading">
           <v-container>
-            <v-card tile>
+            <v-card flat>
               <v-card-title>
                 <h5>نظر خود را وارد نمایید:</h5>
               </v-card-title>
@@ -54,11 +54,13 @@
                         class="mb-2"
                         color="primary"
                         rounded
+                        :loading="commentLoading"
                         @click="() => postComment(comment)"
                 >
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-card-actions>
+              <v-divider/>
             </v-card>
           </v-container>
         </PresentationComment>
@@ -88,7 +90,8 @@ export default {
       comment: '',
       descriptionEditDialog: false,
       fileUploadDialog: false,
-      loading: true
+      loading: true,
+      commentLoading: false,
     }
   },
   computed: {
@@ -102,12 +105,15 @@ export default {
   methods: {
     ...mapActions('presentationModule', ['getCurrentPresentation', 'postCommentForCurrentPresentation']),
     postComment(comment) {
+      this.commentLoading = true;
       this.postCommentForCurrentPresentation({
         pk: this.currentPresentation.pk,
         comment: {text: comment}
       }).then(() => {
         this.comment = '';
-        this.getCurrentPresentation();
+        return this.getCurrentPresentation();
+      }).then(() => {
+        this.commentLoading = false;
       })
     }
   },
