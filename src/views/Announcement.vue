@@ -32,12 +32,13 @@
                     :key="file.id"
                 >
                   <v-list-item-content>
-                    <v-row class="px-sm-4 px-2" justify="space-between">
-                      <v-col cols="9">
-                        <v-list-item-title v-text="file.title"/>
+                    <v-row justify="space-between">
+                      <v-col cols="8">
+                        <v-list-item-title style="text-overflow: ellipsis; max-width: 200px;">
+                          {{file.title}}
+                        </v-list-item-title>
                       </v-col>
-
-                      <v-col>
+                      <v-col cols="3">
                         <v-btn color="primary" fab small tag="a" target="_blank"
                                :href="file.file">
                           <v-icon color="accent">get_app</v-icon>
