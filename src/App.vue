@@ -82,6 +82,9 @@ export default {
   z-index: 2;
 }
 
+p, span {
+  white-space: pre-wrap;
+}
 
 @font-face {
   font-family: Shabnam;
