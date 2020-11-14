@@ -55,6 +55,38 @@ const routes = [
         }
     },
     {
+        path: '/suggestions-complaints-list',
+        name: 'SuggestionsAndComplaintsList',
+        component: () => import("../views/SuggestionsAndComplaintsList"),
+        meta: {
+            resource: 'all'
+        }
+    },
+    {
+        path: '/assignment-list',
+        name: 'AssignmentList',
+        component: () => import("../views/AssignmentsList"),
+        meta: {
+            resource: 'all'
+        }
+    },
+    {
+        path: '/assignment-upload',
+        name: 'AssignmentUpload',
+        component: () => import("../views/AssignmentUpload"),
+        meta: {
+            resource: 'all'
+        }
+    },
+    {
+        path: '/suggestions-complaints-create',
+        name: 'SuggestionsAndComplaintsCreate',
+        component: () => import("../views/SuggestionsAndComplaintsCreate"),
+        meta: {
+            resource: 'all'
+        }
+    },
+    {
         path: '/team-present-page',
         name: 'TeamPresentPage',
         component: () => import("../views/TeamPresentPage"),

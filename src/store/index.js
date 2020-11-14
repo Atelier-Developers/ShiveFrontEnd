@@ -9,6 +9,8 @@ import roleModule from './modules/role-module'
 import archiveModule from './modules/archive-module'
 import presentationModule from './modules/presentation-module'
 import annModule from './modules/ann-module'
+import suggCompsModule from './modules/suggscomps-module'
+import assignmentModule from './modules/assignment-module'
 
 Vue.use(Vuex)
 
@@ -22,6 +24,8 @@ export default new Vuex.Store({
         subjectModule,
         roleModule,
         archiveModule,
-        annModule
+        annModule,
+        suggCompsModule,
+        assignmentModule,
     }
 })

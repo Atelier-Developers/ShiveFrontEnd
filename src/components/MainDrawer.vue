@@ -71,6 +71,22 @@ export default {
           permission: this.$can('read', 'teampresentation')
         },
         {
+          icon: "backup",
+          title: "بارگذاری تکالیف",
+          to: {
+            name: "AssignmentUpload"
+          },
+          permission: this.$can('read', 'all')
+        },
+        {
+          icon: "assignment",
+          title: "تکالیف",
+          to: {
+            name: "AssignmentList"
+          },
+          permission: this.$can('read', 'all')
+        },
+        {
           icon: "how_to_reg",
           title: "مدیریت تیم ها",
           to: {
@@ -111,7 +127,22 @@ export default {
           },
           permission: this.$can('read', 'all')
         },
-
+        {
+          icon: "drafts",
+          title: "پیشنهادات و انتقادات",
+          to: {
+            name: "SuggestionsAndComplaintsList"
+          },
+          permission: this.$can('read', 'user')
+        },
+        {
+          icon: "drafts",
+          title: "پیشنهادات و انتقادات",
+          to: {
+            name: "SuggestionsAndComplaintsCreate"
+          },
+          permission: this.$can('read', 'all')
+        },
       ]
     }
 
