@@ -59,7 +59,7 @@ const routes = [
         name: 'SuggestionsAndComplaintsList',
         component: () => import("../views/SuggestionsAndComplaintsList"),
         meta: {
-            resource: 'all'
+            resource: 'subject'
         }
     },
     {
@@ -67,7 +67,7 @@ const routes = [
         name: 'AssignmentList',
         component: () => import("../views/AssignmentsList"),
         meta: {
-            resource: 'all'
+            resource: 'subject'
         }
     },
     {
@@ -75,7 +75,8 @@ const routes = [
         name: 'AssignmentUpload',
         component: () => import("../views/AssignmentUpload"),
         meta: {
-            resource: 'all'
+            action: 'read',
+            resource: 'teampresentation'
         }
     },
     {
@@ -83,7 +84,8 @@ const routes = [
         name: 'SuggestionsAndComplaintsCreate',
         component: () => import("../views/SuggestionsAndComplaintsCreate"),
         meta: {
-            resource: 'all'
+            action: 'read',
+            resource: 'teampresentation'
         }
     },
     {

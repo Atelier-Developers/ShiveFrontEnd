@@ -76,15 +76,7 @@ export default {
           to: {
             name: "AssignmentUpload"
           },
-          permission: this.$can('read', 'all')
-        },
-        {
-          icon: "assignment",
-          title: "تکالیف",
-          to: {
-            name: "AssignmentList"
-          },
-          permission: this.$can('read', 'all')
+          permission: this.$can('read', 'teampresentation')
         },
         {
           icon: "how_to_reg",
@@ -112,6 +104,14 @@ export default {
 
         },
         {
+          icon: "assignment",
+          title: "تکالیف",
+          to: {
+            name: "AssignmentList"
+          },
+          permission: this.$can('read', 'subject')
+        },
+        {
           icon: "slideshow",
           title: "ارائه‌ی جاری",
           to: {
@@ -129,19 +129,19 @@ export default {
         },
         {
           icon: "drafts",
-          title: "پیشنهادات و انتقادات",
+          title: "پیشنهاد یا انتقاد",
           to: {
-            name: "SuggestionsAndComplaintsList"
+            name: "SuggestionsAndComplaintsCreate"
           },
-          permission: this.$can('read', 'user')
+          permission: this.$can('read', 'teampresentation')
         },
         {
           icon: "drafts",
           title: "پیشنهادات و انتقادات",
           to: {
-            name: "SuggestionsAndComplaintsCreate"
+            name: "SuggestionsAndComplaintsList"
           },
-          permission: this.$can('read', 'all')
+          permission: this.$can('read', 'subject')
         },
       ]
     }
